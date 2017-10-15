@@ -1,5 +1,6 @@
 <?php
 echo $html_heading;?> 
+
 <link href="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/css/jquery.fileupload.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo SchoolSiteResourcesURL;?>bower_components/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo SchoolSiteCSSURL;?>apps/crud.css" rel="stylesheet" type="text/css" />
@@ -18,10 +19,10 @@ echo $html_heading;?>
             </div>
         </div>-->
         <div class="col s12">
-            <h4 class="main-text lighten-1">Manage Student</h4>
+            <h4 class="main-text lighten-1">Manage Teacher</h4>
             <ul class="tabs tab-demo z-depth-1">
-                <li class="tab col s3"><a class="active" href="#StudentList">Student List</a></li>
-                <li class="tab col s3"><a  href="#StudentAdd">Add Student</a></li>
+                <li class="tab col s3"><a class="active" href="#StudentList">Teacher List</a></li>
+                <li class="tab col s3"><a  href="#StudentAdd">Add Teacher</a></li>
             </ul>
             <div id="StudentList" class="col s12">
                 <section id="apps_crud">
@@ -308,61 +309,107 @@ echo $html_heading;?>
                 </section>
             </div>
             <div id="StudentAdd" class="col s12">
-                <form type="POST">
+                <?php form_open_multipart('#',array('id'=>'erp_teacher_add_form','class'=>'form-vertical'));?>
                     <div class="row">
-                        <div class="col s12 m8">
+                        <div class="col s12 m12">
                             <div class="panel panel-bordered">
-                                <div class="panel-header">
+                                <!--<div class="panel-header">
                                     <div class="title">General elements</div>
                                     <div class="subtitle">Customize in your own way. See more <a href="components_forms.html">clicking here.</a></div>
-                                </div>
+                                </div> -->
                                 <div class="panel-body">
                                     <div class="row no-gutter">
-                                        <div class="input-field col s6">
-                                            <input placeholder="Placeholder" id="first_name" type="text" class="validate" required="">
-                                            <label for="first_name">First Name</label>
+                                        <?php foreach($table_user_structure_text AS $key=>$val): //pre($key);//die;?>
+                                        <div class="input-field col s12 m3">
+                                            <?php $element='<input  id="'.$key.'" name="'.$key.'" type="'.$val['type'].'"';
+                                            if(array_key_exists('required', $val)):
+                                                $element.=' required="required"';
+                                            endif;
+                                            
+                                            if(array_key_exists('class', $val)):
+                                                $element.=' class=" validate '.$val['class'].'"';
+                                            else:
+                                                $element.=' class="validate"';
+                                            endif;
+                                            if(array_key_exists('jsEventAction', $val)):
+                                                $element.=' '.$val['jsEventAction'];
+                                            endif;
+                                            $element.=">";
+                                            echo $element;
+                                            echo '<label for="'.$key.'">'.$val['label'].'</label>';
+                                            ?>
+                                            <!--<input placeholder="Placeholder" id="first_name" type="text" class="validate" required="">
+                                            <label for="first_name">First Name</label>-->
                                         </div>
-                                        <div class="input-field col s6">
-                                            <input id="last_name" type="text">
-                                            <label for="last_name">Last Name</label>
+                                        <?php endforeach;?>
+                                        <?php foreach($table_teacher_structure_text AS $key=>$val): //pre($key);//die;?>
+                                        <div class="input-field col s12 m3">
+                                            <?php $element='<input  id="'.$key.'" name="'.$key.'" type="'.$val['type'].'"';
+                                            if(array_key_exists('required', $val)):
+                                                $element.=' required="required"';
+                                            endif;
+                                            
+                                            if(array_key_exists('class', $val)):
+                                                $element.=' class=" validate '.$val['class'].'"';
+                                            else:
+                                                $element.=' class="validate"';
+                                            endif;
+                                            if(array_key_exists('jsEventAction', $val)):
+                                                $element.=' '.$val['jsEventAction'];
+                                            endif;
+                                            $element.=">";
+                                            echo $element;
+                                            echo '<label for="'.$key.'">'.$val['label'].'</label>';
+                                            ?>
+                                            <!--<input placeholder="Placeholder" id="first_name" type="text" class="validate" required="">
+                                            <label for="first_name">First Name</label>-->
                                         </div>
-                                        <div class="input-field col s12">
-                                            <input disabled value="I am not editable" id="disabled" type="text" class="validate">
-                                            <label for="disabled">Disabled</label>
+                                        <?php endforeach;?>
+                                        <div class="input-select2 col s12 m3">
+                                            <select id="jobTitleId" name="jobTitleId">
+                                                <option value="">Select Job Title</option>
+                                                <?php foreach ($jobTitleArr AS $key=>$val):?>
+                                                <option value="<?php echo $val['jobTitleId'];?>"><?php echo $val['title'];?></option>
+                                                <?php endforeach;?>
+                                            </select>
                                         </div>
-                                        <div class="input-field col s3">
-                                            <input id="last_name" type="text">
-                                            <label for="last_name">Last Name</label>
+                                        <div class="clearfix"></div>
+                                        <div class="input-select2 col s12 m3" class="validate required">
+                                            <select id="genderId" name="genderId">
+                                                <option value="">Select gender</option>
+                                                <?php foreach ($genderArr AS $key=>$val):?>
+                                                <option value="<?php echo $val['genderId'];?>"><?php echo $val['title'];?></option>
+                                                <?php endforeach;?>
+                                            </select>
                                         </div>
-                                        <div class="input-field col s3">
-                                            <input id="last_name" type="text">
-                                            <label for="last_name">Last Name</label>
+                                        <div class="input-select2 col s12 m3">
+                                            <select id="bloodGroupId" name="bloodGroupId" class="validate required">
+                                                <option value="">Select blood group</option>
+                                                <?php foreach ($blogGroupArr AS $key=>$val):?>
+                                                <option value="<?php echo $val['bloodGroupId'];?>"><?php echo $val['title'];?></option>
+                                                <?php endforeach;?>
+                                            </select>
                                         </div>
-                                        <div class="input-field col s3">
-                                            <input id="last_name" type="text">
-                                            <label for="last_name">Last Name</label>
+                                        <div class="input-select2 col s12 m3">
+                                            <select id="countryId" name="countryId" class="validate required">
+                                                <option value="">Select country</option>
+                                                <?php foreach ($countryArr AS $key=>$val):?>
+                                                <option value="<?php echo $val['locationId'];?>"><?php echo $val['name'];?></option>
+                                                <?php endforeach;?>
+                                            </select>
                                         </div>
-                                        <div class="input-field col s3">
-                                            <input id="last_name" type="text">
-                                            <label for="last_name">Last Name</label>
+                                        <div class="input-select2 col s12 m3">
+                                            <select id="stateId" name="stateId" class="validate required">
+                                                <option value="">Select state</option>
+                                            </select>
                                         </div>
-                                        <div class="input-field col s3">
-                                            <input id="last_name" type="text">
-                                            <label for="last_name">Last Name</label>
+                                        
+                                        <div class="input-select2 col s12 m3">
+                                            <select id="cityId" name="cityId" class="validate required">
+                                                <option value="">Select city</option>
+                                            </select>
                                         </div>
-                                        <div class="input-field col s3">
-                                            <input id="last_name" type="text">
-                                            <label for="last_name">Last Name</label>
-                                        </div>
-                                        <div class="input-field col s3">
-                                            <input id="last_name" type="text">
-                                            <label for="last_name">Last Name</label>
-                                        </div>
-                                        <div class="input-field col s3">
-                                            <input id="last_name" type="text">
-                                            <label for="last_name">Last Name</label>
-                                        </div>
-                                        <div class="input-select2 col s12">
+                                        <!--<div class="input-select2 col s12">
                                             <select id="state" name="state">
                                                 <optgroup label="Alaskan/Hawaiian Time Zone">
                                                     <option value="AK">Alaska</option>
@@ -387,54 +434,9 @@ echo $html_heading;?>
                                                 </optgroup>
                                             </select>
                                             <label for="state" data-error="wrong" data-success="right">State</label>
-                                        </div>
+                                        </div> -->
                                     </div>
-                                    <div class="row no-gutter">
-                                        <div class="input-field col s12">
-                                            <input disabled value="I am not editable" id="disabled" type="text" class="validate">
-                                            <label for="disabled">Disabled</label>
-                                        </div>
-                                    </div>
-                                    <div class="row no-gutter">
-                                        <div class="input-field col s12">
-                                            <input id="password" type="password" class="validate">
-                                            <label for="password">Password</label>
-                                        </div>
-                                    </div>
-                                    <div class="row no-gutter">
-                                        <div class="input-field col s12">
-                                            <input id="email" type="email" class="validate">
-                                            <label for="email" data-error="wrong" data-success="right">Email</label>
-                                        </div>
-                                    </div>
-                                    <div class="row no-gutter">
-                                        <div class="input-select2 col s12">
-                                            <select id="state" name="state">
-                                                <optgroup label="Alaskan/Hawaiian Time Zone">
-                                                    <option value="AK">Alaska</option>
-                                                    <option value="HI">Hawaii</option>
-                                                </optgroup>
-                                                <optgroup label="Pacific Time Zone">
-                                                    <option value="CA">California</option>
-                                                    <option value="NV">Nevada</option>
-                                                    <option value="OR">Oregon</option>
-                                                    <option value="WA">Washington</option>
-                                                </optgroup>
-                                                <optgroup label="Mountain Time Zone">
-                                                    <option value="AZ">Arizona</option>
-                                                    <option value="CO">Colorado</option>
-                                                    <option value="ID">Idaho</option>
-                                                    <option value="MT">Montana</option>
-                                                    <option value="NE">Nebraska</option>
-                                                    <option value="NM">New Mexico</option>
-                                                    <option value="ND">North Dakota</option>
-                                                    <option value="UT">Utah</option>
-                                                    <option value="WY">Wyoming</option>
-                                                </optgroup>
-                                            </select>
-                                            <label for="state" data-error="wrong" data-success="right">State</label>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="row no-gutter margin-bottom-0">
                                         <div class="input-fileupload col s12">
                                             <div class="form-section">Uploads</div>
@@ -458,18 +460,11 @@ echo $html_heading;?>
                                         <button type="reset" class="btn-flat waves-effect">
                                             RESET
                                         </button>
-                                        <button type="submit" class="btn-flat waves-effect">
+                                        <button type="submit" class="btn-flat waves-effect" id="teacherAddSubmit">
                                             SUBMIT
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col s12 m4">
-                            <div class="helper">
-                                <h5>Input fields</h5>
-                                <p>Text fields allow user input. The border should light up simply and clearly indicating which field the user is currently editing. You must have a <code class="language-markup">.input-field</code> div wrapping your input and label. This helps our jQuery animate the label. This is only used in our Input and Textarea form elements.</p>
-                                <p>The validate class leverages HTML5 validation and will add a <code class="language-markup">valid</code> and <code class="language-markup">invalid</code> class accordingly. If you don't want the Green and Red validation states, just remove the <code class="language-markup">validate</code> class from your inputs.</p>
                             </div>
                         </div>
                     </div>
@@ -501,3 +496,7 @@ echo $html_heading;?>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-tmpl/js/tmpl.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/select2/dist/js/select2.min.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteJSURL; ?>apps/crud_form.js" type="text/javascript"></script>
+<script src="<?php echo SchoolSiteJSURL; ?>custom/teacher_manage.js"></script>
+<script type="text/javascript">
+    myJsMain.teacher_add();
+</script>

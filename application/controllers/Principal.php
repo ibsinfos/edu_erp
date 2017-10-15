@@ -49,7 +49,7 @@ class Principal extends MY_Controller {
             $breadcrumbItemArr=array('breadcrumbLink'=>'#','tooltip'=>'All Student List','breadcrumbIcon'=>'fa-user','breadcrumbText'=>'Student List');
             $breadcrumb[]=$breadcrumbItemArr;
             $data['breadcrumb']=  generate_breadcrumb($breadcrumb);
-            $data['StudentDataArr']=  $this->Sc_student_model->get_students_list_for_principal();
+            $data['studentDataArr']=  $this->Sc_student_model->get_students_list_for_principal();
             $this->load->view($this->erpUserTypeArr[$this->userType].'/student_list',$data);
         }
     }
@@ -82,6 +82,28 @@ class Principal extends MY_Controller {
         }
     }
     
-    
+    function show_teacher_list(){
+        if(!$this->_is_loged_in()){
+            redirect(BASE_URL.'login');
+        }
+        $this->load->model('Sc_teacher_model');
+        $this->load->model('Sc_job_title_model');
+        $this->load->model('Sc_gender_model');
+        $this->load->model('Sc_blood_group_model');
+        $this->load->model('Sc_country_model');
+        $data=$this->_get_logedin_template($this->_SEODataArr);
+        $breadcrumb=array();
+        $breadcrumbItemArr=array('breadcrumbLink'=>'#','tooltip'=>'All Teacher List','breadcrumbIcon'=>'fa-user','breadcrumbText'=>'Teacher List');
+        $breadcrumb[]=$breadcrumbItemArr;
+        $data['breadcrumb']=  generate_breadcrumb($breadcrumb);
+        $data['teacherDataArr']=  $this->Sc_teacher_model->get_teachers_list_for_principal();
+        $data['table_teacher_structure_text']= $this->Sc_teacher_model->_table_teacher_structure_text;
+        $data['table_user_structure_text']= $this->Sc_teacher_model->_table_user_structure_text;
+        $data['jobTitleArr']= $this->Sc_job_title_model->get_list();
+        $data['genderArr']= $this->Sc_gender_model->get_list();
+        $data['blogGroupArr']= $this->Sc_blood_group_model->get_list();
+        $data['countryArr']= $this->Sc_country_model->get_list();
+        $this->load->view($this->erpUserTypeArr[$this->userType].'/teacher_list',$data);
+    }
     
 }

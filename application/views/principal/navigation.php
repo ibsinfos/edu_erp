@@ -6,31 +6,25 @@
         </span>
     </a>
     <ul class="right hide-on-med-and-down">
-        <li class="active"><a href="index-2.html">Dashboard</a></li>
-        <li><a href="documentation.html">Documentation</a></li>
+        <li class="active"><a href="<?php echo BASE_URL; ?>">Dashboard</a></li>
         <li>
             <a class="dropdown-button" href="#!" data-activates="dropdown-css" data-constrainwidth="false" data-beloworigin="true">
-                CSS<i class="material-icons dropdown-icon right">arrow_drop_down</i>
+                <?php echo $this->lang->line('SCHOOL',FALSE);?><i class="material-icons dropdown-icon right">&nbsp;</i>
             </a>
         </li>
         <li>
             <a class="dropdown-button" href="#!" data-activates="dropdown-components" data-constrainwidth="false" data-beloworigin="true">
-                Components<i class="material-icons dropdown-icon right">arrow_drop_down</i>
+                <?php echo $this->lang->line('ACCOUNT',FALSE);?><i class="material-icons dropdown-icon right">&nbsp;</i>
             </a>
         </li>
         <li>
             <a class="dropdown-button" href="#!" data-activates="dropdown-javascript" data-constrainwidth="false" data-beloworigin="true">
-                Javascript<i class="material-icons dropdown-icon right">arrow_drop_down</i>
+                <?php echo $this->lang->line('LIBRARY',FALSE);?><i class="material-icons dropdown-icon right">&nbsp;</i>
             </a>
         </li>
         <li>
             <a class="dropdown-button" href="#!" data-activates="dropdown-apps" data-constrainwidth="false" data-beloworigin="true">
-                APPs<i class="material-icons dropdown-icon right">arrow_drop_down</i>
-            </a>
-        </li>
-        <li>
-            <a class="dropdown-button" href="#!" data-activates="dropdown-pages" data-constrainwidth="false" data-beloworigin="true">
-                Pages<i class="material-icons dropdown-icon right">arrow_drop_down</i>
+                <?php echo $this->lang->line('HRM',FALSE);?><i class="material-icons dropdown-icon right">&nbsp;</i>
             </a>
         </li>
         <li class="profile ">
@@ -45,43 +39,56 @@
     </ul>
 
     <ul id="dropdown-css" class="dropdown-content">
-        <li><a href="css_color.html">Color</a></li>
-        <li><a href="css_grid.html">Grid</a></li>
-        <li><a href="css_helpers.html">Helpers</a></li>
-        <li><a href="css_media.html">Media</a></li>
-        <li><a href="css_sass.html">Sass</a></li>
-        <li><a href="css_shadow.html">Shadow</a></li>
-        <li><a href="css_table.html">Table</a></li>
-        <li><a href="css_typography.html">Typography</a></li>
-    </ul>
-    <ul id="dropdown-components" class="dropdown-content">
-        <li><a href="components_badges.html">Badges</a></li>
-        <li><a href="components_buttons.html">Buttons</a></li>
-        <li><a href="components_breadcrumbs.html">Breadcrumbs</a></li>
-        <li><a href="components_cards.html">Cards</a></li>
-        <li><a href="components_chips.html">Chips</a></li>
-        <li><a href="components_collections.html">Collections</a></li>
-        <li><a href="components_footer.html">Footer</a></li>
-        <li><a href="components_forms.html">Forms</a></li>
-        <li><a href="components_icons.html">Icons</a></li>
-        <li><a href="components_navbar.html">Navbar</a></li>
-        <li><a href="components_pagination.html">Pagination</a></li>
-        <li><a href="components_preloader.html">Preloader</a></li>
-    </ul>
-    <ul id="dropdown-javascript" class="dropdown-content">
-        <li><a href="js_collapsible.html">Collapsible</a></li>
-        <li><a href="js_dialogs.html">Dialogs</a></li>
-        <li><a href="js_dropdown.html">Dropdown</a></li>
-        <li><a href="js_media.html">Media</a></li>
-        <li><a href="js_modals.html">Modals</a></li>
-        <li><a href="js_parallax.html">Parallax</a></li>
-        <li><a href="js_pushpin.html">Pushpin</a></li>
-        <li><a href="js_scrollfire.html">ScrollFire</a></li>
-        <li><a href="js_scrollspy.html">Scrollspy</a></li>
-        <li><a href="js_sidenav.html">SideNav</a></li>
-        <li><a href="js_tabs.html">Tabs</a></li>
-        <li><a href="js_transitions.html">Transitions</a></li>
-        <li><a href="js_waves.html">Waves</a></li>
+        <li>
+            <table class="bordered responsive-table">
+                <thead>
+                    <tr>
+                        <th data-field="id"><?php echo $this->lang->line('SETUP',FALSE);?></th>
+                        <th data-field="id"><?php echo $this->lang->line('MISC_MENU',FALSE);?></th>
+                        <th data-field="id"><?php echo $this->lang->line('COMMUNICATION',FALSE);?></th>
+                        <th data-field="id"><?php echo $this->lang->line('USEFULL',FALSE);?></th>
+                        <th data-field="id"><?php echo $this->lang->line('R_HONG_OUT',FALSE);?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?php echo $this->lang->line('ADMISSION',FALSE);?></td>
+                        <td><?php echo $this->lang->line('ATTENDANCE',FALSE);?></td>
+                        <td><?php echo $this->lang->line('UPDATE',FALSE);?></td>
+                        <td><?php echo $this->lang->line('TRANSPORT',FALSE);?></td>
+                        <td><?php echo $this->lang->line('EXAM',FALSE);?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->lang->line('ENQUIRY',FALSE);?></td>
+                        <td><?php echo $this->lang->line('STUDY_MATERIAL',FALSE);?></td>
+                        <td><?php echo $this->lang->line('EVENT_MGT',FALSE);?></td>
+                        <td><?php echo $this->lang->line('DORMITORY',FALSE);?></td>
+                        <td><?php echo $this->lang->line('ONLINE_EXAM',FALSE);?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->lang->line('ENQUIRY',FALSE);?></td>
+                        <td><?php echo $this->lang->line('STUDY_MATERIAL',FALSE);?></td>
+                        <td><?php echo $this->lang->line('EVENT_MGT',FALSE);?></td>
+                        <td><?php echo $this->lang->line('DORMITORY',FALSE);?></td>
+                        <td><?php echo $this->lang->line('ONLINE_EXAM',FALSE);?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->lang->line('ENQUIRY',FALSE);?></td>
+                        <td><?php echo $this->lang->line('STUDY_MATERIAL',FALSE);?></td>
+                        <td><?php echo $this->lang->line('EVENT_MGT',FALSE);?></td>
+                        <td><?php echo $this->lang->line('DORMITORY',FALSE);?></td>
+                        <td><?php echo $this->lang->line('ONLINE_EXAM',FALSE);?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->lang->line('ENQUIRY',FALSE);?></td>
+                        <td><?php echo $this->lang->line('STUDY_MATERIAL',FALSE);?></td>
+                        <td><?php echo $this->lang->line('EVENT_MGT',FALSE);?></td>
+                        <td><?php echo $this->lang->line('DORMITORY',FALSE);?></td>
+                        <td><?php echo $this->lang->line('ONLINE_EXAM',FALSE);?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </li>
     </ul>
     <ul id="dropdown-apps" class="dropdown-content">
         <li><a href="apps_crud.html">CRUD</a></li>

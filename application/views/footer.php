@@ -1,7 +1,7 @@
 <footer class="page-footer">
     <div class="footer-copyright">
         <div class="container">
-            &copy; <?php echo date('Y'); ?> , All rights reserved.
+            &copy; <?php echo date('Y'); ?> , 
         </div>
     </div>
 </footer>

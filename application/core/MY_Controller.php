@@ -37,6 +37,8 @@ class MY_Controller extends CI_Controller {
         $data = $this->html_heading($generalDataArr);
         //pre($data);die;
         //$data['CMSDataArr'] = $this->Cms_model->get_all();
+        $this->lang->load('header', $this->session->userdata('site_lang'));
+        $this->lang->load('footer', $this->session->userdata('site_lang'));
         $data['header'] = $this->load->view('header', $data, true);
         $data['footer'] = $this->load->view('footer', $data, true);
         return $data;
@@ -45,6 +47,7 @@ class MY_Controller extends CI_Controller {
     public function _get_to_be_login_template($generalDataArr) {
         $data = array();
         $data = $this->html_heading($generalDataArr);
+        $this->lang->load('footer1', $this->session->userdata('site_lang'));
         $data['footer'] = $this->load->view('footer1', $data, true);
         return $data;
     }
@@ -70,6 +73,12 @@ class MY_Controller extends CI_Controller {
     }
     
     public function html_heading($SEODataArr = array()) {
+        $cLanguage=$this->session->userdata('site_lang');
+        if($cLanguage==''){
+            $cLanguage = ($cLanguage != "") ? $cLanguage : "english";
+            $this->session->set_userdata('site_lang', $cLanguage);
+        }
+        $this->lang->load('html_heading', $cLanguage);
         $data = array();
         $GateWayState=$this->input->get('GateWayState',TRUE);
         //echo '$GateWayState  ='.$GateWayState;die;
@@ -111,9 +120,10 @@ class MY_Controller extends CI_Controller {
         //$this->load->model("Category_model");
         $data['navigationData']="<li></li>";
         if($this->userType!=""){
+            $this->lang->load($this->erpUserTypeArr[$this->userType].'/navigation', $cLanguage);
             $data['navigation']=  $this->load->view($this->erpUserTypeArr[$this->userType].'/navigation',$data,TRUE);
         }
-        $data['messageBoxTitle']="School ERP Solutions";
+        $data['messageBoxTitle']=$this->lang->line('SCHOOL_ERP_SOLUCTION',FALSE);
         $data['html_heading'] = $this->load->view('html_heading', $data, true);
         return $data;
     }

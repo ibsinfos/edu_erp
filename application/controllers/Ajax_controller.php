@@ -39,4 +39,66 @@ class Ajax_controller extends MY_Controller {
             }
         }
     }
+    
+    function add_teacher(){
+        $this->load->model('Sc_teacher_model');
+        $tableTeacherStructureTextArr=$this->Sc_teacher_model->_table_teacher_structure_text;
+        $tableUserStructureTextArr=$this->Sc_teacher_model->_table_user_structure_text;
+        /*
+         * $config = array(
+            array('field'   => 'email','label'   => 'User Name','rules'=> 'trim|required|xss_clean|min_length[8]|max_length[35]|valid_email|callback_username_check'),
+            array('field'   => 'password','label'   => 'Password','rules'   => 'trim|required|xss_clean|min_length[4]|max_length[15]'),
+            array('field'   => 'confirmPassword','label'   => 'Password','rules'   => 'trim|required|xss_clean|matches[password]'),
+            array('field'   => 'firstName','label'   => 'First Name','rules'   => 'trim|required|xss_clean|min_length[3]|max_length[25]'),
+            array('field'   => 'lastName','label'   => 'Last Name','rules'   => 'trim|required|xss_clean|min_length[3]|max_length[25]')
+         );
+         * 
+         */
+        $formValidationConfigArr=array();
+        foreach ($tableTeacherStructureTextArr AS $key => $val){
+            $tempArr=array(
+                'field'=>$key,'label'=>$val['label']
+            );
+            $ruleStr='trim|xss_clean';
+            $ruleStr.= $this->_get_form_validatain_rule_str($val);
+            $tempArr['rules']=$ruleStr;
+            $formValidationConfigArr[]=$tempArr;
+        }
+        
+        foreach ($tableUserStructureTextArr AS $key => $val){
+            $tempArr=array(
+                'field'=>$key,'label'=>$val['label']
+            );
+            $ruleStr='trim|xss_clean';
+            $ruleStr.= $this->_get_form_validatain_rule_str($val);
+            $tempArr['rules']=$ruleStr;
+            $formValidationConfigArr[]=$tempArr;
+        }
+        $formValidationConfigArr[]=array('field'=>'','label');
+        $this->form_validation->set_rules($formValidationConfigArr);
+        if($this->form_validation->run() == FALSE){
+            echo json_encode(array('result'=>'bad','msg'=>str_replace('</p>','',str_replace('<p>','',validation_errors()))));die;
+        }else{
+            
+        }
+    }
+    
+    function _get_form_validatain_rule_str($val){
+        $ruleStr='';
+        if(array_key_exists('required', $val)):
+            $ruleStr.='|required';
+            //$element.=' required="required"';
+        endif;
+        if($val['type']=='email'){
+            $ruleStr.='|valid_email';
+        }
+        if($val['type']=='tel'){
+            $ruleStr.='|numeric|max_length[10]';
+        }
+        if(array_key_exists('is_unique', $val)):
+            $ruleStr.='|is_unique['.$val['is_unique'].']';
+            //$element.=' required="required"';
+        endif;
+        return $ruleStr;
+    }
 }
