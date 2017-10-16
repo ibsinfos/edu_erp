@@ -24,9 +24,7 @@ class Ajax_controller_principal extends MY_Controller {
          */
         $formValidationConfigArr = array();
         foreach ($tableTeacherStructureTextArr AS $key => $val) {
-            $tempArr = array(
-                'field' => $key, 'label' => $val['label']
-            );
+            $tempArr = array('field' => $key, 'label' => $val['label']);
             $ruleStr = 'trim|xss_clean';
             $ruleStr .= generate_form_validation_rules($val);
             $tempArr['rules'] = $ruleStr;
@@ -34,9 +32,7 @@ class Ajax_controller_principal extends MY_Controller {
         }
 
         foreach ($tableUserStructureTextArr AS $key => $val) {
-            $tempArr = array(
-                'field' => $key, 'label' => $val['label']
-            );
+            $tempArr = array('field' => $key, 'label' => $val['label']);
             $ruleStr = 'trim|xss_clean';
             $ruleStr .= generate_form_validation_rules($val);
             $tempArr['rules'] = $ruleStr;
@@ -50,8 +46,7 @@ class Ajax_controller_principal extends MY_Controller {
         $formValidationConfigArr[] = array('field' => 'cityId', 'label'=>'City','rules'=>'trim|xss_clean|required');
         $this->form_validation->set_rules($formValidationConfigArr);
         if ($this->form_validation->run() == FALSE) {
-            echo json_encode(array('result' => 'bad', 'msg' => str_replace('</p>', '', str_replace('<p>', '', validation_errors()))));
-            die;
+            echo json_encode(array('result' => 'bad', 'msg' => str_replace('</p>', '', str_replace('<p>', '', validation_errors()))));die;
         } else {
             
         }

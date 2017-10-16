@@ -527,3 +527,24 @@ if (!function_exists('generate_form_validation_rules')) {
         return $ruleStr;
     }
 }
+
+if (!function_exists('generate_passcode')) {
+    function generate_passcode($type){
+        switch ($type){
+            case 'parent':
+                break;
+            case 'student':
+                break;
+            case 'teacher':
+                break;
+            case 'librarian':
+                break;
+            case 'accountant':
+                break;
+            case 'busdriver':
+                break;
+            defult:
+                
+        }
+    }
+}

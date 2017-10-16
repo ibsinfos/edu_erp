@@ -14,7 +14,6 @@ myJsMain.teacher_add=function(){
         if ($(this).valid()) { 
             myJsMain.commonFunction.showPleaseWait();
             $('#teacherAddSubmit').prop('disabled',true);
-            //$('#fade_background').fadeIn();
             myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller_principal/add_teacher', teacherAddFormCallback);
         }
     });
@@ -23,9 +22,6 @@ myJsMain.teacher_add=function(){
     function teacherAddFormCallback(resultData){
         myJsMain.commonFunction.hidePleaseWait();
         $('#teacherAddSubmit').prop('disabled',false); //alert(resultData.result);
-        //console.log('resultData.result : '+resultData.result);
-        //$('#fade_background').fadeOut();
-        //$('#LoadingDiv').fadeOut();
         if(resultData.result=='bad'){
             myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg,200);
         }else if(resultData.result=='good'){
