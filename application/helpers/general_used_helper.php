@@ -530,21 +530,37 @@ if (!function_exists('generate_form_validation_rules')) {
 
 if (!function_exists('generate_passcode')) {
     function generate_passcode($type){
+        $passcode='';
         switch ($type){
             case 'parent':
+                $passcode='PAR';
                 break;
             case 'student':
+                $passcode='STU';
                 break;
             case 'teacher':
+                $passcode='TEA';
                 break;
             case 'librarian':
+                $passcode='LIA';
                 break;
             case 'accountant':
+                $passcode='ACC';
                 break;
             case 'busdriver':
+                $passcode='BUS';
+                break;
+            case 'pricipal':
+                $passcode='PRI';
                 break;
             defult:
-                
+            break;
         }
+        $length=5;
+        $randumStr=substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+        $length=4;
+        $randumStr1=substr(str_shuffle(str_repeat($x=time(), ceil($length/strlen($x)) )),1,$length);
+        $passcode.=$randumStr.$randumStr1;
+        return $passcode;
     }
 }
