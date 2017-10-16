@@ -10,6 +10,7 @@ class Ajax_controller_principal extends MY_Controller {
 
     function add_teacher() {
         $this->load->model('Sc_teacher_model');
+        $this->load->model('Sc_user_model');
         $tableTeacherStructureTextArr = $this->Sc_teacher_model->_table_teacher_structure_text;
         $tableUserStructureTextArr = $this->Sc_teacher_model->_table_user_structure_text;
         /*
@@ -48,7 +49,19 @@ class Ajax_controller_principal extends MY_Controller {
         if ($this->form_validation->run() == FALSE) {
             echo json_encode(array('result' => 'bad', 'msg' => str_replace('</p>', '', str_replace('<p>', '', validation_errors()))));die;
         } else {
+            $userDataArr=array();
+            foreach ($tableUserStructureTextArr AS $key => $val) {
+                $userDataArr[$key]= $this->input->post($key,TRUE);
+            }
+            $passcode=generate_passcode('teacher');
+            $userDataArr['passcode']=$passcode;
+            $userDataArr['password']= base64_encode($passcode).'~'.md5('jsrob');
             
+            $teacherId= $this->Sc_user_model->add($userDataArr);
+            $teacherDataArr=array();
+            foreach ($tableTeacherStructureTextArr AS $key => $val) {
+                $teacherDataArr[$key]= $this->input->post($key,TRUE);
+            }
         }
     }
 

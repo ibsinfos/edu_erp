@@ -13,4 +13,9 @@ class Sc_user_model extends CI_Model {
         //echo $this->db->last_query();die;
         return $rs;
     }
+    
+    function add($dataArr){
+        $this->db->insert($this->_table,$dataArr);
+        return $this->db->insert_id();
+    }
 }
