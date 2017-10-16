@@ -33,7 +33,30 @@ myJsMain.teacher_add=function(){
             window.location.href = resultData.url;
             //myJsMain.commonFunction.tidiitAlert('Tidiit System Message',resultData.url,200);
         }
-    }       
+    }
+    jQuery('#countryId').on('change',function(){
+        jQuery.ajax({
+            url:myJsMain.baseURL+'ajax_controller/show_state_city',
+            data:'locationId='+jQuery(this).val()+'&type=state',
+            type:'POST',
+            success:function(optionStr){
+                jQuery('#stateId').append(optionStr);
+                jQuery('#stateId').select2('refresh');
+            }
+        });
+    });
+    
+    jQuery('#stateId').on('change',function(){
+        jQuery.ajax({
+            url:myJsMain.baseURL+'ajax_controller/show_state_city',
+            data:'locationId='+jQuery(this).val()+'&type=city',
+            type:'POST',
+            success:function(optionStr){
+                jQuery('#cityId').append(optionStr);
+                jQuery('#cityId').select2('refresh');
+            }
+        });
+    });
 }
 myJsMain.forgot_password=function(){
     var forgotPasswrodValidationRules = {

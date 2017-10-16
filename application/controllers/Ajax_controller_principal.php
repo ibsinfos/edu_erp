@@ -42,7 +42,12 @@ class Ajax_controller_principal extends MY_Controller {
             $tempArr['rules'] = $ruleStr;
             $formValidationConfigArr[] = $tempArr;
         }
-        $formValidationConfigArr[] = array('field' => '', 'label');
+        $formValidationConfigArr[] = array('field' => 'jobTitleId', 'label'=>'Job Title','rules'=>'trim|xss_clean|required');
+        $formValidationConfigArr[] = array('field' => 'genderId', 'label'=>'Gender','rules'=>'trim|xss_clean|required');
+        $formValidationConfigArr[] = array('field' => 'bloodGroupId', 'label'=>'Blood Group','rules'=>'trim|xss_clean|required');
+        $formValidationConfigArr[] = array('field' => 'countryId', 'label'=>'Country','rules'=>'trim|xss_clean|required');
+        $formValidationConfigArr[] = array('field' => 'stateId', 'label'=>'State','rules'=>'trim|xss_clean|required');
+        $formValidationConfigArr[] = array('field' => 'cityId', 'label'=>'City','rules'=>'trim|xss_clean|required');
         $this->form_validation->set_rules($formValidationConfigArr);
         if ($this->form_validation->run() == FALSE) {
             echo json_encode(array('result' => 'bad', 'msg' => str_replace('</p>', '', str_replace('<p>', '', validation_errors()))));

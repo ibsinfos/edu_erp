@@ -40,4 +40,23 @@ class Ajax_controller extends MY_Controller {
         }
     }
     
+    function show_state_city(){
+        $locationId= $this->input->post('locationId',TRUE);
+        $type= $this->input->post('type',TRUE);
+        if($locationId!=""){
+            $this->load->model("Sc_country_model");
+            if($type=='state')
+                $dataArr= $this->Sc_country_model->get_state_by_country_id($locationId);
+            else
+                $dataArr= $this->Sc_country_model->get_city_by_country_id($locationId);
+            $optionStr='';
+            foreach ($dataArr AS $key=>$val){
+                $optionStr.='<option value="'.$val['locationId'].'">'.$val['name'].'</option>';
+            }
+            echo $optionStr;die;
+        }else{
+            echo '';die;
+        }
+    }
+    
 }
