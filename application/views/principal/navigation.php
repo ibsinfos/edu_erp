@@ -2,7 +2,7 @@
     <a href="index-2.html" class="brand-logo">
         <img src="img/logo.png" />
         <span class="valign">
-            <b class="main-text">Aero</b> Admin
+            <b class="main-text">School</b> ERP Admininistrator
         </span>
     </a>
     <ul class="right hide-on-med-and-down">
