@@ -125,6 +125,7 @@
     </ul>
     <ul id="dropdown-profile" class="dropdown-content">
         <li><a href="profile.html">Profile</a></li>
+        <li><a href="profile.html">School Settings</a></li>
         <li><a href="logout">Logout</a></li>
     </ul>
 
