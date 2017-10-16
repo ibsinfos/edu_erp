@@ -31,4 +31,9 @@ class Sc_teacher_model extends CI_Model {
     function get_teachers_list_for_principal(){
         return array();
     }
+    
+    function add($dataArr){
+        $this->db->insert($this->_table,$dataArr);
+        return $this->db->insert_id();
+    }
 }

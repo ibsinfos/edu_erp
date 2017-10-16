@@ -14,8 +14,7 @@ myJsMain.teacher_add=function(){
         if ($(this).valid()) { 
             myJsMain.commonFunction.showPleaseWait();
             $('#teacherAddSubmit').prop('disabled',true);
-            //$('#fade_background').fadeIn();
-            myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller/add_teacher', teacherAddFormCallback);
+            myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller_principal/add_teacher', teacherAddFormCallback);
         }
     });
         
@@ -23,9 +22,6 @@ myJsMain.teacher_add=function(){
     function teacherAddFormCallback(resultData){
         myJsMain.commonFunction.hidePleaseWait();
         $('#teacherAddSubmit').prop('disabled',false); //alert(resultData.result);
-        //console.log('resultData.result : '+resultData.result);
-        //$('#fade_background').fadeOut();
-        //$('#LoadingDiv').fadeOut();
         if(resultData.result=='bad'){
             myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg,200);
         }else if(resultData.result=='good'){
@@ -33,7 +29,30 @@ myJsMain.teacher_add=function(){
             window.location.href = resultData.url;
             //myJsMain.commonFunction.tidiitAlert('Tidiit System Message',resultData.url,200);
         }
-    }       
+    }
+    jQuery('#countryId').on('change',function(){
+        jQuery.ajax({
+            url:myJsMain.baseURL+'ajax_controller/show_state_city',
+            data:'locationId='+jQuery(this).val()+'&type=state',
+            type:'POST',
+            success:function(optionStr){
+                jQuery('#stateId').append(optionStr);
+                jQuery('#stateId').select2('refresh');
+            }
+        });
+    });
+    
+    jQuery('#stateId').on('change',function(){
+        jQuery.ajax({
+            url:myJsMain.baseURL+'ajax_controller/show_state_city',
+            data:'locationId='+jQuery(this).val()+'&type=city',
+            type:'POST',
+            success:function(optionStr){
+                jQuery('#cityId').append(optionStr);
+                jQuery('#cityId').select2('refresh');
+            }
+        });
+    });
 }
 myJsMain.forgot_password=function(){
     var forgotPasswrodValidationRules = {
