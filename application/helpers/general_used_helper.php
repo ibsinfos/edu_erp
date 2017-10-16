@@ -3,7 +3,6 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 if (!function_exists('short_words')) {
-
     function short_words($str, $NoOfWorrd = 20) {
         $strArr = explode(' ', $str);
         $shortStr = '';
@@ -13,7 +12,7 @@ if (!function_exists('short_words')) {
             if ($i == 0) {
                 $shortStr = $strArr[$i];
             } else {
-                $shortStr.=' ' . $strArr[$i];
+                $shortStr .= ' ' . $strArr[$i];
             }
         }
         return $shortStr;
@@ -22,7 +21,6 @@ if (!function_exists('short_words')) {
 }
 
 if (!function_exists('my_seo_freindly_url')) {
-
     function my_seo_freindly_url($String) {
         $ChangedStr = preg_replace('/\%/', ' percentage', $String);
         $ChangedStr = preg_replace('/\@/', ' at ', $ChangedStr);
@@ -51,7 +49,6 @@ if (!function_exists('check_exists_BPO')) {
 }
 
 if (!function_exists('pre')) {
-
     function pre($var) { //die('rrr');
         echo '<pre>'; //print_r($var);
         if (is_array($var) || is_object($var)) {
@@ -65,7 +62,6 @@ if (!function_exists('pre')) {
 }
 
 if (!function_exists('multiple_array_search')) {
-
     function multiple_array_search($id, $column, $dataArray) { //die('rrr');
         foreach ($dataArray as $key => $val) {
             //echo $val[$column].' = '.$id .'<br>';
@@ -82,7 +78,6 @@ if (!function_exists('multiple_array_search')) {
 }
 
 if (!function_exists('user_role_check')) {
-
     function user_role_check($controller, $method) {
         $CI = &get_instance();
         if ($CI->session->userdata('ADMIN_SESSION_USER_VAR_TYPE') == 'supper_admin') {
@@ -109,7 +104,6 @@ if (!function_exists('user_role_check')) {
 }
 
 if (!function_exists('get_home_url')) {
-
     function get_home_url() {
         $CI = & get_instance();
         $countryId = $CI->session->userdata('USER_SHIPPING_COUNTRY');
@@ -125,7 +119,6 @@ if (!function_exists('get_home_url')) {
 }
 
 if (!function_exists('title_more_string')) {
-
     function title_more_string($str, $no_char = 22) {
         $strArr = explode(' ', $str);
         $strLen = 0;
@@ -143,7 +136,6 @@ if (!function_exists('title_more_string')) {
 }
 
 if (!function_exists('return_current_country_code')) {
-
     function return_current_country_code() {
         return 'IN';
         die;
@@ -160,30 +152,30 @@ if (!function_exists('return_current_country_code')) {
         $query = 'http://geoip.maxmind.com/a?' . http_build_query($params);
 
         $insights_keys = array(
-                    'country_code',
-                    'country_name',
-                    'region_code',
-                    'region_name',
-                    'city_name',
-                    'latitude',
-                    'longitude',
-                    'metro_code',
-                    'area_code',
-                    'time_zone',
-                    'continent_code',
-                    'postal_code',
-                    'isp_name',
-                    'organization_name',
-                    'domain',
-                    'as_number',
-                    'netspeed',
-                    'user_type',
-                    'accuracy_radius',
-                    'country_confidence',
-                    'city_confidence',
-                    'region_confidence',
-                    'postal_confidence',
-                    'error'
+            'country_code',
+            'country_name',
+            'region_code',
+            'region_name',
+            'city_name',
+            'latitude',
+            'longitude',
+            'metro_code',
+            'area_code',
+            'time_zone',
+            'continent_code',
+            'postal_code',
+            'isp_name',
+            'organization_name',
+            'domain',
+            'as_number',
+            'netspeed',
+            'user_type',
+            'accuracy_radius',
+            'country_confidence',
+            'city_confidence',
+            'region_confidence',
+            'postal_confidence',
+            'error'
         );
 
         $curl = curl_init();
@@ -214,7 +206,6 @@ if (!function_exists('return_current_country_code')) {
 }
 
 if (!function_exists('send_sms_notification')):
-
     function send_sms_notification($data) {
         $CI = & get_instance();
         $CI->load->model('User_model', 'user');
@@ -277,7 +268,6 @@ if (!function_exists('send_sms_notification')):
 endif;
 
 if (!function_exists('get_full_address_from_lat_long')):
-
     function get_full_address_from_lat_long($lat, $long) {
         $url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&sensor=false";
         // Make the HTTP request
@@ -286,11 +276,9 @@ if (!function_exists('get_full_address_from_lat_long')):
         $jsondata = json_decode($data, true);
         return $jsondata["results"][0]["formatted_address"];
     }
-
 endif;
 
 if (!function_exists('get_country_code_from_lat_long')):
-
     function get_country_code_from_lat_long($lat, $long) {
         return 'IN';
         //("country", $jsondata["results"][0]["address_components"]);
@@ -316,7 +304,6 @@ endif;
 
 
 if (!function_exists('get_formatted_address_from_lat_long')):
-
     function get_formatted_address_from_lat_long($lat, $long) {
         //("country", $jsondata["results"][0]["address_components"]);
         $url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&sensor=false";
@@ -336,7 +323,6 @@ if (!function_exists('get_formatted_address_from_lat_long')):
 endif;
 
 if (!function_exists('send_push_notification')) {
-
     function send_push_notification($data) {
         $CI = & get_instance();
         $CI->load->model('User_model', 'user');
@@ -397,7 +383,6 @@ if (!function_exists('send_push_notification')) {
 }
 
 if (!function_exists('send_normal_push_notification')) {
-
     function send_normal_push_notification($data) {
         $CI = & get_instance();
         $CI->load->model('User_model', 'user');
@@ -448,7 +433,6 @@ if (!function_exists('send_normal_push_notification')) {
 }
 
 if (!function_exists('send_gsm_message')) {
-
     function send_gsm_message($fields_data, $action_data = "") {
         $CI = & get_instance();
         $CI->load->config('product');
@@ -499,27 +483,47 @@ if (!function_exists('send_gsm_message')) {
 }
 
 if (!function_exists('generate_breadcrumb')) {
+    function generate_breadcrumb($breadcrumbDataArr = array()) {
+        $breadcrumbStr = '<div id = "breadcrumb"><a href = "' . BASE_URL . '" title = "Go to Home" class = "tip-bottom"><i class = "icon-home"></i> Home</a>';
+        foreach ($breadcrumbDataArr AS $k => $v) {
+            if (array_key_exists('breadcrumbLink', $v)) {
+                $breadcrumbStr .= '<a href = "' . $v['breadcrumbLink'] . '" class = "tip-bottom"';
+            } else {
+                $breadcrumbStr .= '<a href = "#" class = "current"';
+            }
 
-    function generate_breadcrumb($breadcrumbDataArr=array()) {
-        $breadcrumbStr='<div id = "breadcrumb"><a href = "'.BASE_URL.'" title = "Go to Home" class = "tip-bottom"><i class = "icon-home"></i> Home</a>';
-        foreach ($breadcrumbDataArr AS $k =>$v){
-            if(array_key_exists('breadcrumbLink', $v)){
-                $breadcrumbStr.='<a href = "'.$v['breadcrumbLink'].'" class = "tip-bottom"';
-            }else{
-                $breadcrumbStr.='<a href = "#" class = "current"';
+            if (array_key_exists('tooltip', $v)) {
+                $breadcrumbStr .= 'title = "' . $v['tooltip'] . '"';
             }
-            
-            if(array_key_exists('tooltip', $v)){
-                $breadcrumbStr.='title = "'.$v['tooltip'].'"';
+            $breadcrumbStr .= '>';
+            if (array_key_exists('breadcrumbIcon', $v)) {
+                $breadcrumbStr .= '<i class = "' . $v['breadcrumbIcon'] . '"></i>';
             }
-            $breadcrumbStr.='>';
-            if(array_key_exists('breadcrumbIcon', $v)){
-                $breadcrumbStr.='<i class = "'.$v['breadcrumbIcon'].'"></i>';
-            }
-            $breadcrumbStr.=$v['breadcrumbText'].' </a>';
+            $breadcrumbStr .= $v['breadcrumbText'] . ' </a>';
         }
-        $breadcrumbStr.='</div>';
+        $breadcrumbStr .= '</div>';
         return $breadcrumbStr;
     }
 
+}
+
+if (!function_exists('generate_form_validation_rules')) {
+    function generate_form_validation_rules($val){
+        $ruleStr = '';
+        if (array_key_exists('required', $val)):
+            $ruleStr .= '|required';
+        //$element.=' required="required"';
+        endif;
+        if ($val['type'] == 'email') {
+            $ruleStr .= '|valid_email';
+        }
+        if ($val['type'] == 'tel') {
+            $ruleStr .= '|numeric|max_length[10]';
+        }
+        if (array_key_exists('is_unique', $val)):
+            $ruleStr .= '|is_unique[' . $val['is_unique'] . ']';
+        //$element.=' required="required"';
+        endif;
+        return $ruleStr;
+    }
 }

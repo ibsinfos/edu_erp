@@ -15,7 +15,7 @@ myJsMain.teacher_add=function(){
             myJsMain.commonFunction.showPleaseWait();
             $('#teacherAddSubmit').prop('disabled',true);
             //$('#fade_background').fadeIn();
-            myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller/add_teacher', teacherAddFormCallback);
+            myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller_principal/add_teacher', teacherAddFormCallback);
         }
     });
         
