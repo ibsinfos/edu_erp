@@ -7,3 +7,8 @@
         </div>
     </nav>
 </div>
+<style>
+.error {
+    background-color: none !important;
+}
+</style>

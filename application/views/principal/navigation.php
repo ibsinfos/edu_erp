@@ -124,9 +124,9 @@
         <li><a href="error_500.html">Error 500</a></li>
     </ul>
     <ul id="dropdown-profile" class="dropdown-content">
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="profile.html">School Settings</a></li>
-        <li><a href="logout">Logout</a></li>
+        <li><a href="<?php echo BASE_URL.'principal/my_profile';?>">Profile</a></li>
+        <li><a href="<?php echo BASE_URL.'principal/school_settings';?>">School Settings</a></li>
+        <li><a href="<?php echo BASE_URL.'principal/logout';?>">Logout</a></li>
     </ul>
 
     <a href="#" data-activates="mobile-demo" class="button-collapse">

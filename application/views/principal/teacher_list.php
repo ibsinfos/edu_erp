@@ -6,6 +6,12 @@ echo $html_heading;?>
 <link href="<?php echo SchoolSiteCSSURL;?>apps/crud.css" rel="stylesheet" type="text/css" />
 <?php echo $header;
 ?>
+<style>
+.errorTxt{
+  /*border: 1px solid red;*/
+  min-height: 20px;
+}
+</style>
 <main>
     <div class="main-content">
         <!--<div class="row">
@@ -157,14 +163,15 @@ echo $html_heading;?>
                 </section>
             </div>
             <div id="StudentAdd" class="col s12">
-                <?php form_open_multipart('#',array('id'=>'erp_teacher_add_form','class'=>'form-vertical'));?>
+                <?php echo form_open_multipart('#',array('id'=>'erp_teacher_add_form','class'=>'form-vertical'));?>
                     <div class="row">
                         <div class="col s12 m12">
                             <div class="panel panel-bordered">
-                                <!--<div class="panel-header">
-                                    <div class="title">General elements</div>
-                                    <div class="subtitle">Customize in your own way. See more <a href="components_forms.html">clicking here.</a></div>
-                                </div> -->
+                                <div class="panel-header">
+                                    <div class="errorTxt error-text"></div>
+                                    <!--<div class="title">General elements</div>
+                                    <div class="subtitle">Customize in your own way. See more <a href="components_forms.html">clicking here.</a></div>-->
+                                </div>
                                 <div class="panel-body">
                                     <div class="row no-gutter">
                                         <?php foreach($table_user_structure_text AS $key=>$val): //pre($key);//die;?>
@@ -182,7 +189,7 @@ echo $html_heading;?>
                                             if(array_key_exists('jsEventAction', $val)):
                                                 $element.=' '.$val['jsEventAction'];
                                             endif;
-                                            $element.=">";
+                                            $element.=' labelName="'.$val['label'].'">';
                                             echo $element;
                                             echo '<label for="'.$key.'">'.$val['label'].'</label>';
                                             ?>
@@ -205,7 +212,7 @@ echo $html_heading;?>
                                             if(array_key_exists('jsEventAction', $val)):
                                                 $element.=' '.$val['jsEventAction'];
                                             endif;
-                                            $element.=">";
+                                            $element.=' labelName="'.$val['label'].'">';
                                             echo $element;
                                             echo '<label for="'.$key.'">'.$val['label'].'</label>';
                                             ?>
@@ -214,7 +221,7 @@ echo $html_heading;?>
                                         </div>
                                         <?php endforeach;?>
                                         <div class="input-select2 col s12 m3">
-                                            <select id="jobTitleId" name="jobTitleId">
+                                            <select id="jobTitleId" name="jobTitleId" labelName="">
                                                 <option value="">Select Job Title</option>
                                                 <?php foreach ($jobTitleArr AS $key=>$val):?>
                                                 <option value="<?php echo $val['jobTitleId'];?>"><?php echo $val['title'];?></option>
@@ -223,7 +230,7 @@ echo $html_heading;?>
                                         </div>
                                         <div class="clearfix"></div>
                                         <div class="input-select2 col s12 m3" class="validate required">
-                                            <select id="genderId" name="genderId">
+                                            <select id="genderId" name="genderId" labelName="">
                                                 <option value="">Select gender</option>
                                                 <?php foreach ($genderArr AS $key=>$val):?>
                                                 <option value="<?php echo $val['genderId'];?>"><?php echo $val['title'];?></option>
@@ -231,7 +238,7 @@ echo $html_heading;?>
                                             </select>
                                         </div>
                                         <div class="input-select2 col s12 m3">
-                                            <select id="bloodGroupId" name="bloodGroupId" class="validate required">
+                                            <select id="bloodGroupId" name="bloodGroupId" labelName="" class="validate required">
                                                 <option value="">Select blood group</option>
                                                 <?php foreach ($blogGroupArr AS $key=>$val):?>
                                                 <option value="<?php echo $val['bloodGroupId'];?>"><?php echo $val['title'];?></option>
@@ -239,7 +246,7 @@ echo $html_heading;?>
                                             </select>
                                         </div>
                                         <div class="input-select2 col s12 m3">
-                                            <select id="countryId" name="countryId" class="validate required">
+                                            <select id="countryId" name="countryId" labelName="" class="validate required">
                                                 <option value="">Select country</option>
                                                 <?php foreach ($countryArr AS $key=>$val):?>
                                                 <option value="<?php echo $val['locationId'];?>"><?php echo $val['name'];?></option>
@@ -247,13 +254,13 @@ echo $html_heading;?>
                                             </select>
                                         </div>
                                         <div class="input-select2 col s12 m3">
-                                            <select id="stateId" name="stateId" class="validate required">
+                                            <select id="stateId" name="stateId" labelName="" class="validate required">
                                                 <option value="">Select state</option>
                                             </select>
                                         </div>
                                         
                                         <div class="input-select2 col s12 m3">
-                                            <select id="cityId" name="cityId" class="validate required">
+                                            <select id="cityId" name="cityId" labelName="" class="validate required">
                                                 <option value="">Select city</option>
                                             </select>
                                         </div>
@@ -302,7 +309,16 @@ echo $html_heading;?>
 </div>
 </main>
 <?php echo $footer; ?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<script src="<?php echo SchoolSiteJSURL; ?>custom/common.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>-->
+<script src="<?php echo SchoolSiteJSURL; ?>custom/jquery.validate.min.js"></script>
+<script src="<?php echo SchoolSiteJSURL; ?>custom/bootbox.min.js"></script>
+
 <script src="<?php echo SchoolSiteJSURL; ?>apps/crud_list.js" type="text/javascript"></script>
+<script src="<?php echo SchoolSiteResourcesURL;?>bower_components/select2/dist/js/select2.min.js" type="text/javascript"></script>
+<script src="<?php echo SchoolSiteJSURL; ?>apps/crud_form.js" type="text/javascript"></script>
 
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-load-image/js/load-image.all.min.js" type="text/javascript"></script>
@@ -316,9 +332,19 @@ echo $html_heading;?>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload-validate.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload-ui.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-tmpl/js/tmpl.js" type="text/javascript"></script>
-<script src="<?php echo SchoolSiteResourcesURL;?>bower_components/select2/dist/js/select2.min.js" type="text/javascript"></script>
-<script src="<?php echo SchoolSiteJSURL; ?>apps/crud_form.js" type="text/javascript"></script>
+
+
 <script src="<?php echo SchoolSiteJSURL; ?>custom/teacher_manage.js"></script>
 <script type="text/javascript">
+$(function(){
+    $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year
+        clear: 'effacer',
+        /*closeOnSelect:true,
+        closeOnClear:true/*
+    });
+});
+
     myJsMain.teacher_add();
 </script>

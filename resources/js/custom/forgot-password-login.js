@@ -13,7 +13,8 @@ myJsMain.login=function(){
     $('#erp_user_login_form').submit(function(e) {
         e.preventDefault(); 
         if ($(this).valid()) { 
-            myJsMain.commonFunction.showPleaseWait();
+            //myJsMain.commonFunction.showPleaseWait();
+            $.LoadingOverlay("show");
             $('#loginInSubmit').prop('disabled',true);
             //$('#fade_background').fadeIn();
             myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller/validate_login', loginFormCallback);
@@ -22,7 +23,8 @@ myJsMain.login=function(){
         
         // this is just to show product list page
     function loginFormCallback(resultData){
-        myJsMain.commonFunction.hidePleaseWait();
+        //myJsMain.commonFunction.hidePleaseWait();
+        $.LoadingOverlay("hide");
         $('#loginInSubmit').prop('disabled',false); //alert(resultData.result);
         //console.log('resultData.result : '+resultData.result);
         //$('#fade_background').fadeOut();
@@ -47,7 +49,8 @@ myJsMain.forgot_password=function(){
     $('#retailershangout_user_forgot_form').submit(function(e) {
         e.preventDefault();
         if ($(this).valid()) {
-            myJsMain.commonFunction.showPleaseWait();
+            //myJsMain.commonFunction.showPleaseWait();
+            $.LoadingOverlay("show");
             $('#forgotPasswrod').prop('disabled',true);
             //$('#fade_background').fadeIn();
             //$('#LoadingDiv').fadeIn();
@@ -58,7 +61,8 @@ myJsMain.forgot_password=function(){
         // this is just to show product list page
     function forgotPasswordFormCallback(resultData){
         $('#forgotPasswrod').prop('disabled',false);
-        myJsMain.commonFunction.hidePleaseWait();
+        //myJsMain.commonFunction.hidePleaseWait();
+        $.LoadingOverlay("hid");
         myJsMain.commonFunction.tidiitAlert('Retailershangout System Message',resultData.msg,200);
     }
     
