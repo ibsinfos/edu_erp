@@ -34,7 +34,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="panel-footer panel-footer-social">
+                <!--<div class="panel-footer panel-footer-social">
                     <a class="btn-floating google-plus">
                         <i class="fa fa-google-plus"></i>
                     </a>
@@ -50,7 +50,7 @@
                     <a class="btn-floating github">
                         <i class="fa fa-github"></i>
                     </a>
-                </div>
+                </div> -->
                 <div class="panel-footer">
                     <div class="right-align">
                         <!--<a href="register.html" class="btn-flat waves-effect">

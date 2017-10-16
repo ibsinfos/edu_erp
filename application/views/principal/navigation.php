@@ -66,25 +66,39 @@
                         <td><?php echo $this->lang->line('ONLINE_EXAM',FALSE);?></td>
                     </tr>
                     <tr>
-                        <td><?php echo $this->lang->line('ENQUIRY',FALSE);?></td>
-                        <td><?php echo $this->lang->line('STUDY_MATERIAL',FALSE);?></td>
-                        <td><?php echo $this->lang->line('EVENT_MGT',FALSE);?></td>
-                        <td><?php echo $this->lang->line('DORMITORY',FALSE);?></td>
-                        <td><?php echo $this->lang->line('ONLINE_EXAM',FALSE);?></td>
+                        <td><?php echo $this->lang->line('CLASS',FALSE);?></td>
+                        <td><?php echo $this->lang->line('CLASS_TIME_TABLE',FALSE);?></td>
+                        <td><?php echo $this->lang->line('FEEDBACK',FALSE);?></td>
+                        <td><?php echo $this->lang->line('INVENTORY',FALSE);?></td>
+                        <td><?php echo $this->lang->line('DISCIPNARY',FALSE);?></td>
                     </tr>
                     <tr>
-                        <td><?php echo $this->lang->line('ENQUIRY',FALSE);?></td>
-                        <td><?php echo $this->lang->line('STUDY_MATERIAL',FALSE);?></td>
-                        <td><?php echo $this->lang->line('EVENT_MGT',FALSE);?></td>
-                        <td><?php echo $this->lang->line('DORMITORY',FALSE);?></td>
-                        <td><?php echo $this->lang->line('ONLINE_EXAM',FALSE);?></td>
+                        <td><?php echo $this->lang->line('SECTION',FALSE);?></td>
+                        <td><?php echo $this->lang->line('ACCOUNTING_REPORT',FALSE);?></td>
+                        <td><?php echo $this->lang->line('CUSTOM_MSG',FALSE);?></td>
+                        <td><?php echo $this->lang->line('ONLINE_POLL',FALSE);?></td>
+                        <td><?php echo $this->lang->line('CIRTIFICATE',FALSE);?></td>
                     </tr>
                     <tr>
-                        <td><?php echo $this->lang->line('ENQUIRY',FALSE);?></td>
-                        <td><?php echo $this->lang->line('STUDY_MATERIAL',FALSE);?></td>
-                        <td><?php echo $this->lang->line('EVENT_MGT',FALSE);?></td>
-                        <td><?php echo $this->lang->line('DORMITORY',FALSE);?></td>
-                        <td><?php echo $this->lang->line('ONLINE_EXAM',FALSE);?></td>
+                        <td><?php echo $this->lang->line('TEACHERS',FALSE);?></td>
+                        <td><?php echo $this->lang->line('STUD_REPORT',FALSE);?></td>
+                        <td><?php echo $this->lang->line('DISCUSSION_FRM',FALSE);?></td>
+                        <td><?php echo $this->lang->line('DISCIPNARY',FALSE);?></td>
+                        <td><?php echo $this->lang->line('CLINICAL_RECORD',FALSE);?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->lang->line('PARENT',FALSE);?></td>
+                        <td><?php echo $this->lang->line('CUSTOMR_REPORT',FALSE);?></td>
+                        <td><?php echo $this->lang->line('BLOG',FALSE);?></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->lang->line('SUBJECT',FALSE);?></td>
+                        <td>&nbsp;</td>
+                        <td><?php echo $this->lang->line('MESSAGE',FALSE);?></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                     </tr>
                 </tbody>
             </table>
