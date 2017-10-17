@@ -27,17 +27,21 @@ class Ajax_controller_principal extends MY_Controller {
         } else {
             $userDataArr=array();
             $userDataArr=generate_user_table_data_arr($tableUserStructureTextArr, array('typeText'=>'teacher'));
-            //$teacherId= $this->Sc_user_model->add($userDataArr);
-            $teacherId= 3;
+            $userId= $this->Sc_user_model->add($userDataArr);
+            //$teacherId= 3;
             $teacherDataArr=array();
             foreach ($tableTeacherStructureTextArr AS $key => $val) {
                 $teacherDataArr[$key]= $this->input->post($key,TRUE);
             }
-            $teacherDataArr['userId']=$teacherId;
+            $teacherDataArr['userId']=$userId;
             foreach ($tableTeacherStructureForeignKeyIdArr AS $key => $val) {
                 $teacherDataArr[$key]= $this->input->post($key,TRUE);
             }
-            pre($teacherDataArr);die;
+            
+            $teacherId=$this->Sc_teacher_model->add($teacherDataArr);
+            if($teacherId!=""){
+                echo json_encode(array('result' => 'good','msg'=>'Teacher added successfully.'));die;
+            }
         }
     }
 

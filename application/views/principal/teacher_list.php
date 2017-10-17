@@ -344,9 +344,9 @@ $(function(){
     $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 15, // Creates a dropdown of 15 years to control year
-        container: '#root-picker-outlet'
-        /*closeOnSelect:true,
-        closeOnClear:true*/
+        container: '#root-picker-outlet',
+        format: 'dd/mm/yyyy',
+		formatSubmit: 'yyyy/mm/dd'
     });
     
     
