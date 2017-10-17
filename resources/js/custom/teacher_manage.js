@@ -20,10 +20,10 @@ myJsMain.teacher_add=function(){
     $('#erp_teacher_add_form').submit(function(e) {
         e.preventDefault(); 
         if ($(this).valid()) { 
-            $.LoadingOverlay("show");
+            //  $.LoadingOverlay("show");
             //myJsMain.commonFunction.showPleaseWait();
-            $('#teacherAddSubmit').prop('disabled',true);alert("kk");
-           // myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller_principal/add_teacher', teacherAddFormCallback);
+            $('#teacherAddSubmit').prop('disabled',true);
+            myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller_principal/add_teacher', teacherAddFormCallback);
         }
     });
         

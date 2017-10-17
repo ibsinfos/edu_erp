@@ -22,6 +22,15 @@ class Sc_teacher_model extends CI_Model {
         'lName'=>array('type'=>'text','required'=>'required','label'=>'Last Name'),
         'phoneNumber'=>array('type'=>'tel','required'=>'required','label'=>'Phone Number'),
     );
+    
+    public $_table_teacher_structure_foreign_key=array(
+        'jobTitleId'=>array('required'=>'required','label'=>'Job Title'),
+        'genderId'=>array('required'=>'required','label'=>'Gender'),
+        'bloodGroupId'=>array('type'=>'text','required'=>'required','label'=>'Blood Group'),
+        'countryId'=>array('required'=>'required','label'=>'Country'),
+        'stateId'=>array('required'=>'required','label'=>'State'),
+        'cityId'=>array('required'=>'required','label'=>'Phone Number'),
+    );
             
     function __construct() {
         parent::__construct();

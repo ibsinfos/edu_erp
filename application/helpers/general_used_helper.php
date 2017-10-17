@@ -507,6 +507,36 @@ if (!function_exists('generate_breadcrumb')) {
 
 }
 
+if (!function_exists('generate_user_table_data_arr')) {
+    function generate_user_table_data_arr($tableUserStructureTextArr,$type){
+        $CI=& get_instance();
+        foreach ($tableUserStructureTextArr AS $key => $val) {
+            $userDataArr[$key]= $CI->input->post($key,TRUE);
+        }
+        //$passcode=generate_passcode('teacher');
+        $passcode=generate_passcode($type['typeText']);
+        $userDataArr['passcode']=$passcode;
+        $userDataArr['password']= base64_encode($passcode).'~'.md5('jsrob');
+        $userDataArr['userType ']= substr($passcode, 0,3);
+        $userDataArr['status ']=1;
+        $userDataArr['schoolId']=1;
+        return $userDataArr;
+    }
+}
+
+if (!function_exists('generate_form_validation_arr')) {
+    function generate_form_validation_arr($tableTeacherStructureTextArr,$formValidationConfigArr=array()){
+        foreach ($tableTeacherStructureTextArr AS $key => $val) {
+            $tempArr = array('field' => $key, 'label' => $val['label']);
+            $ruleStr = 'trim|xss_clean';
+            $ruleStr .= generate_form_validation_rules($val);
+            $tempArr['rules'] = $ruleStr;
+            $formValidationConfigArr[] = $tempArr;
+        }
+        return $formValidationConfigArr;
+    }
+}
+
 if (!function_exists('generate_form_validation_rules')) {
     function generate_form_validation_rules($val){
         $ruleStr = '';
@@ -514,12 +544,15 @@ if (!function_exists('generate_form_validation_rules')) {
             $ruleStr .= '|required';
         //$element.=' required="required"';
         endif;
-        if ($val['type'] == 'email') {
-            $ruleStr .= '|valid_email';
-        }
-        if ($val['type'] == 'tel') {
-            $ruleStr .= '|numeric|max_length[10]';
-        }
+        if (array_key_exists('type', $val)):
+            if ($val['type'] == 'email') {
+                $ruleStr .= '|valid_email';
+            }
+            if ($val['type'] == 'tel') {
+                $ruleStr .= '|numeric|max_length[10]';
+            }
+        endif;
+        
         if (array_key_exists('is_unique', $val)):
             $ruleStr .= '|is_unique[' . $val['is_unique'] . ']';
         //$element.=' required="required"';

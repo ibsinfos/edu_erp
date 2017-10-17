@@ -198,8 +198,11 @@ echo $html_heading;?>
                                         </div>
                                         <?php endforeach;?>
                                         <?php foreach($table_teacher_structure_text AS $key=>$val): //pre($key);//die;?>
+                                        <?php if($val['type']!='date')?>
+                                            <div id="root-picker-outlet" style="position:relative"></div>
                                         <div class="input-field col s12 m3">
-                                            <?php $element='<input  id="'.$key.'" name="'.$key.'" type="'.$val['type'].'"';
+                                            <?php 
+                                            $element='<input  id="'.$key.'" name="'.$key.'" type="'.$val['type'].'"';
                                             if(array_key_exists('required', $val)):
                                                 $element.=' required="required"';
                                             endif;
@@ -341,9 +344,7 @@ $(function(){
     $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 15, // Creates a dropdown of 15 years to control year
-        clear: 'effacer',
-        closeOnSelect:true,
-        closeOnClear:true
+        container: '#root-picker-outlet'
         /*closeOnSelect:true,
         closeOnClear:true*/
     });
