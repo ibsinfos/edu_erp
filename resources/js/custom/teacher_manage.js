@@ -42,27 +42,11 @@ myJsMain.teacher_add=function(){
     }
     
     jQuery('#countryId').on('change',function(){ 
-        jQuery.ajax({
-            url:myJsMain.baseURL+'ajax_controller/show_state_city',
-            data:'locationId='+jQuery(this).val()+'&type=state',
-            type:'POST',
-            success:function(optionStr){ alert(optionStr);
-                jQuery('#stateId').html(optionStr);
-                jQuery('#stateId').select2('refresh');
-            }
-        });
+        myJsMain.commonFunction.showStateCity(jQuery(this).val(),'state');
     });
     
     jQuery('#stateId').on('change',function(){
-        jQuery.ajax({
-            url:myJsMain.baseURL+'ajax_controller/show_state_city',
-            data:'locationId='+jQuery(this).val()+'&type=city',
-            type:'POST',
-            success:function(optionStr){
-                jQuery('#cityId').html(optionStr);
-                jQuery('#cityId').select2('refresh');
-            }
-        });
+        myJsMain.commonFunction.showStateCity(jQuery(this).val(),'city');
     });
 }
 myJsMain.forgot_password=function(){

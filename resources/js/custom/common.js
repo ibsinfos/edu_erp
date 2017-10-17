@@ -208,6 +208,17 @@ myJsMain.commonFunction = {
         }
         return tidiitConfirm1Var;
     },
+    showStateCity:function(locationId,type){
+        jQuery.ajax({
+            url:myJsMain.baseURL+'ajax_controller/show_state_city',
+            data:'locationId='+locationId+'&type='+type,
+            type:'POST',
+            success:function(optionStr){ alert(optionStr);
+                jQuery('#'+type+'Id').html(optionStr);
+                jQuery('#'+type+'Id').select2('refresh');
+            }
+        });
+    }
     
     //MainSiteBaseURL
 };
