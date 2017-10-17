@@ -33,11 +33,15 @@ myJsMain.teacher_add=function(){
         //myJsMain.commonFunction.hidePleaseWait();
         $('#teacherAddSubmit').prop('disabled',false); //alert(resultData.result);
         if(resultData.result=='bad'){
-            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg,200);
+            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
         }else if(resultData.result=='good'){
-            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg,200);
+            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
             //alert(resultData.url);
-            window.location.href = resultData.url;
+            setTimeout(function(){
+                window.location.reload();
+              }, 3000);
+            
+            //window.location.href = resultData.url;
             //myJsMain.commonFunction.tidiitAlert('Tidiit System Message',resultData.url,200);
         }
     }

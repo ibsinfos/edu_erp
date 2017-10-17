@@ -37,7 +37,10 @@ class Ajax_controller_principal extends MY_Controller {
             foreach ($tableTeacherStructureForeignKeyIdArr AS $key => $val) {
                 $teacherDataArr[$key]= $this->input->post($key,TRUE);
             }
-            
+            $DOBDate = DateTime::createFromFormat('d-m-Y', $teacherDataArr['DOB']);
+            $teacherDataArr['DOB']= $DOBDate->format('Y-m-d');
+            $DOJDate = DateTime::createFromFormat('d-m-Y', $teacherDataArr['DOJ']);
+            $teacherDataArr['DOJ']= $DOJDate->format('Y-m-d');
             $teacherId=$this->Sc_teacher_model->add($teacherDataArr);
             if($teacherId!=""){
                 echo json_encode(array('result' => 'good','msg'=>'Teacher added successfully.'));die;
