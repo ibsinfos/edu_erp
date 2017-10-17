@@ -8,7 +8,10 @@ class Sc_user_model extends CI_Model {
     }
     
     function check_login_data($userName,$password){
-        $dbPassword=  md5($password.'~erp~');
+        //        UFJJLTEyMzQ1~91b2a91f2d3e7b55941c57710757b395
+        //base64_encode($passcode).'~'.md5('jsrob')
+        //for principal -- PRI-12345    echo base64_encode('PRI-12345').'~'.md5('jsrob');
+        $dbPassword=  base64_encode($password).'~'.md5('jsrob');//md5($password.'~erp~');
         $rs=$this->db->select('*')->from($this->_table)->where('userName',$userName)->where('password',$dbPassword)->where('status','1')->get()->result_array();
         //echo $this->db->last_query();die;
         return $rs;

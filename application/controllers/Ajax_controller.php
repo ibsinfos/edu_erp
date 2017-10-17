@@ -45,11 +45,13 @@ class Ajax_controller extends MY_Controller {
         $type= $this->input->post('type',TRUE);
         if($locationId!=""){
             $this->load->model("Sc_country_model");
+            //pre($type);die;
             if($type=='state')
                 $dataArr= $this->Sc_country_model->get_state_by_country_id($locationId);
             else
                 $dataArr= $this->Sc_country_model->get_city_by_country_id($locationId);
-            $optionStr='';
+            //pre($dataArr);die;
+            $optionStr='<option value="">Select '.$type.'</option>';
             foreach ($dataArr AS $key=>$val){
                 $optionStr.='<option value="'.$val['locationId'].'">'.$val['name'].'</option>';
             }

@@ -214,6 +214,7 @@ echo $html_heading;?>
                                             endif;
                                             $element.=' labelName="'.$val['label'].'">';
                                             echo $element;
+                                            if($val['type']!='date')
                                             echo '<label for="'.$key.'">'.$val['label'].'</label>';
                                             ?>
                                             <!--<input placeholder="Placeholder" id="first_name" type="text" class="validate" required="">
@@ -341,9 +342,13 @@ $(function(){
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 15, // Creates a dropdown of 15 years to control year
         clear: 'effacer',
+        closeOnSelect:true,
+        closeOnClear:true
         /*closeOnSelect:true,
-        closeOnClear:true/*
+        closeOnClear:true*/
     });
+    
+    
 });
 
     myJsMain.teacher_add();
