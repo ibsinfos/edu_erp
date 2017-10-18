@@ -27,9 +27,9 @@ echo $html_heading;?>
                 <section id="apps_crud">
                     <div class="crud-app">
                         <div class="fixed-action-btn">
-                            <a class="btn-floating btn-large tooltipped" data-tooltip="Add" data-position="top" data-delay="50" href="apps_crud_form.html">
+                            <!--<a class="btn-floating btn-large tooltipped" data-tooltip="Add" data-position="top" data-delay="50" href="apps_crud_form.html">
                                 <i class="large material-icons">add</i>
-                            </a>
+                            </a>-->
                             <button class="btn-floating btn-large white tooltipped scrollToTop" data-tooltip="Scroll to top" data-position="top" data-delay="50">
                                 <i class="large material-icons">keyboard_arrow_up</i>
                             </button>
@@ -53,6 +53,177 @@ echo $html_heading;?>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <tr>
+                                            <td class="center-align">
+                                                <input type="checkbox" id="chkDeleteAlvin">
+                                                <label for="chkDeleteAlvin"></label>
+                                            </td>
+                                            <td>Alvin</td>
+                                            <td>Eclair</td>
+                                            <td>$0.87</td>
+                                            <td class="center-align">
+                                                <div class="btn-group">
+                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
+                                                        <i class="material-icons">create</i>
+                                                    </a>
+                                                    <a class="btn-flat btn-small waves-effect btnDelete">
+                                                        <i class="material-icons">delete</i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="center-align">
+                                                <input type="checkbox" id="chkDeleteAlvin">
+                                                <label for="chkDeleteAlvin"></label>
+                                            </td>
+                                            <td>Alvin</td>
+                                            <td>Eclair</td>
+                                            <td>$0.87</td>
+                                            <td class="center-align">
+                                                <div class="btn-group">
+                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
+                                                        <i class="material-icons">create</i>
+                                                    </a>
+                                                    <a class="btn-flat btn-small waves-effect btnDelete">
+                                                        <i class="material-icons">delete</i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="center-align">
+                                                <input type="checkbox" id="chkDeleteAlvin">
+                                                <label for="chkDeleteAlvin"></label>
+                                            </td>
+                                            <td>Alvin</td>
+                                            <td>Eclair</td>
+                                            <td>$0.87</td>
+                                            <td class="center-align">
+                                                <div class="btn-group">
+                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
+                                                        <i class="material-icons">create</i>
+                                                    </a>
+                                                    <a class="btn-flat btn-small waves-effect btnDelete">
+                                                        <i class="material-icons">delete</i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="center-align">
+                                                <input type="checkbox" id="chkDeleteAlvin">
+                                                <label for="chkDeleteAlvin"></label>
+                                            </td>
+                                            <td>Alvin</td>
+                                            <td>Eclair</td>
+                                            <td>$0.87</td>
+                                            <td class="center-align">
+                                                <div class="btn-group">
+                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
+                                                        <i class="material-icons">create</i>
+                                                    </a>
+                                                    <a class="btn-flat btn-small waves-effect btnDelete">
+                                                        <i class="material-icons">delete</i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="center-align">
+                                                <input type="checkbox" id="chkDeleteAlvin">
+                                                <label for="chkDeleteAlvin"></label>
+                                            </td>
+                                            <td>Alvin</td>
+                                            <td>Eclair</td>
+                                            <td>$0.87</td>
+                                            <td class="center-align">
+                                                <div class="btn-group">
+                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
+                                                        <i class="material-icons">create</i>
+                                                    </a>
+                                                    <a class="btn-flat btn-small waves-effect btnDelete">
+                                                        <i class="material-icons">delete</i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="center-align">
+                                                <input type="checkbox" id="chkDeleteAlvin">
+                                                <label for="chkDeleteAlvin"></label>
+                                            </td>
+                                            <td>Alvin</td>
+                                            <td>Eclair</td>
+                                            <td>$0.87</td>
+                                            <td class="center-align">
+                                                <div class="btn-group">
+                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
+                                                        <i class="material-icons">create</i>
+                                                    </a>
+                                                    <a class="btn-flat btn-small waves-effect btnDelete">
+                                                        <i class="material-icons">delete</i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="center-align">
+                                                <input type="checkbox" id="chkDeleteAlvin">
+                                                <label for="chkDeleteAlvin"></label>
+                                            </td>
+                                            <td>Alvin</td>
+                                            <td>Eclair</td>
+                                            <td>$0.87</td>
+                                            <td class="center-align">
+                                                <div class="btn-group">
+                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
+                                                        <i class="material-icons">create</i>
+                                                    </a>
+                                                    <a class="btn-flat btn-small waves-effect btnDelete">
+                                                        <i class="material-icons">delete</i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="center-align">
+                                                <input type="checkbox" id="chkDeleteAlvin">
+                                                <label for="chkDeleteAlvin"></label>
+                                            </td>
+                                            <td>Alvin</td>
+                                            <td>Eclair</td>
+                                            <td>$0.87</td>
+                                            <td class="center-align">
+                                                <div class="btn-group">
+                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
+                                                        <i class="material-icons">create</i>
+                                                    </a>
+                                                    <a class="btn-flat btn-small waves-effect btnDelete">
+                                                        <i class="material-icons">delete</i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="center-align">
+                                                <input type="checkbox" id="chkDeleteAlvin">
+                                                <label for="chkDeleteAlvin"></label>
+                                            </td>
+                                            <td>Alvin</td>
+                                            <td>Eclair</td>
+                                            <td>$0.87</td>
+                                            <td class="center-align">
+                                                <div class="btn-group">
+                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
+                                                        <i class="material-icons">create</i>
+                                                    </a>
+                                                    <a class="btn-flat btn-small waves-effect btnDelete">
+                                                        <i class="material-icons">delete</i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td class="center-align">
                                                 <input type="checkbox" id="chkDeleteAlvin">

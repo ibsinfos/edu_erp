@@ -98,11 +98,12 @@
         return e.size > 1048576 ? parseFloat(e.size / 1024 / 1024).toFixed(2) + " mb" : parseFloat(e.size / 1024).toFixed(2) + " kb"
     };
     e(document).ready(function () {
-        e(".input-fileupload").each(function () {
+       /* e(".input-fileupload").each(function () {
             var s = e(this);
             a(s)
         }), e.support.cors && e.ajax({type: "HEAD", url: "erp/principal/show_student_list"}).fail(function () {
             Materialize.toast("Upload server has gone away.", 5e3, "error")
-        }), e(".input-select2 select").select2()
+        }), e(".input-select2 select").select2()*/
+        e(".input-select2 select").select2()
     })
 }(jQuery);

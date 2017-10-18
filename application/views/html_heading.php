@@ -8,6 +8,9 @@
 <meta charset="UTF-8" />
 <meta name="author" content="">
 <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<link href="<?php echo SchoolSiteResourcesURL;?>bower_components/bootstrap/css/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SchoolSiteResourcesURL;?>bower_components/bootstrap/css/css/bootstrap-grid.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SchoolSiteResourcesURL;?>bower_components/bootstrap/css/css/bootstrap-reboot.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo SchoolSiteResourcesURL;?>bower_components/Materialize/dist/css/materialize.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo SchoolSiteResourcesURL;?>bower_components/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo SchoolSiteResourcesURL;?>bower_components/code-prettify/src/prettify.css" rel="stylesheet" type="text/css" />

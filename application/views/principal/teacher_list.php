@@ -81,25 +81,6 @@ echo $html_heading;?>
                                         </tr>
                                         <tr>
                                             <td class="center-align">
-                                                <input type="checkbox" id="chkDeleteAlvin">
-                                                <label for="chkDeleteAlvin"></label>
-                                            </td>
-                                            <td>Alvin</td>
-                                            <td>Eclair</td>
-                                            <td>$0.87</td>
-                                            <td class="center-align">
-                                                <div class="btn-group">
-                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
-                                                        <i class="material-icons">create</i>
-                                                    </a>
-                                                    <a class="btn-flat btn-small waves-effect btnDelete">
-                                                        <i class="material-icons">delete</i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="center-align">
                                                 <input type="checkbox" id="chkDeleteAlan">
                                                 <label for="chkDeleteAlan"></label>
                                             </td>
@@ -305,27 +286,15 @@ echo $html_heading;?>
             </div>
         </div>
     </div>
-
-
-
-
-
 </div>
 </main>
 <?php echo $footer; ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-<script src="<?php echo SchoolSiteJSURL; ?>custom/common.js"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>-->
-<script src="<?php echo SchoolSiteJSURL; ?>custom/jquery.validate.min.js"></script>
-<script src="<?php echo SchoolSiteJSURL; ?>custom/bootbox.min.js"></script>
-
 <script src="<?php echo SchoolSiteJSURL; ?>apps/crud_list.js" type="text/javascript"></script>
-<script src="<?php echo SchoolSiteResourcesURL;?>bower_components/select2/dist/js/select2.min.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteJSURL; ?>apps/crud_form.js" type="text/javascript"></script>
 
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
-<script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-load-image/js/load-image.all.min.js" type="text/javascript"></script>
+<script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-tmpl/js/tmpl.js" type="text/javascript"></script>
+<?php /*<script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-load-image/js/load-image.all.min.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-canvas-to-blob/js/canvas-to-blob.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.iframe-transport.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload.js" type="text/javascript"></script>
@@ -335,7 +304,7 @@ echo $html_heading;?>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload-video.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload-validate.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload-ui.js" type="text/javascript"></script>
-<script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-tmpl/js/tmpl.js" type="text/javascript"></script>
+<script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-tmpl/js/tmpl.js" type="text/javascript"></script>*/?>
 
 
 <script src="<?php echo SchoolSiteJSURL; ?>custom/teacher_manage.js"></script>
