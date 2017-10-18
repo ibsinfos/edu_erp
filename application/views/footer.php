@@ -6,6 +6,7 @@
     </div>
 </footer>
 <script src="<?php echo SchoolSiteResourcesURL; ?>bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
+<script src="<?php echo SchoolSiteResourcesURL; ?>bower_components/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL; ?>bower_components/Materialize/dist/js/materialize.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL; ?>bower_components/code-prettify/src/prettify.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteJSURL; ?>admin.js" type="text/javascript"></script>
@@ -22,5 +23,10 @@
 <script src="<?php echo SchoolSiteResourcesURL; ?>bower_components/datatables/media/js/jquery.dataTables.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteJSURL; ?>modals.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteJSURL; ?>lock.js" type="text/javascript"></script>
+
+<script src="<?php echo SchoolSiteJSURL; ?>custom/common.js"></script>
+<script src="<?php echo SchoolSiteJSURL; ?>custom/jquery.validate.min.js"></script>
+<script src="<?php echo SchoolSiteJSURL; ?>custom/bootbox.min.js"></script>
+<script src="<?php echo SchoolSiteResourcesURL;?>bower_components/select2/dist/js/select2.min.js" type="text/javascript"></script>
 </body>
 </html>

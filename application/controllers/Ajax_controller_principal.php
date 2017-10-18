@@ -9,6 +9,7 @@ class Ajax_controller_principal extends MY_Controller {
     }
 
     function add_teacher() {
+        pre($_FILES);die;
         //pre($this->input->post());die;
         $this->load->model('Sc_teacher_model');
         $this->load->model('Sc_user_model');
