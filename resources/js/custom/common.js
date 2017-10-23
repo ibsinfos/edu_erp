@@ -36,8 +36,11 @@ jQuery.validator.addMethod("notEqual", function(value, element, param) {
 // js utility function to submit formm using ajax 
 myJsMain.commonFunction = {
     ajaxSubmit: function($this, url, callback) {
-        //alert(url);return false;
-        var ajaxUrl =url,
+        //alert(callback);return false;
+        var ajaxUrl =url;
+        data = new FormData($this[0]);
+        
+        /*********** OLD CODE ***************************        
         //data = $this.serialize().replace(/%5B%5D/g, '[]');
         //data = $this.serialize();
         data = new FormData($this[0]);
@@ -48,8 +51,13 @@ myJsMain.commonFunction = {
             
             myJsMain.commonFunction.callBackFuction(callback, resultData);
             //$('body,html').animate({scrollTop: 0}, 'slow');
-        }, 'json');*/
+        }, 'json');
+        ********************  OLD CODE HERE ***********/
         
+        /********************  
+        //var data = new FormData();
+        //data.append('file', $('input[type=file]')[0].files[0]);
+        /********************  some try CODE to fix ***********/
         jQuery.ajax({
             url: ajaxUrl,
             type: 'POST',
@@ -63,6 +71,7 @@ myJsMain.commonFunction = {
         });
     },
     callBackFuction: function(callback, data) { 
+        alert(callback);
         // Call our callback, but using our own instance as the context
         callback.call(this, data);
     },
@@ -124,104 +133,32 @@ myJsMain.commonFunction = {
            success: function(msg){ //alert(msg);
            }
          });
-    },
-    erpAlert:function(boxTitle,alertMessaage){
-        var msg='<p><i class="fa fa-exclamation-triangle fa-2x fa-fw"></i> '+alertMessaage+'</p>';
-        bootbox.alert({
-            title:boxTitle,
-            message: alertMessaage
-        });
-    },
-    erpConfirm:function(boxTitle,confirmMessaage,actionUrlWithData){
-        bootbox.confirm({
-            title:boxTitle,
-            message: confirmMessaage,
-            buttons: {
-                confirm: {
-                    label: 'Yes',
-                    className: 'btn-success'
-                },
-                cancel: {
-                    label: 'No',
-                    className: 'btn-danger'
-                }
-            },
-            callback: function (result) {
-                if(result){
-                    //alert(actionUrlWithData);
-                    //location.href=actionUrlWithData;                    
-                    window.location.href=actionUrlWithData;
-                }
-            }
-        });
-    },
-    erpConfirm1:function(boxTitle,confirmMessaage,height,formId,oldSubmitStatus){
-        if(height==0){
-            height=175;
-        }
-        if(myJsMain.isMobile=='yes'){tidiitAlertBoxWidth=350;}else{tidiitAlertBoxWidth=450;}
-        $('#dialog-confirm-message-text').text(confirmMessaage);
-        $( "#dialog-confirm" ).dialog({
-            resizable: false,
-            height:height,
-            width:tidiitAlertBoxWidth,
-            modal: true,
-            title:boxTitle,
-            dialogClass: 'success-dialog',
-            buttons: {
-                "OK": function() {
-                    oldSubmitStatus=true;
-                    $(formId).submit();
-                    $( this ).dialog( "close" );
-                },
-                Cancel: function() {
-                    $( this ).dialog( "close" );
-                }
-            }
-        });
-    },
-    erpConfirm2:function(boxTitle,confirmMessaage,height,obj){
-        if(!tidiitConfirm1Var){
-            if(height==0){
-                height=175;
-            }
-            if(myJsMain.isMobile=='yes'){tidiitAlertBoxWidth=350;}else{tidiitAlertBoxWidth=450;}
-            jQuery('#dialog-confirm-message-text').text(confirmMessaage);
-            console.log('cimming inside tidiitConfirm2');
-            jQuery( "#dialog-confirm" ).dialog({
-                resizable: false,
-                height:height,
-                width:tidiitAlertBoxWidth,
-                modal: true,
-                title:boxTitle,
-                dialogClass: 'success-dialog',
-                buttons: {
-                    "OK": function() {
-                        jQuery( this ).dialog( "close" );
-                        tidiitConfirm1Var = true;//obj.click();
-                    },
-                    Cancel: function() {
-                        jQuery( this ).dialog( "close" );
-                    }
-                }
-            });
-        }
-        return tidiitConfirm1Var;
+    }
+    ,erpAlert:function(boxTitle,boxBodyMsg){
+        var calBackAction={hooks: {onOk: function () {
+                        /*r(), setTimeout(function () {
+                             //Materialize.toast(a.length + " items deleted", 5e3, "success")
+                        }, 1e3)*/
+                    //alert("calBackAction calling");
+                    }}};
+       //$.Modal("Alert", "This is alert box", calBackAction,'alert');
+       $.Modal(boxTitle,boxBodyMsg, calBackAction,'alert');
     },
     showStateCity:function(locationId,type){
-        $.LoadingOverlay("show");
+        //$.LoadingOverlay("show");
+        $("body").Lock({background: "rgba(249,249,249,.5)"});
         jQuery.ajax({
             url:myJsMain.baseURL+'ajax_controller/show_state_city',
             data:'locationId='+locationId+'&type='+type,
             type:'POST',
             success:function(optionStr){ //alert(optionStr);
-                $.LoadingOverlay("hide");
+                //$.LoadingOverlay("hide");
+                $("body").Unlock();
                 jQuery('#'+type+'Id').html(optionStr);
                 jQuery('#'+type+'Id').select2('refresh');
             }
         });
-    }
-    
+    },
     //MainSiteBaseURL
 };
 });

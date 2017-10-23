@@ -66,12 +66,6 @@
     </div>
 </main>
 <?php echo $footer; ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-<script src="<?php echo SchoolSiteJSURL; ?>custom/common.js"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>-->
-<script src="<?php echo SchoolSiteJSURL; ?>custom/jquery.validate.min.js"></script>
-<script src="<?php echo SchoolSiteJSURL; ?>custom/bootbox.min.js"></script>
 <script src="<?php echo SchoolSiteJSURL; ?>custom/forgot-password-login.js"></script>
 <script type="text/javascript">
     myJsMain.login();

@@ -61,4 +61,16 @@ class Ajax_controller extends MY_Controller {
         }
     }
     
+    function checkUserNameIsExist(){
+        $this->load->model('Sc_user_model');
+        $userName=$this->input->post('userName',TRUE);
+        echo '$userName : '.$userName;die;
+        $DataArr=$this->Sc_user_model->is_user_name_exist($userName);
+        if(!empty($DataArr)){
+            echo 'ok';die;
+        }else{
+            echo 'not';die;
+        }
+    }
+    
 }

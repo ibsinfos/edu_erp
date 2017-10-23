@@ -21,4 +21,8 @@ class Sc_user_model extends CI_Model {
         $this->db->insert($this->_table,$dataArr);
         return $this->db->insert_id();
     }
+    
+    function is_user_name_exist($userName){
+        return $this->db->from($this->_table)->where('userName',$userName)->get()->result();
+    }
 }

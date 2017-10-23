@@ -14,23 +14,38 @@ myJsMain.login=function(){
         e.preventDefault(); 
         if ($(this).valid()) { 
             //myJsMain.commonFunction.showPleaseWait();
-            $.LoadingOverlay("show");
+            //$.LoadingOverlay("show");
+            $("body").Lock({background: "rgba(249,249,249,.5)"})
             $('#loginInSubmit').prop('disabled',true);
             //$('#fade_background').fadeIn();
+            /*var actionObject = {hooks: {onOk: function () {
+                        $("body").Lock({background: "rgba(249,249,249,.5)"}), 
+                                setTimeout(function () {
+                            //e("#chkDeleteAll").prop("checked", !1)
+                            //n(),
+                            myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller/validate_login', loginFormCallback)
+                        }, 1e3)
+                    }}};
+            $.Modal("Testing cofniorm Box","Are you sure want to do the action ?",actionObject);*/
+            
             myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller/validate_login', loginFormCallback);
         }
     });
         
         // this is just to show product list page
-    function loginFormCallback(resultData){
+    function loginFormCallback(resultData){ 
         //myJsMain.commonFunction.hidePleaseWait();
-        $.LoadingOverlay("hide");
-        $('#loginInSubmit').prop('disabled',false); //alert(resultData.result);
+        //$.LoadingOverlay("show");
+        $("body").Unlock();
+        //$.LoadingOverlay("hide");
+        $('#loginInSubmit').prop('disabled',false);
+        //alert(resultData.result);
+        //alert(resultData.msg);
         //console.log('resultData.result : '+resultData.result);
         //$('#fade_background').fadeOut();
         //$('#LoadingDiv').fadeOut();
         if(resultData.result=='bad'){
-            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg,200);
+            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
         }else if(resultData.result=='good'){
             //alert(resultData.url);
             window.location.href = resultData.url;
@@ -62,7 +77,7 @@ myJsMain.forgot_password=function(){
     function forgotPasswordFormCallback(resultData){
         $('#forgotPasswrod').prop('disabled',false);
         //myJsMain.commonFunction.hidePleaseWait();
-        $.LoadingOverlay("hid");
+        $.LoadingOverlay("hide");
         myJsMain.commonFunction.tidiitAlert('Retailershangout System Message',resultData.msg,200);
     }
     

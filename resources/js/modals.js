@@ -1,10 +1,18 @@
 !function (o) {
-    o.Modal = function (n, e, t) {
-        n = n || "", e = e || "";
-        var c = {id: o.randomID(), fixedFooter: !1, closed: !1, dismissible: !0, opacity: .5, classes: {ok: "waves-effect waves-green btn-flat", cancel: "waves-effect waves-red btn-flat"}, texts: {ok: "Ok", cancel: "Cancel"}, hooks: {onShow: function () {
-                }, onClose: function () {
-                }, onOk: null, onCancel: null}}, t = t || {};
-        o.extend(c, t);
+    o.Modal = function (n, e, t,modalFooterType) {
+        n = n || "", e = e || "",t=t || "",modalFooterType=modalFooterType || "";
+		//alert("t "+t);
+		if(modalFooterType=='alert'){
+                    var c = {id: o.randomID(), fixedFooter: !1, closed: !1, dismissible: !0, opacity: .5, classes: {ok: "waves-effect waves-green btn-flat"}, texts: {ok: "Ok"}, hooks: {onShow: function () {
+                                    }, onClose: function () {
+                                    }, onOk: null, onCancel: null}}, t = t || {};
+                    o.extend(c, t);
+		}else{
+                    var c = {id: o.randomID(), fixedFooter: !1, closed: !1, dismissible: !0, opacity: .5, classes: {ok: "waves-effect waves-green btn-flat", cancel: "waves-effect waves-red btn-flat"}, texts: {ok: "Ok", cancel: "Cancel"}, hooks: {onShow: function () {
+                                    }, onClose: function () {
+                                    }, onOk: null, onCancel: null}}, t = t || {};
+                    o.extend(c, t);
+		}
         var i = function () {
             var n = "";
             n += '<div id="' + c.id + '" class="' + l() + '">', n += '\t<div class="modal-content">' + d() + "</div>", n += a(), n += "</div>", o("body").append(n)
@@ -16,9 +24,18 @@
             return n.length > 0 && (o += '<h4 id="title">' + n + "</h4>"), o += '<div id="content">' + e + "</div>"
         }, a = function () {
             var o = "";
-            return null === c.hooks.onOk && null === c.hooks.onCancel ? o : (o += '<div class="modal-footer">', o += '   <a id="cancel" class="modal-action modal-close ' + c.classes.cancel + '">' + c.texts.cancel + "</a>", o += '   <a id="ok" class="modal-action modal-close ' + c.classes.ok + '">' + c.texts.ok + "</a>", o += "</div>")
+            if(modalFooterType=='alert'){
+                return null === c.hooks.onOk && null === c.hooks.onCancel ? o : (o += '<div class="modal-footer">', o += '   <a id="ok" class="modal-action modal-close ' + c.classes.ok + '">' + c.texts.ok + "</a>", o += "</div>")
+            }else{
+                return null === c.hooks.onOk && null === c.hooks.onCancel ? o : (o += '<div class="modal-footer">', o += '   <a id="cancel" class="modal-action modal-close ' + c.classes.cancel + '">' + c.texts.cancel + "</a>", o += '   <a id="ok" class="modal-action modal-close ' + c.classes.ok + '">' + c.texts.ok + "</a>", o += "</div>")
+            }
         }, s = function () {
-            var n = o("#" + c.id), e = n.find("#ok"), t = n.find("#cancel");
+			if(modalFooterType=='alert'){
+				var n = o("#" + c.id), e = n.find("#ok"),t = n.find("#ok");
+			}else{
+				var n = o("#" + c.id), e = n.find("#ok"), t = n.find("#cancel");
+			}
+            
             n.modal({dismissible: c.dismissible, opacity: c.opacity, ready: c.hooks.onShow, complete: c.hooks.onClose}), "function" == typeof c.hooks.onOk ? (e.off("click"), e.on("click", function (o) {
                 c.hooks.onOk(o)
             })) : e.attr("href", c.hooks.onOk), "function" == typeof c.hooks.onCancel ? (t.off("click"), t.on("click", function (o) {
