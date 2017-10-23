@@ -40,6 +40,29 @@ function removeTempProfileImage(img,elem){
                 },
                 downloadTemplate: function(a) {
                     return c(e, a)
+                },
+                add: function (e, data) {
+                    var uploadErrors = [];
+
+                    var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i;
+                    if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+                        uploadErrors.push('Selected file type are not accepted');
+                    }
+
+                    console.log(data.originalFiles[0]['size']) ;
+                    if (data.originalFiles[0]['size'] > 5000000) {
+                        uploadErrors.push('Selected file size is too big.');
+                    }
+                    if(uploadErrors.length > 0) {
+                        alert(uploadErrors.join("\n"));
+                        var uploadErrors = [];
+                        return false;
+                    } else {
+                        //data.context = $('<p/>').text('Subiendo...').appendTo(document.body);
+                        data.submit();
+                        i(e);
+                    }
+
                 }
             };
             e.find("dropzone").length > 0 && (t.dropZone = e.find("dropzone")), e.fileupload(t)
@@ -65,7 +88,7 @@ function removeTempProfileImage(img,elem){
             var a = "green-text",
                 s = "check";
             if(!e.error){
-                Materialize.toast("File Uploaded successfully.", 5e3, "success");
+                //Materialize.toast("File Uploaded successfully.", 5e3, "success");
                 $('.input-fileupload').children(".form-section").hide();
                 $('.input-fileupload').children(".actions").hide();
                 $('.input-fileupload').children(".dropzone").hide();
