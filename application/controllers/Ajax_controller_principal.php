@@ -9,8 +9,8 @@ class Ajax_controller_principal extends MY_Controller {
     }
 
     function add_teacher() {
-        pre($_FILES);
-        die;
+        //pre($_FILES);
+        //die;
         //pre($this->input->post());die;
         $this->load->model('Sc_teacher_model');
         $this->load->model('Sc_user_model');
@@ -25,8 +25,7 @@ class Ajax_controller_principal extends MY_Controller {
 
         $this->form_validation->set_rules($formValidationConfigArr);
         if ($this->form_validation->run() == FALSE) {
-            echo json_encode(array('result' => 'bad', 'msg' => str_replace('</p>', '', str_replace('<p>', '', validation_errors()))));
-            die;
+            echo json_encode(array('result' => 'bad', 'msg' => str_replace('</p>', '', str_replace('<p>', '', validation_errors()))));die;
         } else {
             $userDataArr = array();
             $userDataArr = generate_user_table_data_arr($tableUserStructureTextArr, array('typeText' => 'teacher'));
@@ -44,14 +43,32 @@ class Ajax_controller_principal extends MY_Controller {
             $teacherDataArr['DOB'] = $DOBDate->format('Y-m-d');
             $DOJDate = DateTime::createFromFormat('d-m-Y', $teacherDataArr['DOJ']);
             $teacherDataArr['DOJ'] = $DOJDate->format('Y-m-d');
+            
+            $profilePictureFileName= $this->input->post('profilePictureFileName',TRUE);
+            if($profilePictureFileName!=""){
+                $ext= end(explode('.', $profilePictureFileName));
+                $newFileName=rand('9999999','10000000').'-'.time().'.'.$ext;
+                $destName=SchoolResourcesPath.'user_image/teacher/'.$newFileName;
+                @copy(SchoolResourcesPath.'uploads/'.$profilePictureFileName,$destName);
+                $teacherDataArr['image']=$newFileName;
+            }
+            
             $teacherId = $this->Sc_teacher_model->add($teacherDataArr);
             if ($teacherId != "") {
-                echo json_encode(array('result' => 'good', 'msg' => 'Teacher added successfully.'));
-                die;
+                echo json_encode(array('result' => 'good', 'msg' => 'Teacher added successfully.'));die;
             }
         }
     }
-
+    
+    function teacher_delete(){
+        $this->load->model('Sc_teacher_model');
+        $teacherId= $this->input->post('teacherId',TRUE);
+        /// do transaction check stuff here; if valid then start process for delete teacher
+        $this->Sc_teacher_model->delete($teacherId);
+        //echo json_encode(array('result' => 'bad', 'msg' => str_replace('</p>', '', str_replace('<p>', '', validation_errors()))));die;
+        echo json_encode(array('result' => 'good', 'msg' => 'Teacher delete successfully.'));die;
+    }
+    
     function upload_profile_image() {
         /*if (!is_dir('uploads')) {
             mkdir('uploads');
@@ -72,5 +89,37 @@ class Ajax_controller_principal extends MY_Controller {
         }
         echo json_encode($response);
     }
-
+    
+    function show_teacher_list_in_update_data_table(){
+        $this->load->model('Sc_teacher_model');
+        $teacherDataArr=  $this->Sc_teacher_model->get_teachers_list_for_principal();
+        ob_start();
+         if (!empty($teacherDataArr)):
+            foreach ($teacherDataArr AS $key =>$value):?>
+        <tr>
+            <td class="center-align">
+                <input type="checkbox" id="teacher<?php echo $value['teacherId'];?>">
+                <label for="teacher<?php echo $value['teacherId'];?>"></label>
+            </td>
+            <td data-id="<?php echo $value['teacherId'];?>"><?php echo $value['fName'].' '.$value['lName'];?></td>
+            <td><?php echo $value['communicationEmail'];?></td>
+            <td><?php echo $value['title'];?></td>
+            <td><?php echo $value['phoneNumber'];?></td>
+            <td class="center-align">
+                <div class="btn-group">
+                    <a href="javascript:void(0);" class="btn-flat btn-small waves-effect">
+                        <i class="material-icons">edit</i>
+                    </a>
+                    <a class="btn-flat btn-small waves-effect btnDelete">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        <?php endforeach;
+        endif;
+        $contents = ob_get_contents();
+	ob_end_clean();
+        echo $contents;die;
+    }
 }

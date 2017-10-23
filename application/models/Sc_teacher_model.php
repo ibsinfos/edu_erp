@@ -1,7 +1,9 @@
 <?php
 class Sc_teacher_model extends CI_Model {
     private $_table='sc_teacher';
+    private $_table_primary_key='teacherId';
     private $_table_user='sc_user';
+    private $_table_job_title='sc_job_title';
     public $_table_teacher_structure_text=array(
         'DOB'=>array('type'=>'date','class'=>'datepicker','required'=>'required','label'=>'Date of birth'),
         'DOJ'=>array('type'=>'date','class'=>'datepicker','required'=>'required','label'=>'Date of Join'),
@@ -37,12 +39,33 @@ class Sc_teacher_model extends CI_Model {
         
     }
     
-    function get_teachers_list_for_principal(){
-        return array();
+    function get_teachers_list_for_principal($schoolId=1){
+        $this->db->select('t.teacherId,u.fName,u.lName,u.communicationEmail,u.phoneNumber,jt.title')->from($this->_table.' AS t');
+        $this->db->join($this->_table_user.' AS u','t.userId=u.userId')->join($this->_table_job_title.' AS jt','t.jobTitleId=jt.jobTitleId');
+        $rs=$this->db->where('u.schoolId',$schoolId)->get()->result_array();
+        //echo $this->db->last_query();die;
+        return $rs;
     }
     
     function add($dataArr){
         $this->db->insert($this->_table,$dataArr);
         return $this->db->insert_id();
+    }
+    
+    function edit($dataArr,$id){
+        $this->db->where($this->_table_primary_key,$id);
+        $this->db->update($this->_table,$dataArr);
+        return TRUE;
+    }
+    
+    function delete($id){
+        $DataArr= $this->get_details_by_id($id);
+        $this->db->delete($this->_table, array($this->_table_primary_key=> $id)); 
+        $this->db->delete($this->_table_user,array('userId'=>$DataArr[0]['userId']));
+        return TRUE;
+    }
+    
+    function get_details_by_id($id){
+        return $this->db->from($this->_table)->where($this->_table_primary_key,$id)->get()->result_array();
     }
 }

@@ -44,7 +44,7 @@ function removeTempProfileImage(img,elem){
                 add: function (e, data) {
                     var uploadErrors = [];
 
-                    var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i;
+                    var acceptFileTypes = /^image\/(gif|jpeg|jpg|png)$/i;
                     if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
                         uploadErrors.push('Selected file type are not accepted');
                     }
@@ -54,7 +54,7 @@ function removeTempProfileImage(img,elem){
                         uploadErrors.push('Selected file size is too big.');
                     }
                     if(uploadErrors.length > 0) {
-                        alert(uploadErrors.join("\n"));
+                        myJsMain.commonFunction.erpAlert("Profile image update error",uploadErrors.join("\n"));
                         var uploadErrors = [];
                         return false;
                     } else {
@@ -87,12 +87,14 @@ function removeTempProfileImage(img,elem){
         i = function(e) {
             var a = "green-text",
                 s = "check";
+                //alert(e.error);
             if(!e.error){
                 //Materialize.toast("File Uploaded successfully.", 5e3, "success");
                 $('.input-fileupload').children(".form-section").hide();
                 $('.input-fileupload').children(".actions").hide();
                 $('.input-fileupload').children(".dropzone").hide();
             }
+            $('#profilePictureFileName').val(e.name);
             //1 === e.error && (a = "red-text", s = "close");
             1 === (a = "red-text", s = "close");
             var t = "";
@@ -178,6 +180,8 @@ function removeTempProfileImage(img,elem){
             url: myJsMain.baseURL+'ajax_controller_principal/upload_profile_image'
         }).fail(function() {
             Materialize.toast("Upload server has gone away.", 5e3, "error")
-        }).done(function(){Materialize.toast("File Uploaded successfully.", 5e3, "success")}), e(".input-select2 select").select2()
+        }).done(function(){
+            //Materialize.toast("File Uploaded successfully.", 5e3, "success")
+        }), e(".input-select2 select").select2()
     })
 }(jQuery);

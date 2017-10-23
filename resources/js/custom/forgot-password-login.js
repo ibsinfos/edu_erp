@@ -15,7 +15,7 @@ myJsMain.login=function(){
         if ($(this).valid()) { 
             //myJsMain.commonFunction.showPleaseWait();
             //$.LoadingOverlay("show");
-            $("body").Lock({background: "rgba(249,249,249,.5)"})
+            $("body").Lock({background: "rgba(249,249,249,.5)"});
             $('#loginInSubmit').prop('disabled',true);
             //$('#fade_background').fadeIn();
             /*var actionObject = {hooks: {onOk: function () {

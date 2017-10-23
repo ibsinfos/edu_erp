@@ -1,4 +1,4 @@
-<?php
+<?php 
 echo $html_heading;?> 
 
 <link href="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/css/jquery.fileupload.css" rel="stylesheet" type="text/css" />
@@ -51,27 +51,31 @@ echo $html_heading;?>
                                         <tr>
                                             <th class="center-align" data-searchable="false" data-orderable="false">
                                                 <input type="checkbox" id="chkDeleteAll" class="checkToggle" data-target=".crud-app table tbody [type=checkbox]">
-                                                <label for="chkDeleteAll"></label>
+                                                <label for="chkDeleteAll">Sl No</label>
                                             </th>
-                                            <th>Name</th>
-                                            <th>Item Name</th>
-                                            <th>Item Price</th>
+                                            <th>Teacher Name</th>
+                                            <th>Teacher Email</th>
+                                            <th>Teacher Job title</th>
+                                            <th>Teacher Phone</th>
                                             <th class="center-align" data-searchable="false" data-orderable="false">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php if (!empty($teacherDataArr)): $slNo=0;
+                                            foreach ($teacherDataArr AS $key =>$value):?>
                                         <tr>
                                             <td class="center-align">
-                                                <input type="checkbox" id="chkDeleteAlvin">
-                                                <label for="chkDeleteAlvin"></label>
+                                                <input type="checkbox" id="teacher<?php echo $value['teacherId'];?>">
+                                                <label for="teacher<?php echo $value['teacherId'];?>"><?php echo ++$slNo;?></label>
                                             </td>
-                                            <td>Alvin</td>
-                                            <td>Eclair</td>
-                                            <td>$0.87</td>
+                                            <td data-id="<?php echo $value['teacherId'];?>"><?php echo $value['fName'].' '.$value['lName'];?></td>
+                                            <td><?php echo $value['communicationEmail'];?></td>
+                                            <td><?php echo $value['title'];?></td>
+                                            <td><?php echo $value['phoneNumber'];?></td>
                                             <td class="center-align">
                                                 <div class="btn-group">
-                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
-                                                        <i class="material-icons">create</i>
+                                                    <a href="javascript:void(0);" class="btn-flat btn-small waves-effect">
+                                                        <i class="material-icons">edit</i>
                                                     </a>
                                                     <a class="btn-flat btn-small waves-effect btnDelete">
                                                         <i class="material-icons">delete</i>
@@ -79,63 +83,8 @@ echo $html_heading;?>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="center-align">
-                                                <input type="checkbox" id="chkDeleteAlan">
-                                                <label for="chkDeleteAlan"></label>
-                                            </td>
-                                            <td>Alan</td>
-                                            <td>Jellybean</td>
-                                            <td>$3.76</td>
-                                            <td class="center-align">
-                                                <div class="btn-group">
-                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
-                                                        <i class="material-icons">create</i>
-                                                    </a>
-                                                    <a class="btn-flat btn-small waves-effect btnDelete">
-                                                        <i class="material-icons">delete</i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="center-align">
-                                                <input type="checkbox" id="chkDeleteJonathan">
-                                                <label for="chkDeleteJonathan"></label>
-                                            </td>
-                                            <td>Jonathan</td>
-                                            <td>Lollipop</td>
-                                            <td>$7.00</td>
-                                            <td class="center-align">
-                                                <div class="btn-group">
-                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
-                                                        <i class="material-icons">create</i>
-                                                    </a>
-                                                    <a class="btn-flat btn-small waves-effect btnDelete">
-                                                        <i class="material-icons">delete</i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="center-align">
-                                                <input type="checkbox" id="chkDeleteShannon">
-                                                <label for="chkDeleteShannon"></label>
-                                            </td>
-                                            <td>Shannon</td>
-                                            <td>KitKat</td>
-                                            <td>$9.99</td>
-                                            <td class="center-align">
-                                                <div class="btn-group">
-                                                    <a href="apps_crud_form.html" class="btn-flat btn-small waves-effect">
-                                                        <i class="material-icons">create</i>
-                                                    </a>
-                                                    <a class="btn-flat btn-small waves-effect btnDelete">
-                                                        <i class="material-icons">delete</i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        <?php endforeach;
+                                        endif;?>
                                     </tbody>
                                 </table>
                             </div>
@@ -269,6 +218,7 @@ echo $html_heading;?>
                                         </div>
                                     </div>
                                 </div>
+                                <input type="hidden" name="profilePictureFileName" id="profilePictureFileName" />
                                 <div class="panel-footer">
                                     <div class="right-align">
                                         <button type="reset" class="btn-flat waves-effect">
@@ -289,7 +239,7 @@ echo $html_heading;?>
 </div>
 </main>
 <?php echo $footer; ?>
-<script src="<?php echo SchoolSiteJSURL; ?>apps/crud_list.js" type="text/javascript"></script>
+<script src="<?php echo SchoolSiteJSURL; ?>custom/<?php echo $this->erpUserTypeArr[$this->userType];?>/teacher_list.js" type="text/javascript"></script>
 
 
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
@@ -302,7 +252,7 @@ echo $html_heading;?>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload-validate.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload-ui.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-tmpl/js/tmpl.js" type="text/javascript"></script>
-<script src="<?php echo SchoolSiteJSURL; ?>apps/crud_form.js" type="text/javascript"></script>
+<script src="<?php echo SchoolSiteJSURL; ?>custom/<?php echo $this->erpUserTypeArr[$this->userType];?>/teacher_form.js" type="text/javascript"></script>
 <?php /*
  * <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload-audio.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload-video.js" type="text/javascript"></script>
@@ -310,7 +260,7 @@ echo $html_heading;?>
  */?>
 
 
-<script src="<?php echo SchoolSiteJSURL; ?>custom/teacher_manage.js"></script>
+<script src="<?php echo SchoolSiteJSURL; ?>custom/<?php echo $this->erpUserTypeArr[$this->userType];?>/teacher_manage.js"></script>
 <script type="text/javascript">
 $(function(){
     $('.datepicker').pickadate({
@@ -323,6 +273,5 @@ $(function(){
     
     
 });
-
     myJsMain.teacher_add();
 </script>

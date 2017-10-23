@@ -21,7 +21,7 @@
             return c.fixedFooter !== !1 && (o += " modal-fixed-footer"), o
         }, d = function () {
             var o = "";
-            return n.length > 0 && (o += '<h4 id="title">' + n + "</h4>"), o += '<div id="content">' + e + "</div>"
+            return n.length > 0 && (o += '<h5 id="title">' + n + "</h5>"), o += '<div id="content">' + e + "</div>"
         }, a = function () {
             var o = "";
             if(modalFooterType=='alert'){

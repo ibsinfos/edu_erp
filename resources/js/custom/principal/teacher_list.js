@@ -26,12 +26,16 @@
         }), n(), e(".crud-app [type=checkbox]").on("change", function () {
             setTimeout(n, 50)
         }), e(".btnDelete").on("click", function () {
+            var tableIndex=0;
             var a = e(this), t = a.parents("tr").eq(0), l = t.children("td").eq(1).html(), d = "";
+            tableIndex = t.children("td").eq(1).data("id");
             d += "<p>Are you sure you want to delete this item?</p>", d += "<p><b>" + l + "</b></p>";
             var c = {hooks: {onOk: function () {
                         r(), setTimeout(function () {
                             var a = e(".datatable").DataTable();
-                            a.row(t).remove().draw(), n(), o(), Materialize.toast("1 item deleted", 5e3, "success")
+                            a.row(t).remove().draw();
+                            $("body").Lock({background: "rgba(249,249,249,.5)"});
+                            myJsMain.teacher_delete(tableIndex);
                         }, 1e3)
                     }}};
             e.Modal("Delete", d, c)

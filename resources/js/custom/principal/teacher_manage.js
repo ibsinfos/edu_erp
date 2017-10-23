@@ -21,7 +21,7 @@ myJsMain.teacher_add=function(){
         e.preventDefault(); 
         if ($(this).valid()) { 
             //  $.LoadingOverlay("show");
-            //myJsMain.commonFunction.showPleaseWait();
+            $("body").Lock({background: "rgba(249,249,249,.5)"});
             $('#teacherAddSubmit').prop('disabled',true);
             myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller_principal/add_teacher', teacherAddFormCallback);
         }
@@ -29,18 +29,16 @@ myJsMain.teacher_add=function(){
         
         // this is just to show product list page
     function teacherAddFormCallback(resultData){
-        $.LoadingOverlay("hide");
+        //$.LoadingOverlay("hide");
+        $("body").Unlock();
         //myJsMain.commonFunction.hidePleaseWait();
         $('#teacherAddSubmit').prop('disabled',false); //alert(resultData.result);
         if(resultData.result=='bad'){
             myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
         }else if(resultData.result=='good'){
+            $('#erp_teacher_add_form')[0].reset();
             myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
-            //alert(resultData.url);
-            setTimeout(function(){
-                window.location.reload();
-              }, 3000);
-            
+            myJsMain.teacher_ajax_list();
             //window.location.href = resultData.url;
             //myJsMain.commonFunction.tidiitAlert('Tidiit System Message',resultData.url,200);
         }
@@ -54,6 +52,41 @@ myJsMain.teacher_add=function(){
         myJsMain.commonFunction.showStateCity(jQuery(this).val(),'city');
     });
 }
+
+myJsMain.teacher_ajax_list=function(){
+    $("body").Lock({background: "rgba(249,249,249,.5)"});
+    $('.datatable').find("body").empty();
+    $.ajax({
+        url:myJsMain.baseURL+'ajax_controller_principal/show_teacher_list_in_update_data_table/',
+        success:function(html){
+            $("body").Unlock();
+            $('.datatable').find("body").append(html).draw();
+        }
+    });
+}
+
+myJsMain.teacher_delete=function(id){
+    $.ajax({
+        url:myJsMain.baseURL+'ajax_controller_principal/teacher_delete/',
+        data:'teacherId='+id,
+        type:'POST',
+        dataType:'json',
+        success:function(resultData){
+            $("body").Unlock();
+            //myJsMain.commonFunction.hidePleaseWait();
+            if(resultData.result=='bad'){
+                myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
+            }else if(resultData.result=='good'){
+                myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
+                //alert(resultData.url);
+                /*setTimeout(function(){
+                    window.location.reload();
+                  }, 3000);*/
+            }
+        }
+    });
+}
+
 myJsMain.forgot_password=function(){
     var forgotPasswrodValidationRules = {
         userForgotPasswordEmail: {

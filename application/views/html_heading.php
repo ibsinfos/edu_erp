@@ -54,5 +54,9 @@ manualClick=false;
     var searchurl = '<?php echo BASE_URL;?>';
     var dialog=null;
 </script>
+<style>
+    .modal .modal-content{padding:10px 24px !important;}
+    .modal .modal-footer{height:46px;}
+</style>
 </head>
 <body>
