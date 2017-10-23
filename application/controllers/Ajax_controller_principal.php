@@ -69,7 +69,6 @@ class Ajax_controller_principal extends MY_Controller {
             $newFile['url']=SchoolSiteResourcesURL.'uploads/'.$newFile['name'];
             $response['files'][] = $newFile;
             move_uploaded_file($file['tmp_name'][0], $newFile['uload_path']);
-            
         }
         echo json_encode($response);
     }
