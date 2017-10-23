@@ -258,7 +258,7 @@ echo $html_heading;?>
                                                 <span class="btn-flat small font-size-0-95 waves-effect fileinput-button">
                                                     <i class="material-icons">add</i>
                                                     <span>Add files</span>
-                                                    <input type="file" id="files" name="files[]" multiple>
+                                                    <input type="file" id="files" name="files[]">
                                                 </span>
                                             </div>
                                             <div class="dropzone valign-wrapper">

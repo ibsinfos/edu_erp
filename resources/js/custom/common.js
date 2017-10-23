@@ -159,6 +159,23 @@ myJsMain.commonFunction = {
             }
         });
     },
+    removeProfileImage:function(img,elem){
+        $("body").Lock({background: "rgba(249,249,249,.5)"});
+        $.ajax({
+            url:myJsMain.baseURL+'ajax_conroller/remove_temp_profile_image/',
+            data:'img='+img,
+            type:'POST',
+            success:function(msg){
+                $("body").Unlock();
+                if(msg=='ok'){
+                    elem.remove();
+                    Materialize.toast("Uploaded image removed successfully.", 5e3, "success");
+                }else{
+                    Materialize.toast("Unow error happening to remove the image.", 5e3, "error");
+                }
+            }
+        });
+    },
     //MainSiteBaseURL
 };
 });

@@ -73,4 +73,18 @@ class Ajax_controller extends MY_Controller {
         }
     }
     
+    
+    function remove_temp_profile_image(){
+        $img= $this->input->post('img',TRUE);
+        if($img==""){
+            echo '';die;
+        }else{
+            $profilePicPath=SchoolResourcesPath.'uploads/'. $img;
+            if(@unlink($profilePicPath)){
+                echo 'ok';die;
+            }else{
+                echo '';die;
+            }
+        }
+    }
 }

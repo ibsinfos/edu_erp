@@ -9,44 +9,69 @@ class Ajax_controller_principal extends MY_Controller {
     }
 
     function add_teacher() {
-        pre($_FILES);die;
+        pre($_FILES);
+        die;
         //pre($this->input->post());die;
         $this->load->model('Sc_teacher_model');
         $this->load->model('Sc_user_model');
         $tableTeacherStructureTextArr = $this->Sc_teacher_model->_table_teacher_structure_text;
         $tableUserStructureTextArr = $this->Sc_teacher_model->_table_user_structure_text;
         $tableTeacherStructureForeignKeyIdArr = $this->Sc_teacher_model->_table_teacher_structure_foreign_key;
-        
+
         $formValidationConfigArr = array();
         $formValidationConfigArr = generate_form_validation_arr($tableTeacherStructureTextArr);
-        $formValidationConfigArr = generate_form_validation_arr($tableUserStructureTextArr,$formValidationConfigArr);
-        $formValidationConfigArr = generate_form_validation_arr($tableTeacherStructureForeignKeyIdArr,$formValidationConfigArr);
+        $formValidationConfigArr = generate_form_validation_arr($tableUserStructureTextArr, $formValidationConfigArr);
+        $formValidationConfigArr = generate_form_validation_arr($tableTeacherStructureForeignKeyIdArr, $formValidationConfigArr);
 
         $this->form_validation->set_rules($formValidationConfigArr);
         if ($this->form_validation->run() == FALSE) {
-            echo json_encode(array('result' => 'bad', 'msg' => str_replace('</p>', '', str_replace('<p>', '', validation_errors()))));die;
+            echo json_encode(array('result' => 'bad', 'msg' => str_replace('</p>', '', str_replace('<p>', '', validation_errors()))));
+            die;
         } else {
-            $userDataArr=array();
-            $userDataArr=generate_user_table_data_arr($tableUserStructureTextArr, array('typeText'=>'teacher'));
-            $userId= $this->Sc_user_model->add($userDataArr);
+            $userDataArr = array();
+            $userDataArr = generate_user_table_data_arr($tableUserStructureTextArr, array('typeText' => 'teacher'));
+            $userId = $this->Sc_user_model->add($userDataArr);
             //$teacherId= 3;
-            $teacherDataArr=array();
+            $teacherDataArr = array();
             foreach ($tableTeacherStructureTextArr AS $key => $val) {
-                $teacherDataArr[$key]= $this->input->post($key,TRUE);
+                $teacherDataArr[$key] = $this->input->post($key, TRUE);
             }
-            $teacherDataArr['userId']=$userId;
+            $teacherDataArr['userId'] = $userId;
             foreach ($tableTeacherStructureForeignKeyIdArr AS $key => $val) {
-                $teacherDataArr[$key]= $this->input->post($key,TRUE);
+                $teacherDataArr[$key] = $this->input->post($key, TRUE);
             }
             $DOBDate = DateTime::createFromFormat('d-m-Y', $teacherDataArr['DOB']);
-            $teacherDataArr['DOB']= $DOBDate->format('Y-m-d');
+            $teacherDataArr['DOB'] = $DOBDate->format('Y-m-d');
             $DOJDate = DateTime::createFromFormat('d-m-Y', $teacherDataArr['DOJ']);
-            $teacherDataArr['DOJ']= $DOJDate->format('Y-m-d');
-            $teacherId=$this->Sc_teacher_model->add($teacherDataArr);
-            if($teacherId!=""){
-                echo json_encode(array('result' => 'good','msg'=>'Teacher added successfully.'));die;
+            $teacherDataArr['DOJ'] = $DOJDate->format('Y-m-d');
+            $teacherId = $this->Sc_teacher_model->add($teacherDataArr);
+            if ($teacherId != "") {
+                echo json_encode(array('result' => 'good', 'msg' => 'Teacher added successfully.'));
+                die;
             }
         }
+    }
+
+    function upload_profile_image() {
+        /*if (!is_dir('uploads')) {
+            mkdir('uploads');
+        }*/
+        $profilePicPath=SchoolResourcesPath.'uploads/';
+        $response = array();
+        $response['files'] = array();
+        foreach ($_FILES as $file) {
+            $newFile = array();
+            $newFile['name'] = $file['name'][0];
+            $newFile['size'] = $file['size'][0];
+            $newFile['type'] = $file['type'][0];
+            $newFile['error'] = $file['error'][0];
+            $newFile['uload_path'] = $profilePicPath . $newFile['name'];
+            $newFile['url']=SchoolSiteResourcesURL.'uploads/'.$newFile['name'];
+            $response['files'][] = $newFile;
+            move_uploaded_file($file['tmp_name'][0], $newFile['uload_path']);
+            
+        }
+        echo json_encode($response);
     }
 
 }
