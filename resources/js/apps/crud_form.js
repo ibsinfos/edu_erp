@@ -8,9 +8,9 @@ function removeTempProfileImage(img,elem){
             $("body").Unlock();
             if(msg=='ok'){
                 elem.remove();
-                /*$('.input-fileupload').children(".form-section").show();
+                $('.input-fileupload').children(".form-section").show();
                 $('.input-fileupload').children(".actions").show();
-                $('.input-fileupload').children(".dropzone").show();*/
+                $('.input-fileupload').children(".dropzone").show();
                 Materialize.toast("Uploaded image removed successfully.", 5e3, "success");
             }else{
                 Materialize.toast("Unow error happening to remove the image.", 5e3, "error");
@@ -66,9 +66,9 @@ function removeTempProfileImage(img,elem){
                 s = "check";
             if(!e.error){
                 Materialize.toast("File Uploaded successfully.", 5e3, "success");
-                /*$('.input-fileupload').children(".form-section").hide();
+                $('.input-fileupload').children(".form-section").hide();
                 $('.input-fileupload').children(".actions").hide();
-                $('.input-fileupload').children(".dropzone").hide();*/
+                $('.input-fileupload').children(".dropzone").hide();
             }
             //1 === e.error && (a = "red-text", s = "close");
             1 === (a = "red-text", s = "close");
