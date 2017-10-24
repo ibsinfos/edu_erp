@@ -6,7 +6,6 @@ $(function(){
         //console.log('=='+input+'==');
         return 'The ' + el.getAttribute("labelName") + ' field is required';
     }
-});
 myJsMain.teacher_add=function(){
     var teacherAddValidationRules = {
         userName:{required: true,email:true},
@@ -122,3 +121,52 @@ myJsMain.forgot_password=function(){
     });
             
 }
+
+myJsMain.teacher_edit=function(){
+    $(document).on('click','.material-icons-edit',function(){
+        var cId=0;
+        cId=$(this).data("editid");
+        if(cId==0){
+            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',"Invalid teacher index selection for update.");
+            return false;
+        }else if(cId==0){
+            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',"Invalid teacher index selection for update.");
+            return false;
+        }else{
+            $("body").Lock({background: "rgba(249,249,249,.5)"});
+            $.ajax({
+                url:myJsMain.baseURL+'ajax_controller_principal/get_teacher_details_with_edit_mode/',
+                data:"teacherId="+cId,
+                type:'POST',
+                dataType:'json',
+                success:function(resultData){
+                     if(resultData.result=='bad'){
+                         myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
+                     }else{
+                         $("#editActionWindow").children(".modal-header").find("h4.title").html("Update Teacher");
+                         $("#editActionWindow").children(".modal-content").html(resultData.resultContent);
+                         $('.modal').modal({
+                            dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                            opacity: .5, // Opacity of modal background
+                            in_duration: 300, // Transition in duration
+                            out_duration: 200, // Transition out duration
+                            starting_top: '4%', // Starting top style attribute
+                            ending_top: '10%', // Ending top style attribute
+                            ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                              //alert("Ready");
+                              console.log(modal, trigger);
+                            },
+                            complete: function() { 
+                                //alert('Closed'); // Callback for Modal close
+                            } 
+                        });
+                        $("body").Unlock();
+                        $('#editActionWindow').modal('open');
+                     }
+                }
+            });
+        }
+    });
+}
+
+});

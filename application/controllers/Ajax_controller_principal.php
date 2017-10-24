@@ -72,6 +72,7 @@ class Ajax_controller_principal extends MY_Controller {
         }
     }
     
+    
     function upload_profile_image() {
         /*if (!is_dir('uploads')) {
             mkdir('uploads');
@@ -126,32 +127,12 @@ class Ajax_controller_principal extends MY_Controller {
         echo $contents;die;
     }
     
-    function show_teacher_list_in_update_data_table1(){
-         ob_start();
-        ?>
-        <tr>
-                <td class="center-align">
-                        <input type="checkbox" id="teacher4">
-                        <label for="teacher4"></label>
-                </td>
-                <td data-id="4">demo teacher</td>
-                <td>demo.teacher@school-erp.com</td>
-                <td>Teacher</td>
-                <td>2147483647</td>
-                <td class="center-align">
-                        <div class="btn-group">
-                                <a href="javascript:void(0);" class="btn-flat btn-small waves-effect">
-                                        <i class="material-icons">edit</i>
-                                </a>
-                                <a class="btn-flat btn-small waves-effect btnDelete">
-                                        <i class="material-icons">delete</i>
-                                </a>
-                        </div>
-                </td>
-        </tr>
-        <?php
-        $contents = ob_get_contents();
-	ob_end_clean();
-        echo $contents;die;
+    function get_teacher_details_with_edit_mode(){
+        $teacherId= $this->input->post("teacherId",TRUE);
+        if($teacherId==""){
+            echo json_encode(array('result' => 'bad', 'msg' => 'Inalid teacher index for update.'));die;
+        }else{
+            $this->load->model('Sc_teacher_model');
+        }
     }
 }

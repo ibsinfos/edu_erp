@@ -75,7 +75,7 @@ echo $html_heading;?>
                                             <td class="center-align">
                                                 <div class="btn-group">
                                                     <a href="javascript:void(0);" class="btn-flat btn-small waves-effect">
-                                                        <i class="material-icons">edit</i>
+                                                        <i class="material-icons material-icons-edit" data-editid="<?php echo $value['teacherId'];?>">edit</i>
                                                     </a>
                                                     <a class="btn-flat btn-small waves-effect btnDelete">
                                                         <i class="material-icons">delete</i>
@@ -274,4 +274,5 @@ $(function(){
     
 });
     myJsMain.teacher_add();
+    myJsMain.teacher_edit();
 </script>
