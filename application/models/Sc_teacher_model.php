@@ -60,9 +60,13 @@ class Sc_teacher_model extends CI_Model {
     
     function delete($id){
         $DataArr= $this->get_details_by_id($id);
-        $this->db->delete($this->_table, array($this->_table_primary_key=> $id)); 
-        $this->db->delete($this->_table_user,array('userId'=>$DataArr[0]['userId']));
-        return TRUE;
+        if(!empty($DataArr)){
+            $this->db->delete($this->_table, array($this->_table_primary_key=> $id)); 
+            $this->db->delete($this->_table_user,array('userId'=>$DataArr[0]['userId']));
+            return TRUE;
+        }else{
+            return FALSE;
+        }
     }
     
     function get_details_by_id($id){

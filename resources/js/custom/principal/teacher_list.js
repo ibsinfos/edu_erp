@@ -23,9 +23,9 @@
             n.DataTable({order: [], columns: a(n), fnInitComplete: function (e, a) {
                     t(n)
                 }, dom: "<'nav-wrapper'f><''tr><'row no-gutter'   <'col s12 m4'i>   <'col s12 m8'p>>"})
-        }), n(), e(".crud-app [type=checkbox]").on("change", function () {
+        }), n(), e(document).on("change",".crud-app [type=checkbox]", function () {
             setTimeout(n, 50)
-        }), e(".btnDelete").on("click", function () {
+        }), e(document).on("click",".btnDelete", function () {
             var tableIndex=0;
             var a = e(this), t = a.parents("tr").eq(0), l = t.children("td").eq(1).html(), d = "";
             tableIndex = t.children("td").eq(1).data("id");
@@ -39,7 +39,7 @@
                         }, 1e3)
                     }}};
             e.Modal("Delete", d, c)
-        }), e("#btnDeleteAll").on("click", function () {
+        }), e(document).on("click","#btnDeleteAll", function () {
             var a = e(".crud-app table tbody [type=checkbox]:checked"), t = "";
             t += "<p>Are you sure you want to delete these items?</p>", t += "<p>", a.each(function () {
                 var a = e(this), n = a.parents("tr").eq(0), r = n.children("td").eq(1).html();

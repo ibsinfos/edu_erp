@@ -36,13 +36,13 @@ myJsMain.teacher_add=function(){
         if(resultData.result=='bad'){
             myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
         }else if(resultData.result=='good'){
-            $('#erp_teacher_add_form')[0].reset();
+            myJsMain.teacher_add_form_reset();
             myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
             myJsMain.teacher_ajax_list();
-            //window.location.href = resultData.url;
-            //myJsMain.commonFunction.tidiitAlert('Tidiit System Message',resultData.url,200);
+            $('ul.tabs').tabs('select_tab', 'TeacherList');
         }
     }
+    
     
     jQuery('#countryId').on('change',function(){ 
         myJsMain.commonFunction.showStateCity(jQuery(this).val(),'state');
@@ -53,14 +53,29 @@ myJsMain.teacher_add=function(){
     });
 }
 
+myJsMain.teacher_add_form_reset=function(){
+    $('#erp_teacher_add_form')[0].reset();
+    $('.input-fileupload').children(".form-section").show();
+    $('.input-fileupload').children(".actions").show();
+    $('.input-fileupload').children(".dropzone").show();
+    $('ul.collection').empty();
+    $('#profilePictureFileName').val("");
+    $("#jobTitleId").val("");
+    $("#genderId").val("");
+    $("#bloodGroupId").val("");
+    $("#countryId").val("");
+    $("#stateId").val("");
+    $("#cityId").val("");
+}
+
 myJsMain.teacher_ajax_list=function(){
     $("body").Lock({background: "rgba(249,249,249,.5)"});
-    $('.datatable').find("body").empty();
+    $('.datatable').find("tbody").empty();
     $.ajax({
         url:myJsMain.baseURL+'ajax_controller_principal/show_teacher_list_in_update_data_table/',
         success:function(html){
             $("body").Unlock();
-            $('.datatable').find("body").append(html).draw();
+            $('.datatable').find("tbody").append(html).draw();
         }
     });
 }

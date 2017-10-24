@@ -46,7 +46,8 @@ class Ajax_controller_principal extends MY_Controller {
             
             $profilePictureFileName= $this->input->post('profilePictureFileName',TRUE);
             if($profilePictureFileName!=""){
-                $ext= end(explode('.', $profilePictureFileName));
+                $extArr=explode('.', $profilePictureFileName);
+                $ext= end($extArr);
                 $newFileName=rand('9999999','10000000').'-'.time().'.'.$ext;
                 $destName=SchoolResourcesPath.'user_image/teacher/'.$newFileName;
                 @copy(SchoolResourcesPath.'uploads/'.$profilePictureFileName,$destName);
@@ -64,9 +65,11 @@ class Ajax_controller_principal extends MY_Controller {
         $this->load->model('Sc_teacher_model');
         $teacherId= $this->input->post('teacherId',TRUE);
         /// do transaction check stuff here; if valid then start process for delete teacher
-        $this->Sc_teacher_model->delete($teacherId);
-        //echo json_encode(array('result' => 'bad', 'msg' => str_replace('</p>', '', str_replace('<p>', '', validation_errors()))));die;
-        echo json_encode(array('result' => 'good', 'msg' => 'Teacher delete successfully.'));die;
+        if($this->Sc_teacher_model->delete($teacherId)==TRUE){
+            echo json_encode(array('result' => 'good', 'msg' => 'Teacher delete successfully.'));die;
+        }else{
+            echo json_encode(array('result' => 'bad', 'msg' => 'Unknown error arises for delete the teacher.'));die;
+        }
     }
     
     function upload_profile_image() {
@@ -118,6 +121,35 @@ class Ajax_controller_principal extends MY_Controller {
         </tr>
         <?php endforeach;
         endif;
+        $contents = ob_get_contents();
+	ob_end_clean();
+        echo $contents;die;
+    }
+    
+    function show_teacher_list_in_update_data_table1(){
+         ob_start();
+        ?>
+        <tr>
+                <td class="center-align">
+                        <input type="checkbox" id="teacher4">
+                        <label for="teacher4"></label>
+                </td>
+                <td data-id="4">demo teacher</td>
+                <td>demo.teacher@school-erp.com</td>
+                <td>Teacher</td>
+                <td>2147483647</td>
+                <td class="center-align">
+                        <div class="btn-group">
+                                <a href="javascript:void(0);" class="btn-flat btn-small waves-effect">
+                                        <i class="material-icons">edit</i>
+                                </a>
+                                <a class="btn-flat btn-small waves-effect btnDelete">
+                                        <i class="material-icons">delete</i>
+                                </a>
+                        </div>
+                </td>
+        </tr>
+        <?php
         $contents = ob_get_contents();
 	ob_end_clean();
         echo $contents;die;

@@ -27,10 +27,10 @@ echo $html_heading;?>
         <div class="col s12">
             <h4 class="main-text lighten-1">Manage Teacher</h4>
             <ul class="tabs tab-demo z-depth-1">
-                <li class="tab col s3"><a class="active" href="#StudentList">Teacher List</a></li>
-                <li class="tab col s3"><a  href="#StudentAdd">Add Teacher</a></li>
+                <li class="tab col s3"><a class="active" href="#TeacherList">Teacher List</a></li>
+                <li class="tab col s3"><a  href="#TeacherAdd">Add Teacher</a></li>
             </ul>
-            <div id="StudentList" class="col s12">
+            <div id="TeacherList" class="col s12">
                 <section id="apps_crud">
                     <div class="crud-app">
                         <div class="fixed-action-btn">
@@ -92,7 +92,7 @@ echo $html_heading;?>
                     </div>
                 </section>
             </div>
-            <div id="StudentAdd" class="col s12">
+            <div id="TeacherAdd" class="col s12">
                 <?php echo form_open_multipart('#',array('id'=>'erp_teacher_add_form','class'=>'form-vertical'));?>
                     <div class="row">
                         <div class="col s12 m12">
