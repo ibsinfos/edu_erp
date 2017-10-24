@@ -6,6 +6,7 @@ $(function(){
         //console.log('=='+input+'==');
         return 'The ' + el.getAttribute("labelName") + ' field is required';
     }
+});
 myJsMain.teacher_add=function(){
     var teacherAddValidationRules = {
         userName:{required: true,email:true},
@@ -168,5 +169,3 @@ myJsMain.teacher_edit=function(){
         }
     });
 }
-
-});

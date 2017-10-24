@@ -133,6 +133,14 @@ class Ajax_controller_principal extends MY_Controller {
             echo json_encode(array('result' => 'bad', 'msg' => 'Inalid teacher index for update.'));die;
         }else{
             $this->load->model('Sc_teacher_model');
+            $dataArr= $this->Sc_teacher_model->get_full_details_by_id($teacherId);
+            ob_start();
+            ?>
+        Teacher edit form and details will comme here
+        <?php
+            $contents = ob_get_contents();
+            ob_end_clean();
+            echo json_encode(array('result' => 'good', 'resultContent' => $contents));die;
         }
     }
 }

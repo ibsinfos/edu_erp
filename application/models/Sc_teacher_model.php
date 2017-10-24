@@ -72,4 +72,8 @@ class Sc_teacher_model extends CI_Model {
     function get_details_by_id($id){
         return $this->db->from($this->_table)->where($this->_table_primary_key,$id)->get()->result_array();
     }
+    
+    function get_full_details_by_id($id){
+        return $this->db->from($this->_table)->where($this->_table_primary_key,$id)->get()->result_array();
+    }
 }
