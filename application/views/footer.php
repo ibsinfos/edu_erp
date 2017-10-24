@@ -1,4 +1,4 @@
-<div id="editActionWindow" class="modal">
+<div id="editActionWindow" class="modal modal-fixed-footer">
     <div class="modal-header">
         <h5 class="title">test</h5>
     </div>
