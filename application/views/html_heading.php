@@ -31,7 +31,10 @@
 //<![CDATA[
     // URL for access ajax data
     myJsMain = window.myJsMain || {};
-    myJsMain.baseURL = '<?php echo BASE_URL;?>';
+    <?php if($this->userType!=""):?>
+    myJsMain.baseURL = '<?php echo BASE_URL.$this->erpUserTypeArr[$this->userType].'/';?>';
+    <?php endif;?>
+    myJsMain.baseURLWithoutLogin = '<?php echo BASE_URL;?>';
     myJsMain.showHowItWorksBoxLoaded =0;
     //myJsMain.securityCode='<?php //echo $this->session->userdata("secret");?>';
     <?php if($this->session->userdata('LOGEDIN')==''):?>
@@ -44,7 +47,7 @@
     <?php else: ?>
         myJsMain.isMobile='no';
     <?php endif; */?>    
-    myJsMain.SecretTextSetAjaxURL='<?php echo BASE_URL.'ajax/reset_secret/'?>';
+    myJsMain.SecretTextSetAjaxURL='<?php echo BASE_URL.'ajax_controller/reset_secret/'?>';
     myJsMain.CaptchaCookeName='<?php //echo $this->config->item('CAPTCHA_COOKIE_NAME');?>';     
     myJsMain.messageBoxTitle='<?php echo $messageBoxTitle;?>';
     myJsMain.isConfirmBoxClick="no";

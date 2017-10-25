@@ -134,7 +134,7 @@ myJsMain.teacher_edit=function(){
             myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',"Invalid teacher index selection for update.");
             return false;
         }else{
-            $("body").Lock({background: "rgba(249,249,249,.5)"});
+            //$("body").Lock({background: "rgba(249,249,249,.5)"});
             $.ajax({
                 url:myJsMain.baseURL+'ajax_controller_principal/get_teacher_details_with_edit_mode/',
                 data:"teacherId="+cId,
@@ -144,7 +144,7 @@ myJsMain.teacher_edit=function(){
                      if(resultData.result=='bad'){
                          myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
                      }else{
-                         $("#editActionWindow").children(".modal-header").find("h4.title").html("Update Teacher");
+                         $("#editActionWindow").children(".modal-header").find("h5.title").html('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> <i class="fa fa-user" aria-hidden="true"></i> Update Teacher');
                          $("#editActionWindow").children(".modal-content").html(resultData.resultContent);
                          $('.modal').modal({
                             dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -168,4 +168,41 @@ myJsMain.teacher_edit=function(){
             });
         }
     });
+}
+
+myJsMain.teacher_edit_save=function(){
+    var teacherAddValidationRules = {
+        userName:{required: true,email:true},
+        communicationEmail: {required: true,email:true},
+        fName: {required: true},
+        lName: {required: true},
+        phoneNumber: {required: true},
+    };
+    $('#erp_teacher_edit_form').validate({rules: teacherAddValidationRules,errorElement : 'div',
+    errorLabelContainer: '.errorTxt',onsubmit: true});
+    $('#erp_teacher_edit_form').submit(function(e) {
+        e.preventDefault(); 
+        if ($(this).valid()) { 
+            //  $.LoadingOverlay("show");
+            $("body").Lock({background: "rgba(249,249,249,.5)"});
+            //$('#teachereditSubmit').prop('disabled',true);
+            myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller_principal/edit_teacher', teacherEditFormCallback);
+        }
+    });
+    
+    function teacherEditFormCallback(resultData){
+        //$.LoadingOverlay("hide");
+        $("body").Unlock();
+        //myJsMain.commonFunction.hidePleaseWait();
+        //$('#teacherAddSubmit').prop('disabled',false); //alert(resultData.result);
+        if(resultData.result=='bad'){
+            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
+        }else if(resultData.result=='good'){
+            //myJsMain.teacher_add_form_reset();
+            $('#editActionWindow').modal('close');
+            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
+            myJsMain.teacher_ajax_list();
+            $('ul.tabs').tabs('select_tab', 'TeacherList');
+        }
+    }
 }

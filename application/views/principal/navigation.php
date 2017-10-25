@@ -126,7 +126,7 @@
     <ul id="dropdown-profile" class="dropdown-content">
         <li><a href="<?php echo BASE_URL.'principal/my_profile';?>">Profile</a></li>
         <li><a href="<?php echo BASE_URL.'principal/school_settings';?>">School Settings</a></li>
-        <li><a href="<?php echo BASE_URL.'principal/logout';?>">Logout</a></li>
+        <li><a href="<?php echo BASE_URL.$this->erpUserTypeArr[$this->userType].'/'.'principal/logout';?>">Logout</a></li>
     </ul>
 
     <a href="#" data-activates="mobile-demo" class="button-collapse">

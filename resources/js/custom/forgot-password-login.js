@@ -23,12 +23,12 @@ myJsMain.login=function(){
                                 setTimeout(function () {
                             //e("#chkDeleteAll").prop("checked", !1)
                             //n(),
-                            myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller/validate_login', loginFormCallback)
+                            myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURLWithoutLogin+'ajax_controller/validate_login', loginFormCallback)
                         }, 1e3)
                     }}};
             $.Modal("Testing cofniorm Box","Are you sure want to do the action ?",actionObject);*/
             
-            myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller/validate_login', loginFormCallback);
+            myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURLWithoutLogin+'ajax_controller/validate_login', loginFormCallback);
         }
     });
         
@@ -69,7 +69,7 @@ myJsMain.forgot_password=function(){
             $('#forgotPasswrod').prop('disabled',true);
             //$('#fade_background').fadeIn();
             //$('#LoadingDiv').fadeIn();
-            myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax/retribe_forgot_password/', forgotPasswordFormCallback);
+            myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURLWithoutLogin+'ajax/retribe_forgot_password/', forgotPasswordFormCallback);
         }
     });
         

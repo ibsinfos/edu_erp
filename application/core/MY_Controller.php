@@ -20,7 +20,7 @@ class MY_Controller extends CI_Controller {
     
     function _go_to_user_dashbooard(){
         //echo '$userType : '.$userType;die;
-        redirect(BASE_URL.$this->erpUserTypeArr[$this->userType].'/dashboard');
+        redirect(BASE_URL.$this->erpUserTypeArr[$this->userType].'/'.$this->erpUserTypeArr[$this->userType].'/dashboard');
     }
 
     function _is_loged_in() {

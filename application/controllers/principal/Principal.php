@@ -103,7 +103,7 @@ class Principal extends MY_Controller {
         $data['genderArr']= $this->Sc_gender_model->get_list();
         $data['blogGroupArr']= $this->Sc_blood_group_model->get_list();
         $data['countryArr']= $this->Sc_country_model->get_list();
-        $this->load->view($this->erpUserTypeArr[$this->userType].'/teacher_list',$data);
+        $this->load->view($this->erpUserTypeArr[$this->userType].'/teacher/teacher_list',$data);
     }
     
 }
