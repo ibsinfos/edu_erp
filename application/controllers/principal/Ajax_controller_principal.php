@@ -153,10 +153,12 @@ class Ajax_controller_principal extends MY_Controller {
                 $v['elementEditVal']=$valueProp;
                 $table_teacher_structure_text_arr[]=$v;
             }
+           
             $data=array();
             $data['table_user_structure_text']=$table_user_structure_text_arr;
             $data['table_teacher_structure_text']=$table_teacher_structure_text_arr;
-            $data['teacherDataArr']=$dataArr;
+            //pre($dataArr);die;
+            $data['teacherDataArr']=$dataArr[0];
             $data['teacherId']=$teacherId;
             $data['countryArr']= $this->Sc_country_model->get_list();
             $data['jobTitleArr']= $this->Sc_job_title_model->get_list();
