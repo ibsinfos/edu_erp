@@ -80,7 +80,7 @@
                         <td><?php echo $this->lang->line('CIRTIFICATE',FALSE);?></td>
                     </tr>
                     <tr>
-                        <td><?php echo $this->lang->line('TEACHERS',FALSE);?></td>
+                        <td><a href="<?php echo BASE_URL.'principal/show_teacher_list';?>"><?php echo $this->lang->line('TEACHERS',FALSE);?></a></td>
                         <td><?php echo $this->lang->line('STUD_REPORT',FALSE);?></td>
                         <td><?php echo $this->lang->line('DISCUSSION_FRM',FALSE);?></td>
                         <td><?php echo $this->lang->line('DISCIPNARY',FALSE);?></td>
