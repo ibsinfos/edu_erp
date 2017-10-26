@@ -162,12 +162,12 @@
 <script src="<?php echo SchoolSiteResourcesURL; ?>bower_components/blueimp-file-upload/js/jquery.fileupload-validate.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL; ?>bower_components/blueimp-file-upload/js/jquery.fileupload-ui.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL; ?>bower_components/blueimp-tmpl/js/tmpl.js" type="text/javascript"></script>
-<script src="<?php echo SchoolSiteJSURL; ?>custom/<?php echo $this->erpUserTypeArr[$this->userType]; ?>/teacher/teacher_form.js" type="text/javascript"></script>
+<script src="<?php echo SchoolSiteJSURL; ?>custom/<?php echo $this->erpUserTypeArr[$this->userType]; ?>/teacher/teacher_form_edit.js" type="text/javascript"></script>
 
 <script src="<?php echo SchoolSiteJSURL; ?>custom/<?php echo $this->erpUserTypeArr[$this->userType]; ?>/teacher/teacher_manage.js"></script>
 <script type="text/javascript">
     jQuery(document).ready(function(){
-        //$("body").Unlock();
+        $("body").Unlock();
         $("body").delegate(".datepicker", "focusin", function () {
             //$('#editActionWindow').on('shown.bs.modal', function() {
             $(this).datepicker({

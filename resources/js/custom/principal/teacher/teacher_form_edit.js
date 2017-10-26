@@ -1,11 +1,11 @@
 function removeTempProfileImage(img,elem){
-    $("body").Lock({background: "rgba(249,249,249,.5)"});
+    //$("body").Lock({background: "rgba(249,249,249,.5)"});
     $.ajax({
         url:myJsMain.baseURLWithoutLogin+'ajax_controller/remove_temp_profile_image/',
         data:'img='+img,
         type:'POST',
-        success:function(msg){
-            $("body").Unlock();
+        success:function(msg){ 
+            //$("body").Unlock();
             if(msg=='ok'){
                 elem.remove();
                 $('.input-fileupload').children(".form-section").show();
@@ -93,12 +93,12 @@ function removeTempProfileImage(img,elem){
                 $('.input-fileupload').children(".form-section").hide();
                 $('.input-fileupload').children(".actions").hide();
                 $('.input-fileupload').children(".dropzone").hide();
-            }alert(e.name);
-                $('#profilePictureFileName').val(e.name);
+            } //alert(e.name);
+                //$('#profilePictureFileName').val(e.name);
             //1 === e.error && (a = "red-text", s = "close");
             1 === (a = "red-text", s = "close");
             var t = "";
-            return t += '<li class="collection-item avatar file download">', t += l(e), t += ' <span class="title">' + e.name + "</span>", t += " <p>" + n(e) + "</p>", t += '<span class="secondary-content ' + a + '">', t += '   <i class="material-icons" onclick="removeTempProfileImage(\''+ e.name +'\',$(this).parent().parent())">' + s + "</i>", t += " </span>", t += "</li>"
+            return t += '<li class="collection-item avatar file download">', t += l(e), t += ' <span class="title">' + e.name + "</span>", t += " <p>" + n(e) + "</p>", t += ' <input type="hidden" name="profilePictureFileName12" value="'+ e.name +'"> <span class="secondary-content ' + a + '">', t += '   <i class="material-icons" onclick="removeTempProfileImage(\''+ e.name +'\',$(this).parent().parent())">' + s + "</i>", t += " </span>", t += "</li>"
         },
         l = function(e) {
             return e.type.match("image.*") && "undefined" != typeof e.url ? '<div class="circle"><img src="' + e.url + '" alt="' + e.name + '"/></div>' : o(e)

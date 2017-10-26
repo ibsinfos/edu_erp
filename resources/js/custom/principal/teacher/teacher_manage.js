@@ -135,7 +135,7 @@ myJsMain.teacher_edit=function(){
             return false;
         }else{
             //location.href=myJsMain.baseURL+'principal/show_teacher_edit/'+cId;
-            //$("body").Lock({background: "rgba(249,249,249,.5)"});
+            $("body").Lock({background: "rgba(249,249,249,.5)"});
             //$.LoadingOverlay("show");
             $.ajax({
                 url:myJsMain.baseURL+'ajax_controller_principal/get_teacher_details_with_edit_mode/',

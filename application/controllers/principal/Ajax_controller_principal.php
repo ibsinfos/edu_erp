@@ -173,6 +173,6 @@ class Ajax_controller_principal extends MY_Controller {
     }
     
     function edit_teacher(){
-        
+        pre($_POST);die;
     }
 }
