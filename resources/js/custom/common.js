@@ -148,7 +148,7 @@ myJsMain.commonFunction = {
         //$.LoadingOverlay("show");
         $("body").Lock({background: "rgba(249,249,249,.5)"});
         jQuery.ajax({
-            url:myJsMain.baseURL+'ajax_controller/show_state_city',
+            url:myJsMain.baseURLWithoutLogin+'ajax_controller/show_state_city',
             data:'locationId='+locationId+'&type='+type,
             type:'POST',
             success:function(optionStr){ //alert(optionStr);
@@ -162,7 +162,7 @@ myJsMain.commonFunction = {
     removeProfileImage:function(img,elem){
         $("body").Lock({background: "rgba(249,249,249,.5)"});
         $.ajax({
-            url:myJsMain.baseURL+'ajax_conroller/remove_temp_profile_image/',
+            url:myJsMain.baseURLWithoutLogin+'ajax_conroller/remove_temp_profile_image/',
             data:'img='+img,
             type:'POST',
             success:function(msg){

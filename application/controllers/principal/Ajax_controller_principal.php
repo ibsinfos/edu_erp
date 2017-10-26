@@ -162,7 +162,10 @@ class Ajax_controller_principal extends MY_Controller {
             $data['jobTitleArr']= $this->Sc_job_title_model->get_list();
             $data['genderArr']= $this->Sc_gender_model->get_list();
             $data['blogGroupArr']= $this->Sc_blood_group_model->get_list();
+            $data['common_css'] = $this->load->view('common_css', $data, true);
+            $data['common_js'] = $this->load->view('common_js', $data, true);
             $viewContent= $this->load->view($this->erpUserTypeArr[$this->userType].'/teacher/modal_teacher_edit',$data,TRUE);
+            
             echo json_encode(array('result' => 'good', 'resultContent' => $viewContent));die;
         }
     }

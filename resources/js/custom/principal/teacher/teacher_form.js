@@ -1,4 +1,4 @@
-function removeTempProfileImage(img,elem){
+function removeTempProfileImage(img,elem){ alert("calling");
     $("body").Lock({background: "rgba(249,249,249,.5)"});
     $.ajax({
         url:myJsMain.baseURLWithoutLogin+'ajax_controller/remove_temp_profile_image/',

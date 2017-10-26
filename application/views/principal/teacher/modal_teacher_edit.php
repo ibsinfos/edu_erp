@@ -1,7 +1,9 @@
+<?php echo $common_css;?>
 <style>
-    .datepicker{ z-index:99999 !important; }
+    .datepicker{ z-index:9999999 !important; }
 </style>
-<?php echo form_open_multipart('#', array('id' => 'erp_teacher_edit_form', 'class' => 'form-vertical')); ?>
+<?php echo $common_js;?>
+<?php echo form_open_multipart(BASE_URL.$this->erpUserTypeArr[$this->userType].'/ajax_controller_principal/edit_teacher', array('id' => 'erp_teacher_edit_form', 'class' => 'form-vertical')); ?>
 <div class="row">
     <div class="col s12 m12">
         <div class="panel panel-bordered">
@@ -96,7 +98,7 @@
 <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="input-select2 col s12 m12 l6">
+                    <?php /*<div class="input-select2 col s12 m12 l6">
                         <select id="countryId" name="countryId" labelName="" class="validate required">
                             <option value="">Select country</option>
                             <?php foreach ($countryArr AS $key => $val): ?>
@@ -114,7 +116,7 @@
                         <select id="cityId" name="cityId" labelName="" class="validate required">
                             <option value="">Select city</option>
                         </select>
-                    </div>
+                    </div>*/?>
                 </div>
 
                 <div class="row no-gutter margin-bottom-0">
@@ -141,7 +143,7 @@
                     <button type="reset" class="btn-flat waves-effect">
                         RESET
                     </button>
-                    <button type="submit" class="btn-flat waves-effect" id="teacherAddSubmit">
+                    <button type="submit" class="btn-flat waves-effect" id="teacherEditSubmit">
                         SUBMIT
                     </button>
                 </div>
@@ -177,7 +179,7 @@ $(function(){
         $(this).datepicker({
             container: '#root-picker-outlet',
             format: 'dd/mm/yyyy',
-            formatSubmit: 'yyyy/mm/dd'
+            formatSubmit: 'yyyy/mm/dd',
             todayBtn: "linked",
             autoclose: true,
             todayHighlight: true,
@@ -185,6 +187,15 @@ $(function(){
             selectYears: 15, 
         });
     });
+    
+    jQuery(document).delegate('#countryId','change',function(){ 
+        alert("calling");
+        myJsMain.commonFunction.showStateCity(jQuery('#countryId').val(),'state');
+    });
+    
+    jQuery(document).delegate('#stateId','change',function(){
+        myJsMain.commonFunction.showStateCity(jQuery('#stateId').val(),'city');
+    });
 });
-    myJsMain.teacher_edit_save();
+    
 </script>

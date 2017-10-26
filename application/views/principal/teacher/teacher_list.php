@@ -261,17 +261,17 @@ echo $html_heading;?>
 
 <script src="<?php echo SchoolSiteJSURL; ?>custom/<?php echo $this->erpUserTypeArr[$this->userType];?>/teacher/teacher_manage.js"></script>
 <script type="text/javascript">
-$(function(){
-    $('.datepicker').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15, // Creates a dropdown of 15 years to control year
+jQuery(document).ready(function(){
+    jQuery('.datepicker').pickadate({
+        selectMonths: true, /* Creates a dropdown to control month*/
+        selectYears: 15, /* Creates a dropdown of 15 years to control year*/
         container: '#root-picker-outlet',
         format: 'dd/mm/yyyy',
 		formatSubmit: 'yyyy/mm/dd'
     });
     
-    
-});
     myJsMain.teacher_add();
     myJsMain.teacher_edit();
+});
+    
 </script>

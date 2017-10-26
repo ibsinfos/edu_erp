@@ -1,5 +1,5 @@
 // here i am handle product data selected by the user by submit event and handle show product list in Prackage details page
-$(function(){
+jQuery(document).ready(function(){
     jQuery.validator.messages.required = function (param, input) {
         var el =document.getElementById(input.name); 
         //console.log(el.getAttribute("labelName"));
@@ -134,7 +134,9 @@ myJsMain.teacher_edit=function(){
             myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',"Invalid teacher index selection for update.");
             return false;
         }else{
+            //location.href=myJsMain.baseURL+'principal/show_teacher_edit/'+cId;
             //$("body").Lock({background: "rgba(249,249,249,.5)"});
+            //$.LoadingOverlay("show");
             $.ajax({
                 url:myJsMain.baseURL+'ajax_controller_principal/get_teacher_details_with_edit_mode/',
                 data:"teacherId="+cId,
@@ -161,7 +163,8 @@ myJsMain.teacher_edit=function(){
                                 //alert('Closed'); // Callback for Modal close
                             } 
                         });
-                        $("body").Unlock();
+                        //$("body").Unlock();
+                        //$.LoadingOverlay("hide");
                         $('#editActionWindow').modal('open');
                      }
                 }
@@ -171,7 +174,7 @@ myJsMain.teacher_edit=function(){
 }
 
 myJsMain.teacher_edit_save=function(){
-    var teacherAddValidationRules = {
+    /*var teacherAddValidationRules = {
         userName:{required: true,email:true},
         communicationEmail: {required: true,email:true},
         fName: {required: true},
@@ -179,15 +182,16 @@ myJsMain.teacher_edit_save=function(){
         phoneNumber: {required: true},
     };
     $('#erp_teacher_edit_form').validate({rules: teacherAddValidationRules,errorElement : 'div',
-    errorLabelContainer: '.errorTxt',onsubmit: true});
+    errorLabelContainer: '.errorTxt',onsubmit: true});*/
     $('#erp_teacher_edit_form').submit(function(e) {
-        e.preventDefault(); 
+        $.LoadingOverlay("show");
+        /*e.preventDefault(); 
         if ($(this).valid()) { 
             //  $.LoadingOverlay("show");
             $("body").Lock({background: "rgba(249,249,249,.5)"});
             //$('#teachereditSubmit').prop('disabled',true);
             myJsMain.commonFunction.ajaxSubmit($(this),myJsMain.baseURL+'ajax_controller_principal/edit_teacher', teacherEditFormCallback);
-        }
+        }*/
     });
     
     function teacherEditFormCallback(resultData){
