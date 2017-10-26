@@ -43,7 +43,7 @@ class Ajax_controller extends MY_Controller {
     function show_state_city(){
         $locationId= $this->input->post('locationId',TRUE);
         $type= $this->input->post('type',TRUE);
-        if($locationId!=""){
+        if($type!=""){
             $this->load->model("Sc_country_model");
             //pre($type);die;
             if($type=='state')

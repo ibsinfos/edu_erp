@@ -98,7 +98,7 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <?php /* <div class="input-select2 col s12 m12 l6">
+                    <div class="input-select2 col s12 m12 l6">
                       <select id="countryId" name="countryId" labelName="" class="validate required">
                       <option value="">Select country</option>
                       <?php foreach ($countryArr AS $key => $val): ?>
@@ -112,7 +112,7 @@
                       </select>
                       </div>
 
-                      <div class="input-select2 col s12 m12 l6">
+                       <?php /*<div class="input-select2 col s12 m12 l6">
                       <select id="cityId" name="cityId" labelName="" class="validate required">
                       <option value="">Select city</option>
                       </select>
@@ -182,7 +182,7 @@
             });
         });
 
-        jQuery(document).delegate('#countryId', 'change', function () {
+        jQuery(document).delegate('#countryId', 'change', function () { //alert('calling')
             myJsMain.commonFunction.showStateCity(jQuery('#countryId').val(), 'state');
         });
 
