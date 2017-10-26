@@ -103,7 +103,45 @@ class Principal extends MY_Controller {
         $data['genderArr']= $this->Sc_gender_model->get_list();
         $data['blogGroupArr']= $this->Sc_blood_group_model->get_list();
         $data['countryArr']= $this->Sc_country_model->get_list();
-        $this->load->view($this->erpUserTypeArr[$this->userType].'/teacher_list',$data);
+        $this->load->view($this->erpUserTypeArr[$this->userType].'/teacher/teacher_list',$data);
     }
     
+    function show_teacher_edit($teacherId){
+        //$teacherId= $this->input->post("teacherId",TRUE);
+         if($teacherId==""){
+             //process error message
+         }else{
+             $this->load->model('Sc_country_model');
+            $this->load->model('Sc_teacher_model');
+            $this->load->model('Sc_job_title_model');
+            $this->load->model('Sc_gender_model');
+            $this->load->model('Sc_blood_group_model');
+            $dataArr= $this->Sc_teacher_model->get_full_details_by_id($teacherId);
+            $table_teacher_structure_text= $this->Sc_teacher_model->_table_teacher_structure_text;
+            $table_user_structure_text= $this->Sc_teacher_model->_table_user_structure_text;
+            $table_user_structure_text_arr=array();
+            foreach($table_user_structure_text AS $k =>$v){
+                $valueProp='value="'.$dataArr[0][$k].'"';
+                $v['elementEditVal']=$valueProp;
+                $table_user_structure_text_arr[]=$v;
+            }
+            
+            $table_teacher_structure_text_arr=array();
+            foreach($table_teacher_structure_text AS $k =>$v){
+                $valueProp='value="'.$dataArr[0][$k].'"';
+                $v['elementEditVal']=$valueProp;
+                $table_teacher_structure_text_arr[]=$v;
+            }
+            $data=$this->_get_logedin_template($this->_SEODataArr);
+            $data['table_user_structure_text']=$table_user_structure_text_arr;
+            $data['table_teacher_structure_text']=$table_teacher_structure_text_arr;
+            $data['teacherDataArr']=$dataArr;
+            $data['teacherId']=$teacherId;
+            $data['countryArr']= $this->Sc_country_model->get_list();
+            $data['jobTitleArr']= $this->Sc_job_title_model->get_list();
+            $data['genderArr']= $this->Sc_gender_model->get_list();
+            $data['blogGroupArr']= $this->Sc_blood_group_model->get_list();
+            $this->load->view($this->erpUserTypeArr[$this->userType].'/teacher/teacher_edit',$data);
+         }
+    }
 }

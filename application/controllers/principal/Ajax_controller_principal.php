@@ -132,15 +132,47 @@ class Ajax_controller_principal extends MY_Controller {
         if($teacherId==""){
             echo json_encode(array('result' => 'bad', 'msg' => 'Inalid teacher index for update.'));die;
         }else{
+            $this->load->model('Sc_country_model');
             $this->load->model('Sc_teacher_model');
+            $this->load->model('Sc_job_title_model');
+            $this->load->model('Sc_gender_model');
+            $this->load->model('Sc_blood_group_model');
             $dataArr= $this->Sc_teacher_model->get_full_details_by_id($teacherId);
-            ob_start();
-            ?>
-        Teacher edit form and details will comme here
-        <?php
-            $contents = ob_get_contents();
-            ob_end_clean();
-            echo json_encode(array('result' => 'good', 'resultContent' => $contents));die;
+            $table_teacher_structure_text= $this->Sc_teacher_model->_table_teacher_structure_text;
+            $table_user_structure_text= $this->Sc_teacher_model->_table_user_structure_text;
+            $table_user_structure_text_arr=array();
+            foreach($table_user_structure_text AS $k =>$v){
+                $valueProp='value="'.$dataArr[0][$k].'"';
+                $v['elementEditVal']=$valueProp;
+                $table_user_structure_text_arr[]=$v;
+            }
+            
+            $table_teacher_structure_text_arr=array();
+            foreach($table_teacher_structure_text AS $k =>$v){
+                $valueProp='value="'.$dataArr[0][$k].'"';
+                $v['elementEditVal']=$valueProp;
+                $table_teacher_structure_text_arr[]=$v;
+            }
+           
+            $data=array();
+            $data['table_user_structure_text']=$table_user_structure_text_arr;
+            $data['table_teacher_structure_text']=$table_teacher_structure_text_arr;
+            //pre($dataArr);die;
+            $data['teacherDataArr']=$dataArr[0];
+            $data['teacherId']=$teacherId;
+            $data['countryArr']= $this->Sc_country_model->get_list();
+            $data['jobTitleArr']= $this->Sc_job_title_model->get_list();
+            $data['genderArr']= $this->Sc_gender_model->get_list();
+            $data['blogGroupArr']= $this->Sc_blood_group_model->get_list();
+            $data['common_css'] = $this->load->view('common_css', $data, true);
+            $data['common_js'] = $this->load->view('common_js', $data, true);
+            $viewContent= $this->load->view($this->erpUserTypeArr[$this->userType].'/teacher/modal_teacher_edit',$data,TRUE);
+            
+            echo json_encode(array('result' => 'good', 'resultContent' => $viewContent));die;
         }
+    }
+    
+    function edit_teacher(){
+        pre($_POST);die;
     }
 }

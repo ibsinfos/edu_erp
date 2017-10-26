@@ -20,7 +20,7 @@ class MY_Controller extends CI_Controller {
     
     function _go_to_user_dashbooard(){
         //echo '$userType : '.$userType;die;
-        redirect(BASE_URL.$this->erpUserTypeArr[$this->userType].'/dashboard');
+        redirect(BASE_URL.$this->erpUserTypeArr[$this->userType].'/'.$this->erpUserTypeArr[$this->userType].'/dashboard');
     }
 
     function _is_loged_in() {
@@ -40,6 +40,7 @@ class MY_Controller extends CI_Controller {
         $this->lang->load('header', $this->session->userdata('site_lang'));
         $this->lang->load('footer', $this->session->userdata('site_lang'));
         $data['header'] = $this->load->view('header', $data, true);
+        $data['common_js'] = $this->load->view('common_js', $data, true);
         $data['footer'] = $this->load->view('footer', $data, true);
         return $data;
     }
@@ -48,6 +49,7 @@ class MY_Controller extends CI_Controller {
         $data = array();
         $data = $this->html_heading($generalDataArr);
         $this->lang->load('footer1', $this->session->userdata('site_lang'));
+        $data['common_js'] = $this->load->view('common_js', $data, true);
         $data['footer'] = $this->load->view('footer1', $data, true);
         return $data;
     }
@@ -78,6 +80,9 @@ class MY_Controller extends CI_Controller {
             $cLanguage = ($cLanguage != "") ? $cLanguage : "english";
             $this->session->set_userdata('site_lang', $cLanguage);
         }
+        $cData=array();
+        $common_css= $this->load->view('common_css',array(),TRUE);
+       
         $this->lang->load('html_heading', $cLanguage);
         $data = array();
         $GateWayState=$this->input->get('GateWayState',TRUE);
@@ -124,6 +129,7 @@ class MY_Controller extends CI_Controller {
             $data['navigation']=  $this->load->view($this->erpUserTypeArr[$this->userType].'/navigation',$data,TRUE);
         }
         $data['messageBoxTitle']=$this->lang->line('SCHOOL_ERP_SOLUCTION',FALSE);
+        $data['common_css'] = $common_css;
         $data['html_heading'] = $this->load->view('html_heading', $data, true);
         return $data;
     }

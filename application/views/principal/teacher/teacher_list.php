@@ -8,7 +8,6 @@ echo $html_heading;?>
 ?>
 <style>
 .errorTxt{
-  /*border: 1px solid red;*/
   min-height: 20px;
 }
 </style>
@@ -105,7 +104,7 @@ echo $html_heading;?>
                                 <div class="panel-body">
                                     <div class="row no-gutter">
                                         <?php foreach($table_user_structure_text AS $key=>$val): //pre($key);//die;?>
-                                        <div class="input-field col s12 m3">
+                                        <div class="input-field col s12 m6 l3">
                                             <?php $element='<input  id="'.$key.'" name="'.$key.'" type="'.$val['type'].'"';
                                             if(array_key_exists('required', $val)):
                                                 $element.=' required="required"';
@@ -130,7 +129,7 @@ echo $html_heading;?>
                                         <?php foreach($table_teacher_structure_text AS $key=>$val): //pre($key);//die;?>
                                         <?php if($val['type']!='date')?>
                                             <div id="root-picker-outlet" style="position:relative"></div>
-                                        <div class="input-field col s12 m3">
+                                        <div class="input-field col s12 m6 l3">
                                             <?php 
                                             $element='<input  id="'.$key.'" name="'.$key.'" type="'.$val['type'].'"';
                                             if(array_key_exists('required', $val)):
@@ -154,7 +153,7 @@ echo $html_heading;?>
                                             <label for="first_name">First Name</label>-->
                                         </div>
                                         <?php endforeach;?>
-                                        <div class="input-select2 col s12 m3">
+                                        <div class="input-select2 col s12 m6 l3">
                                             <select id="jobTitleId" name="jobTitleId" labelName="">
                                                 <option value="">Select Job Title</option>
                                                 <?php foreach ($jobTitleArr AS $key=>$val):?>
@@ -171,7 +170,7 @@ echo $html_heading;?>
                                                 <?php endforeach;?>
                                             </select>
                                         </div>
-                                        <div class="input-select2 col s12 m3">
+                                        <div class="input-select2 col s12 m6 l3">
                                             <select id="bloodGroupId" name="bloodGroupId" labelName="" class="validate required">
                                                 <option value="">Select blood group</option>
                                                 <?php foreach ($blogGroupArr AS $key=>$val):?>
@@ -179,7 +178,7 @@ echo $html_heading;?>
                                                 <?php endforeach;?>
                                             </select>
                                         </div>
-                                        <div class="input-select2 col s12 m3">
+                                        <div class="input-select2 col s12 m6 l3">
                                             <select id="countryId" name="countryId" labelName="" class="validate required">
                                                 <option value="">Select country</option>
                                                 <?php foreach ($countryArr AS $key=>$val):?>
@@ -187,13 +186,13 @@ echo $html_heading;?>
                                                 <?php endforeach;?>
                                             </select>
                                         </div>
-                                        <div class="input-select2 col s12 m3">
+                                        <div class="input-select2 col s12 m6 l3">
                                             <select id="stateId" name="stateId" labelName="" class="validate required">
                                                 <option value="">Select state</option>
                                             </select>
                                         </div>
                                         
-                                        <div class="input-select2 col s12 m3">
+                                        <div class="input-select2 col s12 m6 l3">
                                             <select id="cityId" name="cityId" labelName="" class="validate required">
                                                 <option value="">Select city</option>
                                             </select>
@@ -201,7 +200,7 @@ echo $html_heading;?>
                                     </div>
                                     
                                     <div class="row no-gutter margin-bottom-0">
-                                        <div class="input-fileupload col s12">
+                                        <div class="input-fileupload col s12 m12 l6">
                                             <div class="form-section">Uploads</div>
                                             <div class="actions">
                                                 <span class="btn-flat small font-size-0-95 waves-effect fileinput-button">
@@ -239,7 +238,7 @@ echo $html_heading;?>
 </div>
 </main>
 <?php echo $footer; ?>
-<script src="<?php echo SchoolSiteJSURL; ?>custom/<?php echo $this->erpUserTypeArr[$this->userType];?>/teacher_list.js" type="text/javascript"></script>
+<script src="<?php echo SchoolSiteJSURL; ?>custom/<?php echo $this->erpUserTypeArr[$this->userType];?>/teacher/teacher_list.js" type="text/javascript"></script>
 
 
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
@@ -252,7 +251,7 @@ echo $html_heading;?>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload-validate.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload-ui.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-tmpl/js/tmpl.js" type="text/javascript"></script>
-<script src="<?php echo SchoolSiteJSURL; ?>custom/<?php echo $this->erpUserTypeArr[$this->userType];?>/teacher_form.js" type="text/javascript"></script>
+<script src="<?php echo SchoolSiteJSURL; ?>custom/<?php echo $this->erpUserTypeArr[$this->userType];?>/teacher/teacher_form.js" type="text/javascript"></script>
 <?php /*
  * <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload-audio.js" type="text/javascript"></script>
 <script src="<?php echo SchoolSiteResourcesURL;?>bower_components/blueimp-file-upload/js/jquery.fileupload-video.js" type="text/javascript"></script>
@@ -260,19 +259,19 @@ echo $html_heading;?>
  */?>
 
 
-<script src="<?php echo SchoolSiteJSURL; ?>custom/<?php echo $this->erpUserTypeArr[$this->userType];?>/teacher_manage.js"></script>
+<script src="<?php echo SchoolSiteJSURL; ?>custom/<?php echo $this->erpUserTypeArr[$this->userType];?>/teacher/teacher_manage.js"></script>
 <script type="text/javascript">
-$(function(){
-    $('.datepicker').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15, // Creates a dropdown of 15 years to control year
+jQuery(document).ready(function(){
+    jQuery('.datepicker').pickadate({
+        selectMonths: true, /* Creates a dropdown to control month*/
+        selectYears: 15, /* Creates a dropdown of 15 years to control year*/
         container: '#root-picker-outlet',
         format: 'dd/mm/yyyy',
 		formatSubmit: 'yyyy/mm/dd'
     });
     
-    
-});
     myJsMain.teacher_add();
     myJsMain.teacher_edit();
+});
+    
 </script>
