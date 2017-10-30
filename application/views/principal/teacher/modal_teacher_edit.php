@@ -3,7 +3,9 @@
     .datepicker{ z-index:9999999 !important; }
 </style>
 <?php echo $common_js; ?>
-<?php echo form_open_multipart(BASE_URL . $this->erpUserTypeArr[$this->userType] . '/ajax_controller_principal/edit_teacher', array('id' => 'erp_teacher_edit_form', 'class' => 'form-vertical')); ?>
+<?php 
+$hidden = array($primary_key_field => $primary_key_field_val);
+echo form_open_multipart(BASE_URL . $this->erpUserTypeArr[$this->userType] . '/ajax_controller_principal/edit_teacher', array('id' => 'erp_teacher_edit_form', 'class' => 'form-vertical'),$hidden); ?>
 <div class="row">
     <div class="col s12 m12">
         <div class="panel panel-bordered">
@@ -14,29 +16,34 @@
             </div>
             <div class="panel-body">
                 <div class="row no-gutter">
-                    <?php foreach ($table_user_structure_text AS $key => $val): //pre($key);//die;?>
+                    <?php foreach ($table_user_structure_text AS $key => $val): //pre($key);pre($val);die;?>
                         <div class="input-field col s12 m12 l6">
                             <?php
-                            $element = '<input  id="' . $key . '" name="' . $key . '" type="' . $val['type'] . '"';
-                            if (array_key_exists('required', $val)):
-                                $element .= ' required="required"';
-                            endif;
-
-                            if (array_key_exists('class', $val)):
-                                $element .= ' class=" validate ' . $val['class'] . '"';
+                            if (array_key_exists('not_editable', $val)):
+                                echo '<label for="' . $key . '">' . $val['elementEditVal'] . '</label>';
                             else:
-                                $element .= ' class="validate"';
-                            endif;
-                            if (array_key_exists('jsEventAction', $val)):
-                                $element .= ' ' . $val['jsEventAction'];
-                            endif;
+                                $element = '<input  id="' . $key . '" name="' . $key . '" type="' . $val['type'] . '"';
+                                if (array_key_exists('required', $val)):
+                                    $element .= ' required="required"';
+                                endif;
 
-                            if (array_key_exists('elementEditVal', $val)):
-                                $element .= ' ' . $val['elementEditVal'];
+                                if (array_key_exists('class', $val)):
+                                    $element .= ' class=" validate ' . $val['class'] . '"';
+                                else:
+                                    $element .= ' class="validate"';
+                                endif;
+                                if (array_key_exists('jsEventAction', $val)):
+                                    $element .= ' ' . $val['jsEventAction'];
+                                endif;
+
+                                if (array_key_exists('elementEditVal', $val)):
+                                    $element .= ' ' . $val['elementEditVal'];
+                                endif;
+                                $element .= ' labelName="' . $val['label'] . '">';
+                                echo $element;
+                                echo '<label for="' . $key . '">' . $val['label'] . '</label>';
                             endif;
-                            $element .= ' labelName="' . $val['label'] . '">';
-                            echo $element;
-                            echo '<label for="' . $key . '">' . $val['label'] . '</label>';
+                            
                             ?>
                             <!--<input placeholder="Placeholder" id="first_name" type="text" class="validate" required="">
                             <label for="first_name">First Name</label>-->
@@ -98,7 +105,7 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="input-select2 col s12 m12 l6">
+                   <?php /* <div class="input-select2 col s12 m12 l6">
                       <select id="countryId" name="countryId" labelName="" class="validate required">
                       <option value="">Select country</option>
                       <?php foreach ($countryArr AS $key => $val): ?>
@@ -112,7 +119,7 @@
                       </select>
                       </div>
 
-                       <?php /*<div class="input-select2 col s12 m12 l6">
+                       <div class="input-select2 col s12 m12 l6">
                       <select id="cityId" name="cityId" labelName="" class="validate required">
                       <option value="">Select city</option>
                       </select>
@@ -137,7 +144,6 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="profilePictureFileName" id="profilePictureFileName" />
             <div class="panel-footer">
                 <div class="right-align">
                     <button type="reset" class="btn-flat waves-effect" onclick="$('#editActionWindow').modal('open');">

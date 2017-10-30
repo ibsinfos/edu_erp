@@ -9,13 +9,10 @@ class Ajax_controller_principal extends MY_Controller {
     }
 
     function add_teacher() {
-        //pre($_FILES);
-        //die;
-        //pre($this->input->post());die;
         $this->load->model('Sc_teacher_model');
         $this->load->model('Sc_user_model');
         $tableTeacherStructureTextArr = $this->Sc_teacher_model->_table_teacher_structure_text;
-        $tableUserStructureTextArr = $this->Sc_teacher_model->_table_user_structure_text;
+        $tableUserStructureTextArr=$this->Sc_teacher_model->_table_user_structure_text;
         $tableTeacherStructureForeignKeyIdArr = $this->Sc_teacher_model->_table_teacher_structure_foreign_key;
 
         $formValidationConfigArr = array();
@@ -142,16 +139,20 @@ class Ajax_controller_principal extends MY_Controller {
             $table_user_structure_text= $this->Sc_teacher_model->_table_user_structure_text;
             $table_user_structure_text_arr=array();
             foreach($table_user_structure_text AS $k =>$v){
-                $valueProp='value="'.$dataArr[0][$k].'"';
+                if(array_key_exists('not_editable', $v)){
+                    $valueProp=$dataArr[0][$k];
+                }else{
+                    $valueProp='value="'.$dataArr[0][$k].'"';
+                }
                 $v['elementEditVal']=$valueProp;
-                $table_user_structure_text_arr[]=$v;
+                $table_user_structure_text_arr[$k]=$v;
             }
             
             $table_teacher_structure_text_arr=array();
             foreach($table_teacher_structure_text AS $k =>$v){
                 $valueProp='value="'.$dataArr[0][$k].'"';
                 $v['elementEditVal']=$valueProp;
-                $table_teacher_structure_text_arr[]=$v;
+                $table_teacher_structure_text_arr[$k]=$v;
             }
            
             $data=array();
@@ -159,7 +160,8 @@ class Ajax_controller_principal extends MY_Controller {
             $data['table_teacher_structure_text']=$table_teacher_structure_text_arr;
             //pre($dataArr);die;
             $data['teacherDataArr']=$dataArr[0];
-            $data['teacherId']=$teacherId;
+            $data['primary_key_field']= $this->Sc_teacher_model->_table_primary_key;
+            $data['primary_key_field_val']=$teacherId;
             $data['countryArr']= $this->Sc_country_model->get_list();
             $data['jobTitleArr']= $this->Sc_job_title_model->get_list();
             $data['genderArr']= $this->Sc_gender_model->get_list();
@@ -173,6 +175,66 @@ class Ajax_controller_principal extends MY_Controller {
     }
     
     function edit_teacher(){
-        pre($_POST);die;
+        //pre($_POST);die;
+        $this->load->model('Sc_teacher_model');
+        $this->load->model('Sc_user_model');
+        $tableTeacherStructureTextArr = $this->Sc_teacher_model->_table_teacher_structure_text;
+        $tableUserStructureTextArr=$this->Sc_teacher_model->_table_user_structure_text;
+        
+        $formValidationConfigArr = array();
+        $formValidationConfigArr = generate_form_validation_arr($tableTeacherStructureTextArr,array(),TRUE);
+        $formValidationConfigArr = generate_form_validation_arr($tableUserStructureTextArr, $formValidationConfigArr,TRUE);
+        
+        //pre($formValidationConfigArr);die;
+        
+        $this->form_validation->set_rules($formValidationConfigArr);
+        if ($this->form_validation->run() == FALSE) {
+            echo json_encode(array('result' => 'bad', 'msg' => str_replace('</p>', '', str_replace('<p>', '', validation_errors()))));die;
+        } else {
+            $primeryKeVal= $this->input->post($this->Sc_teacher_model->_table_primary_key,TRUE);
+            $oldTeacherDataArr= $this->Sc_teacher_model->get_details_by_id($primeryKeVal);
+            //pre($teacherDataArr);die;
+            $userDataArr = array();
+            $userDataArr = generate_user_table_data_arr_for_edit($tableUserStructureTextArr, array('typeText' => 'teacher'));
+            //pre($userDataArr);die;
+            $this->Sc_user_model->edit($userDataArr,$oldTeacherDataArr['userId']);
+            //$teacherId= 3;
+            $teacherDataArr = array();
+            foreach ($tableTeacherStructureTextArr AS $key => $val) {
+                $teacherDataArr[$key] = $this->input->post($key, TRUE);
+            }
+            
+            /*foreach ($tableTeacherStructureForeignKeyIdArr AS $key => $val) {
+                $teacherDataArr[$key] = $this->input->post($key, TRUE);
+            }*/
+            $DOBDate = DateTime::createFromFormat('d-m-Y', $teacherDataArr['DOB']);
+            $teacherDataArr['DOB'] = $DOBDate->format('Y-m-d');
+            $DOJDate = DateTime::createFromFormat('d-m-Y', $teacherDataArr['DOJ']);
+            $teacherDataArr['DOJ'] = $DOJDate->format('Y-m-d');
+            $teacherDataArr['jobTitleId'] = $this->input->post("jobTitleId",TRUE);
+            $teacherDataArr['genderId'] = $this->input->post("genderId",TRUE);
+            $teacherDataArr['bloodGroupId'] = $this->input->post("bloodGroupId",TRUE);
+            
+            $profilePictureFileName= $this->input->post('profilePictureFileName12',TRUE);
+            if($profilePictureFileName!=""){
+                $extArr=explode('.', $profilePictureFileName);
+                $ext= end($extArr);
+                $newFileName=rand('9999999','10000000').'-'.time().'.'.$ext;
+                $destName=SchoolResourcesPath.'user_image/teacher/'.$newFileName;
+                @copy(SchoolResourcesPath.'uploads/'.$profilePictureFileName,$destName);
+                $teacherDataArr['image']=$newFileName;
+                /// removing old img
+                @unlink(SchoolResourcesPath.'user_image/teacher/'.$oldTeacherDataArr['image']);
+            }
+            
+            if($this->Sc_teacher_model->edit($teacherDataArr,$primeryKeVal)){
+                //echo json_encode(array('result' => 'good', 'msg' => 'Teacher updated successfully.'));die;
+                $this->session->set_flashdata('success_message','Teacher updated successfully.');
+                redirect(BASE_URL.$this->erpUserTypeArr[$this->userType].'/principal/show_teacher_list');
+            }
+            /*if ($teacherId != "") {
+                echo json_encode(array('result' => 'good', 'msg' => 'Teacher updated successfully.'));die;
+            }*/
+        }
     }
 }

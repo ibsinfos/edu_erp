@@ -1,7 +1,7 @@
 <?php
 class Sc_teacher_model extends CI_Model {
     private $_table='sc_teacher';
-    private $_table_primary_key='teacherId';
+    public $_table_primary_key='teacherId';
     private $_table_user='sc_user';
     private $_table_job_title='sc_job_title';
     public $_table_teacher_structure_text=array(
@@ -17,7 +17,7 @@ class Sc_teacher_model extends CI_Model {
     );
     
     public $_table_user_structure_text=array(
-        'userName'=>array('type'=>'email','required'=>'required','is_unique'=>'sc_user.userName','label'=>'User Name','jsEventAction'=>'onblur="$(\'#communicationEmail\').val($(this).val());"'),
+        'userName'=>array('type'=>'email','required'=>'required','is_unique'=>'sc_user.userName','label'=>'User Name','jsEventAction'=>'onblur="$(\'#communicationEmail\').val($(this).val());"','not_editable'=>'true'),
         'communicationEmail'=>array('type'=>'email','required'=>'required','label'=>'Communication Email'),
         'fName'=>array('type'=>'text','required'=>'required','label'=>'First Name'),
         'mName'=>array('type'=>'text','label'=>'Middle Name'),
@@ -70,7 +70,7 @@ class Sc_teacher_model extends CI_Model {
     }
     
     function get_details_by_id($id){
-        return $this->db->from($this->_table)->where($this->_table_primary_key,$id)->get()->result_array();
+        return $this->db->from($this->_table)->where($this->_table_primary_key,$id)->get()->row_array();
     }
     
     function get_full_details_by_id($id){

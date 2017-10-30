@@ -524,14 +524,29 @@ if (!function_exists('generate_user_table_data_arr')) {
     }
 }
 
+if (!function_exists('generate_user_table_data_arr_for_edit')) {
+    function generate_user_table_data_arr_for_edit($tableUserStructureTextArr,$type){
+        $CI=& get_instance();
+        foreach ($tableUserStructureTextArr AS $key => $val) {
+            if(!array_key_exists('not_editable', $val))
+                $userDataArr[$key]= $CI->input->post($key,TRUE);
+        }
+        return $userDataArr;
+    }
+}
+
 if (!function_exists('generate_form_validation_arr')) {
-    function generate_form_validation_arr($tableTeacherStructureTextArr,$formValidationConfigArr=array()){
+    function generate_form_validation_arr($tableTeacherStructureTextArr,$formValidationConfigArr=array(),$actionEdit=FALSE){
         foreach ($tableTeacherStructureTextArr AS $key => $val) {
-            $tempArr = array('field' => $key, 'label' => $val['label']);
-            $ruleStr = 'trim|xss_clean';
-            $ruleStr .= generate_form_validation_rules($val);
-            $tempArr['rules'] = $ruleStr;
-            $formValidationConfigArr[] = $tempArr;
+            if($actionEdit==TRUE && array_key_exists('not_editable', $val)){
+                continue;
+            }else{
+                $tempArr = array('field' => $key, 'label' => $val['label']);
+                $ruleStr = 'trim|xss_clean';
+                $ruleStr .= generate_form_validation_rules($val);
+                $tempArr['rules'] = $ruleStr;
+                $formValidationConfigArr[] = $tempArr;
+            }
         }
         return $formValidationConfigArr;
     }

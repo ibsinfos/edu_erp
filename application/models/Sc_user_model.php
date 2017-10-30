@@ -2,6 +2,7 @@
 
 class Sc_user_model extends CI_Model {
     private $_table="sc_user";
+    public $_table_primary_key='userId';
     
     function __construct() {
         parent::__construct();
@@ -20,6 +21,12 @@ class Sc_user_model extends CI_Model {
     function add($dataArr){
         $this->db->insert($this->_table,$dataArr);
         return $this->db->insert_id();
+    }
+    
+    function edit($dataArr,$id){
+        $this->db->where($this->_table_primary_key,$id);
+        $this->db->update($this->_table,$dataArr);
+        return TRUE;
     }
     
     function is_user_name_exist($userName){

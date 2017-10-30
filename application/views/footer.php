@@ -19,6 +19,18 @@
 </footer>
 <?php echo $common_js;?>
 <script type="text/javascript">
+    <?php 
+    $crud_operation_success_msg=$this->session->set_flashdata('success_message');
+    if($crud_operation_success_msg!=""){?>
+        myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',$crud_operation_success_msg);
+    <?php }
+    ?>
+    <?php 
+    $crud_operation_fail_msg=$this->session->set_flashdata('fail_message');
+    if($crud_operation_fail_msg!=""){?>
+        myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',$crud_operation_fail_msg);
+    <?php }
+    ?>
     jQuery(document).ready(function(){
         jQuery('body').on('click','.closeEditModelWin',function(){
             $('#editActionWindow').modal('close');
