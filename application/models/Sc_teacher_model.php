@@ -40,7 +40,7 @@ class Sc_teacher_model extends CI_Model {
     }
     
     function get_teachers_list_for_principal($schoolId=1){
-        $this->db->select('t.teacherId,u.fName,u.lName,u.communicationEmail,u.phoneNumber,jt.title')->from($this->_table.' AS t');
+        $this->db->select('t.teacherId,u.fName,u.lName,u.communicationEmail,u.phoneNumber,jt.title,u.status')->from($this->_table.' AS t');
         $this->db->join($this->_table_user.' AS u','t.userId=u.userId')->join($this->_table_job_title.' AS jt','t.jobTitleId=jt.jobTitleId');
         $rs=$this->db->where('u.schoolId',$schoolId)->get()->result_array();
         //echo $this->db->last_query();die;
@@ -62,7 +62,7 @@ class Sc_teacher_model extends CI_Model {
         $DataArr= $this->get_details_by_id($id);
         if(!empty($DataArr)){
             $this->db->delete($this->_table, array($this->_table_primary_key=> $id)); 
-            $this->db->delete($this->_table_user,array('userId'=>$DataArr[0]['userId']));
+            $this->db->delete($this->_table_user,array('userId'=>$DataArr['userId']));
             return TRUE;
         }else{
             return FALSE;

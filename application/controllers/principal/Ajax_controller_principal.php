@@ -207,14 +207,21 @@ class Ajax_controller_principal extends MY_Controller {
             /*foreach ($tableTeacherStructureForeignKeyIdArr AS $key => $val) {
                 $teacherDataArr[$key] = $this->input->post($key, TRUE);
             }*/
-            $DOBDate = DateTime::createFromFormat('d-m-Y', $teacherDataArr['DOB']);
-            $teacherDataArr['DOB'] = $DOBDate->format('Y-m-d');
-            $DOJDate = DateTime::createFromFormat('d-m-Y', $teacherDataArr['DOJ']);
-            $teacherDataArr['DOJ'] = $DOJDate->format('Y-m-d');
+            //pre($teacherDataArr['DOB']);die;
+            $teacherDOBDataArr= explode('-', $teacherDataArr['DOB']);
+            if(strlen($teacherDOBDataArr[0])==2){
+                $DOBDate = DateTime::createFromFormat('d-m-Y', $teacherDataArr['DOB']);
+                $teacherDataArr['DOB'] = $DOBDate->format('Y-m-d');
+            }
+            $teacherDOJDataArr= explode('-', $teacherDataArr['DOJ']);
+            if(strlen($teacherDOJDataArr[0])==2){
+                $DOJDate = DateTime::createFromFormat('d-m-Y', $teacherDataArr['DOJ']);
+                $teacherDataArr['DOJ'] = $DOJDate->format('Y-m-d');
+            }
             $teacherDataArr['jobTitleId'] = $this->input->post("jobTitleId",TRUE);
             $teacherDataArr['genderId'] = $this->input->post("genderId",TRUE);
             $teacherDataArr['bloodGroupId'] = $this->input->post("bloodGroupId",TRUE);
-            
+            //pre($teacherDataArr);die;
             $profilePictureFileName= $this->input->post('profilePictureFileName12',TRUE);
             if($profilePictureFileName!=""){
                 $extArr=explode('.', $profilePictureFileName);
@@ -235,6 +242,25 @@ class Ajax_controller_principal extends MY_Controller {
             /*if ($teacherId != "") {
                 echo json_encode(array('result' => 'good', 'msg' => 'Teacher updated successfully.'));die;
             }*/
+        }
+    }
+    
+    function teacher_status_chanage(){
+        $teacherId= $this->input->post('teacherId',TRUE);
+        $changeTo=$this->input->post('changeTo',TRUE);
+        
+        $this->load->model('Sc_teacher_model');
+        $this->load->model('Sc_user_model');
+        
+        $TeacherDataArr= $this->Sc_teacher_model->get_details_by_id($teacherId);
+        if(empty($TeacherDataArr)){
+            echo json_encode(array('result' => 'bad', 'msg' => 'invalie teacher selected for status update.'));die;
+        }else{
+            if($this->Sc_user_model->edit(array('status'=>$changeTo),$TeacherDataArr['userId'])==TRUE){
+                echo json_encode(array('result' => 'good', 'msg' => 'Teacher status change successfully.'));die;
+            }else{
+                echo json_encode(array('result' => 'bad', 'msg' => 'Unknown error arises for update the teacher status.'));die;
+            }
         }
     }
 }

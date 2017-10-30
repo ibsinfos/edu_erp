@@ -61,20 +61,27 @@ echo $html_heading;?>
                                     </thead>
                                     <tbody>
                                         <?php if (!empty($teacherDataArr)): $slNo=0;
-                                            foreach ($teacherDataArr AS $key =>$value):?>
+                                            foreach ($teacherDataArr AS $key =>$value): //pre($value);?>
                                         <tr>
-                                            <td class="center-align">
+                                            <td class="center-align" width="10%">
                                                 <input type="checkbox" id="teacher<?php echo $value['teacherId'];?>">
                                                 <label for="teacher<?php echo $value['teacherId'];?>"><?php echo ++$slNo;?></label>
                                             </td>
-                                            <td data-id="<?php echo $value['teacherId'];?>"><?php echo $value['fName'].' '.$value['lName'];?></td>
-                                            <td><?php echo $value['communicationEmail'];?></td>
-                                            <td><?php echo $value['title'];?></td>
-                                            <td><?php echo $value['phoneNumber'];?></td>
-                                            <td class="center-align">
+                                            <td data-id="<?php echo $value['teacherId'];?>" width="20%"><?php echo $value['fName'].' '.$value['lName'];?></td>
+                                            <td width="25%"><?php echo $value['communicationEmail'];?></td>
+                                            <td width="15%"><?php echo $value['title'];?></td>
+                                            <td with="15%"><?php echo $value['phoneNumber'];?></td>
+                                            <td class="center-align" width="20%">
                                                 <div class="btn-group">
                                                     <a href="javascript:void(0);" class="btn-flat btn-small waves-effect">
                                                         <i class="material-icons material-icons-edit" data-editid="<?php echo $value['teacherId'];?>">edit</i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="btn-flat btn-small waves-effect">
+                                                        <?php if($value['status']==1):?>
+                                                        <i style="font-size:0.8rem !important;" class="make-inactive-cl" data-statusid="<?php echo $value['teacherId'];?>" title="Active">Make Inactive</i>
+                                                        <?php else:?>
+                                                        <i style="font-size:0.8rem !important;" class="make-active-cl" data-statusid="<?php echo $value['teacherId'];?>" title="Inactive">Make Active</i>
+                                                        <?php endif;?>
                                                     </a>
                                                     <a class="btn-flat btn-small waves-effect btnDelete">
                                                         <i class="material-icons">delete</i>
@@ -272,6 +279,8 @@ jQuery(document).ready(function(){
     
     myJsMain.teacher_add();
     myJsMain.teacher_edit();
+    myJsMain.teacher_update_status();
+    
 });
     
 </script>

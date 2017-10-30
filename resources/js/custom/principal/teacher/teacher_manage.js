@@ -210,3 +210,41 @@ myJsMain.teacher_edit_save=function(){
         }
     }
 }
+
+myJsMain.teacher_update_status=function(){
+    $(document).on('click','.make-inactive-cl',function(){
+        var cId=0;
+        cId=$(this).data("statusid");        
+        $("body").Lock({background: "rgba(249,249,249,.5)"});
+        teacher_update_status_by_action(cId,0);
+    });
+    
+    $(document).on('click','.make-active-cl',function(){
+        var cId=0;
+        cId=$(this).data("statusid");        
+        $("body").Lock({background: "rgba(249,249,249,.5)"});
+        teacher_update_status_by_action(cId,1);
+    });
+    
+    function teacher_update_status_by_action(cId,changeTo){
+        $.ajax({
+            url:myJsMain.baseURL+'ajax_controller_principal/teacher_status_chanage/',
+            data:'teacherId='+cId+'&changeTo='+changeTo,
+            type:'POST',
+            dataType:'json',
+            success:function(resultData){
+                $("body").Unlock();
+                //myJsMain.commonFunction.hidePleaseWait();
+                if(resultData.result=='bad'){
+                    myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
+                }else if(resultData.result=='good'){
+                    myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
+                    //alert(resultData.url);
+                    setTimeout(function(){
+                        window.location.reload();
+                      }, 3000);
+                }
+            }
+        });
+    }
+}
