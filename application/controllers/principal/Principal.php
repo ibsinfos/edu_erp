@@ -106,7 +106,7 @@ class Principal extends MY_Controller {
         $this->load->view($this->erpUserTypeArr[$this->userType].'/teacher/teacher_list',$data);
     }
     
-    function show_teacher_edit($teacherId){
+    /*function show_teacher_edit($teacherId){
         //$teacherId= $this->input->post("teacherId",TRUE);
          if($teacherId==""){
              //process error message
@@ -143,5 +143,14 @@ class Principal extends MY_Controller {
             $data['blogGroupArr']= $this->Sc_blood_group_model->get_list();
             $this->load->view($this->erpUserTypeArr[$this->userType].'/teacher/teacher_edit',$data);
          }
+    }*/
+    
+    function bulk_upload(){
+        $data=$this->_get_logedin_template($this->_SEODataArr);
+        $breadcrumb=array();
+        $breadcrumbItemArr=array('breadcrumbLink'=>'#','tooltip'=>'All Teacher List','breadcrumbIcon'=>'fa-user','breadcrumbText'=>'Teacher List');
+        $breadcrumb[]=$breadcrumbItemArr;
+        $data['breadcrumb']=  generate_breadcrumb($breadcrumb);
+        $this->load->view($this->erpUserTypeArr[$this->userType].'/general_settings/bulk_upload',$data);
     }
 }
