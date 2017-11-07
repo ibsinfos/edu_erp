@@ -153,4 +153,8 @@ class Principal extends MY_Controller {
         $data['breadcrumb']=  generate_breadcrumb($breadcrumb);
         $this->load->view($this->erpUserTypeArr[$this->userType].'/general_settings/bulk_upload',$data);
     }
+    
+    function teacher_bulk_upload_error(){
+        
+    }
 }

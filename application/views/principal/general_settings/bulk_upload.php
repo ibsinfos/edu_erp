@@ -43,7 +43,7 @@
                                             </button>
                                         </div>
                                         <div class="col m6 s12 l4 text-center">
-                                            <button type="button" class="btn btn-default upload-btn" data-formactionid="teacher_process">
+                                            <button type="button" class="btn btn-default upload-btn" data-formactionid="teacher_upload_process">
                                                 <i class="mdi mdi-upload"></i>
                                                 Submit
                                             </button>

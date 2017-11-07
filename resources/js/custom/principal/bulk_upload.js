@@ -50,10 +50,12 @@ jQuery(function () {
                     });
                 }else{
                     //process erro for to upload excel file onlye
+                    myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',"Please select only excel file for bulk upload.");
                 }
             }
         }else{
             /// empty file error process
+            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',"Please select the excel file for bulk upload.");
         }
     });
     
