@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2017 at 10:54 PM
+-- Generation Time: Nov 07, 2017 at 05:50 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -19,6 +19,44 @@ SET time_zone = "+00:00";
 --
 -- Database: `erp`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sc_attendance`
+--
+
+DROP TABLE IF EXISTS `sc_attendance`;
+CREATE TABLE IF NOT EXISTS `sc_attendance` (
+  `attendanceId` int(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` varchar(30) NOT NULL,
+  `date` date NOT NULL,
+  `sessionId` int(11) NOT NULL,
+  `inTime` datetime NOT NULL,
+  `outTime` datetime NOT NULL,
+  `studentId` int(11) NOT NULL,
+  `schoolId` int(11) NOT NULL,
+  PRIMARY KEY (`attendanceId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sc_attendance_teacher`
+--
+
+DROP TABLE IF EXISTS `sc_attendance_teacher`;
+CREATE TABLE IF NOT EXISTS `sc_attendance_teacher` (
+  `attendanceTeacherId` int(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` varchar(30) NOT NULL,
+  `inTime` datetime NOT NULL,
+  `outTime` datetime NOT NULL,
+  `teacherId` int(11) NOT NULL,
+  `attendanceDate` date NOT NULL,
+  `sessionId` int(11) NOT NULL,
+  `schoolId` int(11) NOT NULL,
+  PRIMARY KEY (`attendanceTeacherId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -46,6 +84,21 @@ INSERT INTO `sc_blood_group` (`bloodGroupId`, `title`) VALUES
 (6, 'AB-'),
 (7, 'O+'),
 (8, 'O-');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sc_class`
+--
+
+DROP TABLE IF EXISTS `sc_class`;
+CREATE TABLE IF NOT EXISTS `sc_class` (
+  `classId` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) NOT NULL,
+  `numericName` varchar(15) NOT NULL,
+  `schoolId` int(11) NOT NULL,
+  PRIMARY KEY (`classId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1742,6 +1795,24 @@ INSERT INTO `sc_country` (`locationId`, `name`, `iso2Code`, `locationType`, `par
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sc_enroll`
+--
+
+DROP TABLE IF EXISTS `sc_enroll`;
+CREATE TABLE IF NOT EXISTS `sc_enroll` (
+  `enrollId` bigint(20) NOT NULL AUTO_INCREMENT,
+  `enrollCode` varchar(30) NOT NULL,
+  `studentId` int(11) NOT NULL,
+  `sectionId` int(11) NOT NULL,
+  `roll` varchar(50) NOT NULL,
+  `addmissionDate` date NOT NULL,
+  `sessionId` int(11) NOT NULL,
+  PRIMARY KEY (`enrollId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sc_gender`
 --
 
@@ -1858,6 +1929,25 @@ CREATE TABLE IF NOT EXISTS `sc_principal` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sc_section`
+--
+
+DROP TABLE IF EXISTS `sc_section`;
+CREATE TABLE IF NOT EXISTS `sc_section` (
+  `sectionId` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `nickName` varchar(50) NOT NULL,
+  `teacherId` int(11) NOT NULL,
+  `classId` int(11) NOT NULL,
+  `roomNo` int(11) DEFAULT NULL,
+  `maxCapacity` int(11) DEFAULT NULL,
+  `schoolId` int(11) NOT NULL,
+  PRIMARY KEY (`sectionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sc_student`
 --
 
@@ -1917,17 +2007,14 @@ CREATE TABLE IF NOT EXISTS `sc_teacher` (
   `cardId` int(11) NOT NULL,
   `image` varchar(250) NOT NULL,
   PRIMARY KEY (`teacherId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sc_teacher`
 --
 
 INSERT INTO `sc_teacher` (`teacherId`, `userId`, `DOB`, `DOJ`, `jobTitleId`, `qualification`, `specialisation`, `experience`, `genderId`, `bloodGroupId`, `address`, `countryId`, `stateId`, `cityId`, `zipCode`, `homePhone`, `cardId`, `image`) VALUES
-(1, 2, '2017-10-01', '2017-10-28', 1, 'b.come', 'comm', 12, 1, 1, 'no address', 100, 752, 6196, 123414321, 2147483647, 34342, ''),
-(2, 3, '2017-10-12', '2017-10-31', 1, 'test', 'test', 12, 1, 1, 'address temp', 100, 752, 6196, 34214, 432143243, 0, ''),
-(3, 4, '2007-10-03', '2017-10-31', 1, 'b.come', 'comm', 12, 1, 2, 'address temp123', 100, 752, 6196, 34214, 432143243, 34342, ''),
-(4, 5, '2017-10-09', '2017-10-31', 3, 'c com', 'comm', 12, 1, 2, 'address temp', 100, 752, 6198, 34214, 432143243, 34342, '9999999-1508790221.jpg');
+(1, 2, '2017-10-01', '2017-10-28', 1, 'b.come', 'comm', 10, 1, 2, 'no address..yes', 100, 752, 6196, 123414321, 2147483647, 34342, '10000000-1509387214.png');
 
 -- --------------------------------------------------------
 
@@ -1950,7 +2037,7 @@ CREATE TABLE IF NOT EXISTS `sc_user` (
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0=>deactive,1=>active,2=>delete',
   `schoolId` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sc_user`
@@ -1958,10 +2045,31 @@ CREATE TABLE IF NOT EXISTS `sc_user` (
 
 INSERT INTO `sc_user` (`userId`, `userName`, `communicationEmail`, `password`, `passcode`, `fName`, `mName`, `lName`, `phoneNumber`, `userType`, `status`, `schoolId`) VALUES
 (1, 'info@school-erp.com', 'info@school-erp.com', 'UFJJLTEyMzQ1~91b2a91f2d3e7b55941c57710757b395', 'SAD-12345', 'School', '', 'Admin', 88888888, 'PRI', 1, 1),
-(2, 'demoteacher@school-erp.com', 'demoteacher@school-erp.com', 'VEVBblo2ZkgwMTg2~91b2a91f2d3e7b55941c57710757b395', 'TEAnZ6fH0186', 'fname', 'mname', 'lname', 2147483647, 'TEA', 1, 1),
-(3, 'demo.teacher@school-erp.com', 'demo.teacher@school-erp.com', 'VEVBZFFLTnQ3OTEw~91b2a91f2d3e7b55941c57710757b395', 'TEAdQKNt7910', 'demo', '', 'teacher', 898998981, 'TEA', 1, 1),
-(4, 'demo.teacher1@school-erp.com', 'demo.teacher1@school-erp.com', 'VEVBSzgzZzQxMzgw~91b2a91f2d3e7b55941c57710757b395', 'TEAK83g41380', 'demo1', 'mname', 'teacher1', 2147483647, 'TEA', 1, 1),
-(5, 'meroni@school-erp.com', 'meroni@school-erp.com', 'VEVBVHZxZGE1MDEy~91b2a91f2d3e7b55941c57710757b395', 'TEATvqda5012', 'meroni', '', 'eluni', 2147483647, 'TEA', 1, 1);
+(2, 'demoteacher@school-erp.com', 'demoteacher@school-erp.com', 'VEVBblo2ZkgwMTg2~91b2a91f2d3e7b55941c57710757b395', 'TEAnZ6fH0186', 'fname', 'mname', 'lname', 2147483647, 'TEA', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sc_year`
+--
+
+DROP TABLE IF EXISTS `sc_year`;
+CREATE TABLE IF NOT EXISTS `sc_year` (
+  `sessionId` int(11) NOT NULL AUTO_INCREMENT,
+  `session` varchar(25) NOT NULL,
+  PRIMARY KEY (`sessionId`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sc_year`
+--
+
+INSERT INTO `sc_year` (`sessionId`, `session`) VALUES
+(1, '2016-2017'),
+(2, '2017-2018'),
+(3, '2018-2019'),
+(4, '2019-2020'),
+(5, '2020-2021');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
