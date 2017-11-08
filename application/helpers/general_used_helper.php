@@ -612,3 +612,374 @@ if (!function_exists('generate_passcode')) {
         return $passcode;
     }
 }
+
+
+if(!function_exists('generate_roll_no')){
+    function generate_roll_no($class_id,$section_id){
+        if($section_id=="" || $section_id == ""){
+            return FALSE;
+        }else{
+            $CI=&get_instance();
+            $sqlRoll="SELECT MAX(roll) latest_roll FROM enroll WHERE class_id='".$class_id."' AND section_id='".$section_id."'";
+            generate_log($sqlRoll);
+            $rsRoll=$CI->db->query($sqlRoll)->result_array();
+            generate_log(serialize($rsRoll));
+            generate_log("==".$rsRoll[0]['latest_roll']."==");
+            if(count($rsRoll)>0 || $rsRoll[0]['latest_roll']!=NULL || $rsRoll[0]['latest_roll']!=""){
+                return (int)$rsRoll[0]['latest_roll']+1;
+            }else{
+                return 1;
+            }
+        }
+    }
+}
+
+if(!function_exists('get_user_img_url')){
+    function get_user_img_url($type,$id){
+        //echo $type.$id; exit;
+        if (file_exists('uploads/' . $type . '_image/' . $id . '.jpg')){
+            $image_url = base_url() . 'uploads/' . $type . '_image/' . $id . '.jpg';
+            //echo $image_url; exit;
+        }else{
+            $image_url = base_url() . 'uploads/user.jpg';
+        //echo $image_url. "fgfg"; exit; http://localhost/beta_ag/uploads/admin_image/1.jpg
+        }
+        return $image_url;
+    }
+}
+
+if(!function_exists('create_school_data_backup')){
+    function create_school_data_backup($backupFilename,$backup_drive){
+        generate_log("calling create_mysql_manual_back_up_current_db.log()","create_mysql_manual_back_up_current_db.log");
+        date_default_timezone_set('Asia/Calcutta');
+        
+        $CI=&get_instance();
+        $CI->load->dbutil();
+        $tables         =       $CI->db->list_tables(); 
+        $statement_values   =   '';
+        $statement_values   .=   'SET @TRIGGER_BEFORE_INSERT_CHECKS = FALSE;'.PHP_EOL;
+        $statement_values   .=   'SET @TRIGGER_AFTER_INSERT_CHECKS = FALSE;'.PHP_EOL;
+        $statement_values   .=   'SET @TRIGGER_BEFORE_UPDATE_CHECKS = FALSE;'.PHP_EOL;
+        $statement_values   .=   'SET @TRIGGER_AFTER_UPDATE_CHECKS = FALSE;'.PHP_EOL;
+        $statement_values   .=   'SET @TRIGGER_BEFORE_DELETE_CHECKS = FALSE;'.PHP_EOL;
+        $statement_values   .=   'SET @TRIGGER_AFTER_DELETE_CHECKS = FALSE;'.PHP_EOL;
+        $statement_values   .=   'SET FOREIGN_KEY_CHECKS=0;'.PHP_EOL;
+        $statement_query    =   '';
+        $prev_table_name="";
+        $skipTableBackupArr=array('member','member1');
+        $skipTableArr=array();
+        foreach ($tables as $table_names){
+            generate_log("start for ".$table_names,"database_data_backup_log_".CURRENT_INSTANCE.".log");
+            if(in_array($table_names, $skipTableBackupArr)){
+                continue;
+            }
+            if(!in_array($table_names, $skipTableArr)){
+                if($table_names=='main_currency'){
+                    $statement_values.=PHP_EOL."TRUNCATE TABLE `tm_emp_timesheets`;".PHP_EOL;
+                    $statement_values.=PHP_EOL."TRUNCATE TABLE `tm_projects`;".PHP_EOL;
+                }
+                $statement_values.=PHP_EOL."TRUNCATE TABLE `".$table_names."`;".PHP_EOL;
+            }
+            generate_log("just before taking data from table get_data_generic_fun(): ".$table_names,"database_data_backup_log_".CURRENT_INSTANCE.".log");
+            $statement =  get_data_generic_fun($table_names,'*',array(),'result_arr');
+            if(!empty($statement)){
+                foreach ($statement as $key => $post) {
+                    if(isset($statement_values)) {
+                        $statement_values .= "\n";
+                    }
+                    $values = array_values($post);
+                    foreach($values as $index => $value) {
+                        $quoted = str_replace("'","\'",str_replace('"','\"', $value));
+                        $values[$index] = (!isset($value) ? 'NULL' : "'" . $quoted."'") ;
+                    }
+                $statement_values .="insert into ".$table_names." values "."(".implode(',',$values).");";
+                }
+                generate_log("get_data_generic_fun() return data for : ".$table_names." ==== ".$statement_values,"database_data_backup_log_".CURRENT_INSTANCE.".log");
+            }else{
+                generate_log("get_data_generic_fun() return no data : ".$table_names,"database_data_backup_log_".CURRENT_INSTANCE.".log");
+            }
+            $statement = $statement_values . ";";     
+        }
+        $statement_values   .=   PHP_EOL.'SET @TRIGGER_BEFORE_INSERT_CHECKS = TRUE;'.PHP_EOL;
+        $statement_values   .=   'SET @TRIGGER_AFTER_INSERT_CHECKS = TRUE;'.PHP_EOL;
+        $statement_values   .=   'SET @TRIGGER_BEFORE_UPDATE_CHECKS = TRUE;'.PHP_EOL;
+        $statement_values   .=   'SET @TRIGGER_AFTER_UPDATE_CHECKS = TRUE;'.PHP_EOL;
+        $statement_values   .=   'SET @TRIGGER_BEFORE_DELETE_CHECKS = TRUE;'.PHP_EOL;
+        $statement_values   .=   'SET @TRIGGER_AFTER_DELETE_CHECKS = TRUE;'.PHP_EOL;
+        $statement_values   .=   'SET FOREIGN_KEY_CHECKS=1;'.PHP_EOL;
+        $backup         =   $statement_values;
+        //echo $backup;die;
+        generate_log("helper init for save the backup data to SQL : ","create_mysql_manual_back_up_current_db.log");
+        $CI->load->helper('file'); 
+        generate_log("back_up_file_full_path : ".$backup_drive.$backupFilename,"create_mysql_manual_back_up_current_db.log");
+        write_file($backup_drive.$backupFilename, $backup);
+        //die("write done");
+        generate_log("going back to main function : ","create_mysql_manual_back_up_current_db.log");
+        return $backupFilename;
+    }
+}
+if(!function_exists('get_session_links')){
+	function get_session_links($sess_link_id=false){
+        $CI=&get_instance();
+        $CI->load->dbutil();
+        $rec = $CI->db->get_where('session_links',array('id'=>$sess_link_id))->row();
+        $links = $rec?json_decode($rec->links,true):array();
+        buildMenu($links);
+    }
+}
+
+if(!function_exists('generate_log')){
+	function generate_log($message,$log_file_name="",$isOverwritting=FALSE){
+        $dir=$_SERVER['DOCUMENT_ROOT'];
+        //die($dir);
+        if($_SERVER['HTTP_HOST']==CURRENT_IP_ADDR || $_SERVER['HTTP_HOST']==SMS_IP_ADDR || $_SERVER['HTTP_HOST']=='localhost' || $_SERVER['HTTP_HOST']=='localhost:8080'){
+            $dir .= '/'.CURRENT_INSTANCE.'/uploads/';
+        }else{
+                $dir .= '/uploads/';
+        }
+        if($log_file_name==""){
+            $log_file_path=$dir.'demo_school_curl_'.date('Y-m-d').'.log';
+        }else{
+            $log_file_path=$dir.$log_file_name;
+        }
+        //echo $log_file_path;die;
+        if($isOverwritting == FALSE){
+            $fileOpenType = 'a+';
+        }else{
+            $fileOpenType = 'w+';
+        }   
+        if (!$handle = fopen($log_file_path, $fileOpenType)) {
+            return false;
+        }else{
+            $message.=PHP_EOL;
+            if (fwrite($handle, $message) === FALSE) {
+                return false;
+            }else{
+                fclose($handle);
+            }
+        }
+    }
+}
+
+if ( ! function_exists('success_response_after_post_get')){
+    function success_response_after_post_get($parram){
+        $result=array();
+        if(!array_key_exists('ajaxType', $parram)):
+            if(array_key_exists('master_ip', $parram)){
+                $result=  get_default_urls($parram['master_ip']);    
+            }else{
+                $result=  get_default_urls();    
+            }
+        endif;
+        //$result['message']="Shipping address data updated successfully.";
+        $result['timestamp'] = time();
+        if(!empty($parram)):
+            foreach ($parram as $k => $v){
+                $result[$k]=$v;
+            }
+        endif;
+        
+        header('Content-type: application/json');
+        echo json_encode($result);
+    }
+}
+
+if ( ! function_exists('get_default_urls')){
+    function get_default_urls($ip=SMS_IP_ADDR){
+        $result=array();
+        $result['site_logo_image_url']='http://'.$ip.'/upload/';
+        $result['site_image_url']='http://'.$ip.'/assets/images/';
+        $result['site_image_url']='http://'.$ip.'/assets/images/';
+        return $result;
+    }
+}
+
+if(!function_exists('get_data_generic_fun')){
+    /**
+    * 
+    * @param type $columnName
+    * @param type $conditionArr
+    * @param type $return_type="result"
+    * @return type
+    * example it will use in controlelr
+    * 
+    * =====bellow is for * data without conditions======
+    * get_data_generic_fun('parent','*');
+    *  =====bellow is for * data witht conditions======
+    * get_data_generic_fun('parent','*',array('column1'=>$column1Value,'column2'=>$column2Value));
+    * 
+    * =====bellow is for 1 or more column data without conditions======
+    * get_data_generic_fun('parent','column1,column2,column3');
+    *  =====bellow is for 1 or more column data with conditions======
+    * get_data_generic_fun('parent','column1,column2,column3',array('column1'=>$column1Value,'column2'=>$column2Value));
+    *  =====bellow is for 1 or more column data with conditions and return as result all======
+    * get_data_generic_fun('parent','column1,column2,column3',array('column1'=>$column1Value,'column2'=>$column2Value),'result_arr');
+    * 
+    * ==== modification for  adding sortby and limit and add conditionArr for AND -- OR -- IN ---
+    * get_data_generic_fun('parent','parent_id,passcode',array('passcode'=>$passcoad,'device_token'=>$deviceToken,'condition_type'=>'or'),array('parrent_id'=>'asc','date_time'=>'desc'),1);
+    */
+   function get_data_generic_fun($table_name,$columnName="*",$conditionArr=array(),$return_type="result",$sortByArr=array(),$limit=""){
+       $CI= & get_instance();
+       $CI->db->select($columnName);
+       $condition_type='and';
+       if(array_key_exists('condition_type', $conditionArr)){
+           if($conditionArr['condition_type']!=""){
+               $condition_type=$conditionArr['condition_type'];
+           }
+       }
+       unset($conditionArr['condition_type']);
+       $condition_in_data_arr=array();
+       $startCounter=0;
+       $condition_in_column="";
+       foreach($conditionArr AS $k=>$v){
+           if($condition_type=='in'){
+               if(array_key_exists('condition_in_data', $conditionArr)){
+                   $condition_in_data_arr=  explode(',', $conditionArr['condition_in_data']);
+                   $condition_in_column=$conditionArr['condition_in_col'];
+               }
+               
+           }elseif($condition_type=='or'){
+               if($startCounter==0){
+                   $CI->db->where($k,$v);
+               }else{
+                   $CI->db->or_where($k,$v);
+               }
+           }elseif($condition_type=='and'){
+               $CI->db->where($k,$v);
+           }
+           $startCounter++;
+       }
+        
+        if($condition_type=='in'){
+            if(!empty($condition_in_data_arr))
+                $CI->db->where_in($condition_in_column,$condition_in_data_arr);
+       }
+
+       if($limit!=""){
+           $CI->db->limit($limit);
+       }
+
+       foreach($sortByArr AS $key=>$val){
+           $CI->db->order_by($key,$val);
+       }
+
+       if($return_type=='result'){
+           $rs=$CI->db->get($table_name)->result();
+       }else{
+           $rs=$CI->db->get($table_name)->result_array();
+       }
+       
+       if($table_name!="settings")
+            generate_log($CI->db->last_query(),'get_data_generic_fun_'.date('d-m-Y-H').'.log');
+       
+       return $rs;
+   } 
+} 
+
+if(!function_exists('create_excel_file')){
+    function create_excel_file($file_name_path,$data,$sheet_title="Student Upload Data"){
+        include_once APPPATH.'third_party/PHPExcel.php';
+        
+        $objPHPExcel=new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0)->fromArray($data);
+        $objPHPExcel->getActiveSheet()->setTitle($sheet_title);
+        //$filename='just_some_random_name.xls'; 
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007'); //- See more at: https://arjunphp.com/how-to-use-phpexcel-with-codeigniter/#sthash.0d4ttuQe.dpuf
+        //$filePath=$_SERVER['DOCUMENT_ROOT'].'/rentbike/uploads/'.$filename;
+        $objWriter->save($file_name_path);
+    }
+}
+
+if(!function_exists('fire_api_by_curl')){
+    function fire_api_by_curl($url,$post){
+        generate_log($url.PHP_EOL);
+        generate_log('starting curl execute with POST fields '.json_encode($post) . PHP_EOL);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_VERBOSE, true);
+        
+        generate_log('starting curl execute ' . PHP_EOL);
+        // execute!
+        $response = curl_exec($ch);
+        generate_log('getting cURL ' . $url . ' response ' . $response . PHP_EOL);
+        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        generate_log('getting cURL status ' . $status . ' response ' . $response . PHP_EOL);
+        if($response === false){
+            generate_log('getting cURL error Details ' . curl_error($ch)  . PHP_EOL);
+        }
+        curl_close($ch);
+        return $response;
+    }
+    
+}
+
+if(!function_exists('admission_process_allow')){
+    function admission_process_allow(){
+        $CI                             =       &get_instance();
+        $CI->load->model('Admission_settings_model');
+        
+        $cYear=date('Y')+1;
+        $student_running_year=($cYear-1).'-'. ($cYear); 
+        $rsCSetting=$CI->Admission_settings_model->get_admission_settings_by_running_year($student_running_year);
+        if(count($rsCSetting)>=1 && $rsCSetting[count($rsCSetting)-1]->isActive==1){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    
+}
+
+if(!function_exists('create_excel_file_multiple_sheet')){
+    function create_excel_file_multiple_sheet($file_name_path,$data){
+        include_once APPPATH.'third_party/PHPExcel.php';
+        //pre($data);die;
+        $objPHPExcel=new PHPExcel();
+        foreach($data AS $k => $v){ 
+            $key= array_keys($v);
+            //pre($key);die;
+            $cSheetData=array();
+            $cSheetData=$v[$key[0]];
+            //pre($key);
+            //pre($cSheetData);die;
+            if($key==0){
+                $objPHPExcel->setActiveSheetIndex(0)->fromArray($cSheetData);
+                $objPHPExcel->getActiveSheet()->setTitle($key[0]);
+            }else{
+                $objPHPExcel->createSheet();
+                $sheet = $objPHPExcel->setActiveSheetIndex($k);
+                $sheet->fromArray($cSheetData);
+                $sheet->setTitle($key[0]);
+            }
+        }
+        
+        //$filename='just_some_random_name.xls'; 
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007'); //- See more at: https://arjunphp.com/how-to-use-phpexcel-with-codeigniter/#sthash.0d4ttuQe.dpuf
+        //$filePath=$_SERVER['DOCUMENT_ROOT'].'/rentbike/uploads/'.$filename;
+        $objWriter->save($file_name_path);
+    }
+}
+
+if(!function_exists('read_mark_data_from_excel_file')){
+    function read_mark_data_from_excel_file($file_path){
+        include_once APPPATH.'third_party/PHPExcel.php';
+        //include  FCPATH.'application/third_party/PHPExcel/IOFactory.php';
+        $objReader = PHPExcel_IOFactory::createReader('Excel2007');
+        $objReader->setReadDataOnly(true);
+
+        $objPHPExcel = $objReader->load($file_path);
+        $totalSheet= $objPHPExcel->getSheetCount();
+        $i = 0;
+        $data=array();
+        while ($i<$totalSheet){
+            $objPHPExcel->setActiveSheetIndex($i);
+            $sheetTitle=$objPHPExcel->getActiveSheet()->getTitle();
+            $activeSheetData = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+            $data[$sheetTitle]=$activeSheetData;
+            $i++;
+        }
+        return $data;
+    }
+}
