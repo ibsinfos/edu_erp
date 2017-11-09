@@ -510,6 +510,7 @@ if (!function_exists('generate_breadcrumb')) {
 if (!function_exists('generate_user_table_data_arr')) {
     function generate_user_table_data_arr($tableUserStructureTextArr,$type){
         $CI=& get_instance();
+        $userDataArr=array();
         foreach ($tableUserStructureTextArr AS $key => $val) {
             $userDataArr[$key]= $CI->input->post($key,TRUE);
         }
@@ -519,7 +520,27 @@ if (!function_exists('generate_user_table_data_arr')) {
         $userDataArr['password']= base64_encode($passcode).'~'.md5('jsrob');
         $userDataArr['userType ']= substr($passcode, 0,3);
         $userDataArr['status ']=1;
-        $userDataArr['schoolId']=1;
+        $userDataArr['schoolId']=$CI->session->userdata('USER_SCHOOL_ID');
+        if($userDataArr['schoolId']==""){
+            $userDataArr['schoolId']=1;
+        }
+        return $userDataArr;
+    }
+}
+
+if (!function_exists('bulk_upload_generate_user_table_data_arr')) {
+    function bulk_upload_generate_user_table_data_arr($userDataArr,$type){
+        $CI=& get_instance();
+        //$passcode=generate_passcode('teacher');
+        $passcode=generate_passcode($type['typeText']);
+        $userDataArr['passcode']=$passcode;
+        $userDataArr['password']= base64_encode($passcode).'~'.md5('jsrob');
+        $userDataArr['userType ']= substr($passcode, 0,3);
+        $userDataArr['status ']=1;
+        $userDataArr['schoolId']=$CI->session->userdata('USER_SCHOOL_ID');
+        if($userDataArr['schoolId']==""){
+            $userDataArr['schoolId']=1;
+        }
         return $userDataArr;
     }
 }
@@ -730,12 +751,12 @@ if(!function_exists('get_session_links')){
 
 if(!function_exists('generate_log')){
 	function generate_log($message,$log_file_name="",$isOverwritting=FALSE){
-        $dir=$_SERVER['DOCUMENT_ROOT'];
+        $dir="";
         //die($dir);
         if($_SERVER['HTTP_HOST']==CURRENT_IP_ADDR || $_SERVER['HTTP_HOST']==SMS_IP_ADDR || $_SERVER['HTTP_HOST']=='localhost' || $_SERVER['HTTP_HOST']=='localhost:8080'){
-            $dir .= '/'.CURRENT_INSTANCE.'/uploads/';
+            $dir .= SchoolResourcesPath.'msc_logs/';
         }else{
-                $dir .= '/uploads/';
+                $dir .= SchoolResourcesPath.'msc_logs/';
         }
         if($log_file_name==""){
             $log_file_path=$dir.'demo_school_curl_'.date('Y-m-d').'.log';
@@ -983,3 +1004,4 @@ if(!function_exists('read_mark_data_from_excel_file')){
         return $data;
     }
 }
+

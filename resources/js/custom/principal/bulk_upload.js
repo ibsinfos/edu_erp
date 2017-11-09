@@ -1,5 +1,6 @@
 jQuery(function () {
     jQuery(document).on('click','.upload-btn',function(){
+        $("body").Lock({background: "rgba(249,249,249,.5)"});
         var uploadURI=myJsMain.baseURL+'bulk_upload_controller/'+jQuery(this).data('formactionid')+'/';
         
         var inputFile = jQuery(this).parent().prev().prev().children();
@@ -30,6 +31,7 @@ jQuery(function () {
                         contentType: false,
                         success: function (data) {
                             //listFilesOnServer();
+                            $("body").Unlock();
                             showUploadedFileStatus(data);
                         },
                         /*xhr: function() {
@@ -60,6 +62,16 @@ jQuery(function () {
     });
     
     function showUploadedFileStatus(data){
-        console.log(data);
+        resultData=JSON.parse(data);
+        if(resultData.result=='bad'){
+            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
+        }else if(resultData.result=='good'){
+            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
+        }else if(resultData.result=='need_good'){
+            myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
+            setTimeout(function(){
+                window.location.href=resultData.url;
+              }, 3500);
+        }
     }
 });

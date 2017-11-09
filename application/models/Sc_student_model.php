@@ -15,4 +15,15 @@ class Sc_student_model extends CI_Model {
         //echo $this->db->last_query();
         return $rs;
     }
+
+    function add($dataArr){
+        $this->db->insert($this->_table,$dataArr);
+        return $this->db->insert_id();
+    }
+    
+    function edit($dataArr,$id){
+        $this->db->where($this->_table_primary_key,$id);
+        $this->db->update($this->_table,$dataArr);
+        return TRUE;
+    }
 }

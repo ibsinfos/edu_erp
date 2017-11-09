@@ -30,6 +30,7 @@ class Ajax_controller extends MY_Controller {
                 $this->session->set_userdata('USER_NAME',$userName);
                 $this->session->set_userdata('USER_FNAME',$DataArr[0]['fName']);
                 $this->session->set_userdata('USER_TYPE',$DataArr[0]['userType']);
+                $this->session->set_userdata('USER_SCHOOL_ID',$DataArr[0]['schoolId']);
                 
                 //$this->Sc_user_model->add_login_history(array('userId'=>$DataArr[0]->userId,'IP'=>$this->input->ip_address()));
                 $redirect_url = $_SERVER['HTTP_REFERER'];

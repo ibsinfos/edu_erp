@@ -1,0 +1,374 @@
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajsthan'
+AND `locationType` = 1
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajasthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajasthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajasthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajasthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajasthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajasthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajasthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajasthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajsthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajsthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajsthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajsthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajsthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajsthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajsthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajsthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2
+SELECT `jobTitleId`
+FROM `sc_job_title`
+WHERE `title` = 'Teacher'
+SELECT `genderId`
+FROM `sc_gender`
+WHERE `title` = 'male'
+SELECT `bloodGroupId`
+FROM `sc_blood_group`
+WHERE `title` = 'A+'
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'india'
+AND `locationType` =0
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'rajsthan'
+AND `locationType` = 1
+SELECT `locationId`
+FROM `sc_country`
+WHERE `name` = 'jodhpur'
+AND `locationType` = 2

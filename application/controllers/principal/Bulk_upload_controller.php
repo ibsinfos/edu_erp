@@ -24,18 +24,20 @@ class Bulk_upload_controller extends MY_Controller {
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload('userFile')) {
             //$error = array('error' => );
-            echo json_encode(array('result'=>'bad','message'=>$this->upload->display_errors()));die;
+            echo json_encode(array('result'=>'bad','msg'=>$this->upload->display_errors()));die;
         } else {
             $data = $this->upload->data();
             $excelFilePath=$data['full_path'];
+            //$excelFilePath=SchoolResourcesPath."uploads/teacher_upload_template.xlsx";
             $this->load->library('Excel_lib',array('excelFilePath'=>$excelFilePath));
+            //die("kkk");
             @ini_set('memory_limit', '-1');
             @set_time_limit(0);
-            $num_cols= $this->Excel_lib->get_num_cols();
+            $num_cols= $this->excel_lib->get_num_cols();
             $f = 0;
-            $fielsdStringForAdmin=""; /// lable in excel file
-            $fielsdString=""; // real db fields
-            $fielsdStringMandotary ="" ;// real db fields which are mandetory;
+            $fielsdStringForAdmin="First Name,Last Name,phone number,user name,DOB,DOJ,Job Title,qualification,specialisation,experience,gender,blood,group,address,country,state,city,zip code,home phone,cardid"; /// lable in excel file
+            $fielsdString="fName,lName,phoneNumber,userName,DOB,DOJ,jobTitleId,qualification,specialisation,experience,genderId,bloodGroupId,address,countryId,stateId,cityId,zipCode,homePhone,cardId"; // real db fields
+            $fielsdStringMandotary =$fielsdString ;// real db fields which are mandetory;
             $fielsdArr = explode(',', $fielsdString);
             $fielsdStringForAdminArr = explode(',', $fielsdStringForAdmin);
             $fielsdStringMandotaryArr = explode(',', $fielsdStringMandotary);
@@ -45,7 +47,10 @@ class Bulk_upload_controller extends MY_Controller {
             $errorExcelArr = array();
             $errorExcelArr[] = $fielsdStringForAdminArr;
             $errorRowNo = 2;
-            $allDataRows=$this->Excel_lib->get_all_rows();
+            $allDataRows=$this->excel_lib->get_all_rows();
+            $NotAutoAddCollArr=array('DOB','DOJ','jobTitleId','genderId','bloodGroupId','countryId','stateId','cityId');
+            //pre($allDataRows);die;
+            $this->load->model('Sc_user_model');
             foreach ($allDataRows as $r) {
                 $data = array();
                 $dataStudent = array();
@@ -67,51 +72,53 @@ class Bulk_upload_controller extends MY_Controller {
                 for ($i = 0; $i < $num_cols; $i++) {    // checking is filds is mandetory or not
                     //pre($fielsdArr); echo $i;
                     if (in_array($fielsdArr[$i], $fielsdStringMandotaryArr)) {
-                        //pre($fielsdArr[$i]);
+                        //pre($fielsdArr[$i]);die;
                         //now validating mandetory fiels
                         //generate_log("Field ".$fielsdArr[$i]." value ".$r[$i]."\n",'student_bulk_upload_'.date('d-m-Y-H').'.log');
-
+    
                         if (trim($r[$i]) == "") {
                             $error = TRUE;
                             $blankErrorMsgArr[] = $fielsdStringForAdminArr[$i] . " should not be blank at row no " . $errorRowNo;
-                            //pre($blankErrorMsgArr);
+                            pre($blankErrorMsgArr);die;
                         } else {
-                            $validPhoneEmailCheck = "";
+                            $validPhoneEmailCheck = "ok";
                             $rsEmailPhoneUnique = array();
                             // now check teh uniques for email then phone
-
+    
                             /*$fieldType = $this->Dynamic_field_model->get_field_type_student($fielsdArr[$i]);
                             //pre('$fieldType : '.$fieldType);
                             if ($fieldType == 'email') {
                                 $rsEmailPhoneUnique = $this->Student_model->get_data_by_cols('student_id', array($fielsdArr[$i] => trim($r[$i])));
                                 $validPhoneEmailCheck = $this->checkValidPhoneEmail(trim($r[$i]), 'email');
                             }
-
+    
                             if ($fieldType == 'tel') {
                                 $rsEmailPhoneUnique = $this->Student_model->get_data_by_cols('student_id', array($fielsdArr[$i] => trim($r[$i])));
                                 $validPhoneEmailCheck = $this->checkValidPhoneEmail(trim($r[$i]), 'phone');
                             }*/
-
-                            if ($fielsdArr[$i] == 'email') {
-                                $rsEmailPhoneUnique = $this->Student_model->get_data_by_cols('student_id', array('email' => trim($r[$i])));
+    
+                            if ($fielsdArr[$i] == 'userName') {
+                                $rsEmailPhoneUnique = $this->Sc_user_model->get_data_by_cols('userId', array('userName' => trim($r[$i])));
                                 $validPhoneEmailCheck = $this->checkValidPhoneEmail(trim($r[$i]), 'email');
-                            } elseif ($fielsdArr[$i] == 'phone') {
-                                $rsEmailPhoneUnique = $this->Student_model->get_data_by_cols('student_id', array('phone' => trim($r[$i])));
+                            } elseif ($fielsdArr[$i] == 'phoneNumber') {
+                                $rsEmailPhoneUnique = $this->Sc_user_model->get_data_by_cols('userId', array('phoneNumber' => trim($r[$i])));
                                 $validPhoneEmailCheck = $this->checkValidPhoneEmail(trim($r[$i]), 'phone');
                             } 
-
+    
                             if (count($rsEmailPhoneUnique) > 0) {
                                 $error = TRUE;
                                 $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " is already entered.Should be unique information at row no -" . $errorRowNo;
                                 //echo '<br>';
                             }
-
+    
                             if ($validPhoneEmailCheck != 'ok') {
                                 $error = TRUE;
                                 $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " Should be " . $validPhoneEmailCheck . " at row no -" . $errorRowNo;
                             }
-
-                            if ($fielsdArr[$i] == 'birthday') {
+    
+                            //pre("kkk");pre($errorMsgArr);die;
+    
+                            if ($fielsdArr[$i] == 'DOB') {
                             //if ($fieldType == 'date') {
                                 $excelDOB = trim($r[$i]);
                                 //$unixTimestamp = ($excelDOB - 25569) * 86400;
@@ -126,165 +133,96 @@ class Bulk_upload_controller extends MY_Controller {
                                     $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " content invalid data at row no -" . $errorRowNo;
                                 }
                             }
-
-                            /* if ($fielsdArr[$i] == 'date_time') {
-                              $excelDOB = trim($r[$i]);
-                              $unixTimestamp = ($excelDOB - 25569) * 86400;
-                              $rawDOB = date('d.m.Y', $unixTimestamp);
-
-                              $newDOB = $this->get_mysql_date_formate_from_raw($rawDOB);
-                              if ($newDOB != "") {
-                              $data[$fielsdArr[$i]] = $newDOB;
-                              } else {
-                              $error = TRUE;
-                              $errorMsgArr[] .= $fielsdStringForAdminArr[$i] . " content invalid data at row no -" . $errorRowNo;
-                              }
-                              } */
-
-                            if ($fielsdArr[$i] == 'parent_id') { //echo "parent_id ";
-                                $rsParent = $this->Parent_model->get_data_by_cols('*', array('email' => trim($r[$i])));
-                                //echo $this->db->last_query();
-                                //pre($rsParent);die;
-                                if (count($rsParent) > 0) {
-                                    $data['parent_id'] = $rsParent[0]->parent_id;
+    
+                            if ($fielsdArr[$i] == 'DOJ') {
+                            //if ($fieldType == 'date') {
+                                $excelDOB = trim($r[$i]);
+                                //$unixTimestamp = ($excelDOB - 25569) * 86400;
+                                //$rawDOB= date('d.m.Y',$unixTimestamp);
+                                $rawDOB = $excelDOB;
+                                //generate_log("Harvinder ".date('Y-m-d', $ts),'student_bulk_upload_'.date('d-m-Y-H').'.log');
+                                $newDOB = $this->get_mysql_date_formate_from_raw($rawDOB);
+                                if ($newDOB != "") {
+                                    $data[$fielsdArr[$i]] = $newDOB; //date('Y-m-d', $ts);
                                 } else {
                                     $error = TRUE;
                                     $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " content invalid data at row no -" . $errorRowNo;
                                 }
                             }
-
-                            $stu_password = create_passcode('student');
-                            $data['password'] = ($stu_password != 'invalid') ? sha1($stu_password) : '';
-                            $data['passcode'] = ($stu_password != 'invalid') ? $stu_password : '';
-                            $data['student_status'] = '1';
-
-                            if ($fielsdArr[$i] == 'class_id') {
-                                $rsClass = $this->Class_model->get_name($r[$i]);
-                                if (count($rsClass) > 0) {
-                                    $dataStudent['class_id'] = $rsClass[0]->class_id;
-                                } else {
-                                    $dataStudent['class_id'] = "";
+    
+                            if ($fielsdArr[$i] == 'jobTitleId') {
+                                $rs=get_data_generic_fun('sc_job_title','jobTitleId',array('title'=>trim($r[$i])));
+                                if(!empty($rs)){
+                                    $data[$fielsdArr[$i]]=$rs[0]->jobTitleId;
+                                }else{
                                     $error = TRUE;
-                                    $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " content invalid data at row no -" . $errorRowNo;
+                                    $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " is match with master data for job_title at row no -" . $errorRowNo;
                                 }
                             }
-
-                            if ($fielsdArr[$i] == 'section_id') {
-                                if ($dataStudent['class_id'] == "") {
+                            
+                            if ($fielsdArr[$i] == 'genderId') {
+                                $rs=get_data_generic_fun('sc_gender','genderId',array('title'=>trim($r[$i])));
+                                if(!empty($rs)){
+                                    $data[$fielsdArr[$i]]=$rs[0]->genderId;
+                                }else{
                                     $error = TRUE;
-                                    $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " content invalid data at row no -" . $errorRowNo;
-                                } else {
-                                    $rsClassSection = $this->Section_model->get_name($dataStudent['class_id'], $r[$i]);
-
-                                    if (count($rsClassSection) > 0) {
-                                        $dataStudent['section_id'] = $rsClassSection[0]->section_id;
-                                    } else {
-                                        $error = TRUE;
-                                        $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " content invalid data at row no -" . $errorRowNo;
-                                    }
+                                    $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " is match with master data for gender at row no -" . $errorRowNo;
                                 }
                             }
+    
+                            if ($fielsdArr[$i] == 'bloodGroupId') {
+                                $rs=get_data_generic_fun('sc_blood_group','bloodGroupId',array('title'=>trim($r[$i])));
+                                if(!empty($rs)){
+                                    $data[$fielsdArr[$i]]=$rs[0]->bloodGroupId;
+                                }else{
+                                    $error = TRUE;
+                                    $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " is match with master data for blood_group at row no -" . $errorRowNo;
+                                }
+                            }
+    
+                            if ($fielsdArr[$i] == 'countryId') {
+                                $rs=get_data_generic_fun('sc_country','locationId',array('name'=>trim($r[$i]),'locationType'=>0));
+                                if(!empty($rs)){
+                                    $data[$fielsdArr[$i]]=$rs[0]->locationId;
+                                }else{
+                                    $error = TRUE;
+                                    $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " is match with master data for country at row no -" . $errorRowNo;
+                                }
+                            }
+    
+                            if ($fielsdArr[$i] == 'stateId') {
+                                $rs=get_data_generic_fun('sc_country','locationId',array('name'=>trim($r[$i]),'locationType'=>1));
+                                if(!empty($rs)){
+                                    $data[$fielsdArr[$i]]=$rs[0]->locationId;
+                                }else{
+                                    $error = TRUE;
+                                    $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " is match with master data for state at row no -" . $errorRowNo;
+                                }
+                            }
+    
+                            if ($fielsdArr[$i] == 'cityId') {
+                                $rs=get_data_generic_fun('sc_country','locationId',array('name'=>trim($r[$i]),'locationType'=>2));
+                                if(!empty($rs)){
+                                    $data[$fielsdArr[$i]]=$rs[0]->locationId;
+                                }else{
+                                    $error = TRUE;
+                                    $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " is match with master data for city at row no -" . $errorRowNo;
+                                }
+                            }
+                            
                         }
                         //pre($blankErrorMsgArr);
-                        if ($fielsdArr[$i] != 'section_id' && $fielsdArr[$i] != 'class_id' && $fielsdArr[$i] != 'birthday' && $fielsdArr[$i] != 'date_time' && $fielsdArr[$i] != 'parent_id') {
+                        if ( !in_array($fielsdArr[$i],$NotAutoAddCollArr)) {
                             //echo '$i : '.$i.' ==== $fielsdArr[$i] :'.$fielsdArr[$i].' ==== $r[$i] : '.$r[$i].'<br>';
                             $data[$fielsdArr[$i]] = trim($r[$i]);
                         }
                     } else {
-                        $validPhoneEmailCheck = "";
-                        $rsEmailPhoneUnique = array();
-                        // now check teh uniques for email then phone
-
-                        //$fieldType = $this->Dynamic_field_model->get_field_type($fielsdArr[$i], '1');
-                        if (trim($r[$i]) != "") {
-                            /*if ($fieldType == 'email') {
-                                $rsEmailPhoneUnique = $this->Student_model->get_data_by_cols('student_id', array($fielsdArr[$i] => trim($r[$i])));
-                                $validPhoneEmailCheck = $this->checkValidPhoneEmail(trim($r[$i]), 'email');
-                            }
-
-                            if ($fieldType == 'tel') {
-                                $rsEmailPhoneUnique = $this->Student_model->get_data_by_cols('student_id', array($fielsdArr[$i] => trim($r[$i])));
-                                $validPhoneEmailCheck = $this->checkValidPhoneEmail(trim($r[$i]), 'phone');
-                            }*/
-
-                            if ($fielsdArr[$i] == 'email') {
-                                $rsEmailPhoneUnique = $this->Student_model->get_data_by_cols('student_id', array('email' => trim($r[$i])));
-                                $validPhoneEmailCheck = $this->checkValidPhoneEmail(trim($r[$i]), 'email');
-                            } elseif ($fielsdArr[$i] == 'phone') {
-                                $rsEmailPhoneUnique = $this->Student_model->get_data_by_cols('student_id', array('phone' => trim($r[$i])));
-                                $validPhoneEmailCheck = $this->checkValidPhoneEmail(trim($r[$i]), 'phone');
-                            } 
-
-                            if (count($rsEmailPhoneUnique) > 0) {
-                                $error = TRUE;
-                                $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " is already entered.Should be unique information at row no -" . $errorRowNo;
-                                //echo '<br>';
-                            }
-
-                            if ($validPhoneEmailCheck != 'ok') {
-                                $error = TRUE;
-                                $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " Should be " . $validPhoneEmailCheck . " at row no -" . $errorRowNo;
-                            } else {
-                                $data[$fielsdArr[$i]] = trim($r[$i]);
-                            }
-
-                            if ($fielsdArr[$i] == 'parent_id' && trim($r[$i]) != "") { //echo "parent_id ";
-                                $rsParent = $this->Parent_model->get_data_by_cols('*', array('email' => trim($r[$i])));
-                                //echo $this->db->last_query();
-                                //pre($rsParent);die;
-                                if (count($rsParent) > 0) {
-                                    $data['parent_id'] = $rsParent[0]->parent_id;
-                                } else {
-                                    $error = TRUE;
-                                    $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " content invalid data at row no -" . $errorRowNo;
-                                }
-                            } else {
-                                if ($fielsdArr[$i] == 'parent_id' && trim($r[$i]) == "") {
-                                    $error = TRUE;
-                                    $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " content invalid data at row no -" . $errorRowNo;
-                                }
-                            }
-                        }
-
-                        if ($fielsdArr[$i] == 'roll' && trim($r[$i]) == "") {
-                            $data['roll'] = ""; //substr(uniqid(),0,8);
-                        }
-                        if ($fielsdArr[$i] == 'dormitory_id' && trim($r[$i]) != "") {
-                            $rsDormitory = array();
-                            $rsDormitory = $this->Dormitory_model->get_name($r[$i]);
-
-                            if (count($rsDormitory) > 0) {
-                                $data['dormitory_id'] = $rsDormitory[0]->dormitory_id;
-                            } else {
-                                $error = TRUE;
-                                $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " content invalid data at row no -" . $errorRowNo;
-                            }
-                        } else {
-                            $data['dormitory_id'] = 0;
-                        }
-
-                        if ($fielsdArr[$i] == 'transport_id' && trim($r[$i]) != "") {
-                            $rsTransport = $this->Transport_model->get_name($r[$i]);
-
-                            if (count($rsTransport) > 0) {
-                                //pre($rsTransport);die($rsTransport[0]->transport_id);
-                                $transport_id = $rsTransport[0]->transport_id;
-                                $rsTransport = array();
-                                $data['transport_id'] = $transport_id;
-                            } else {
-                                $error = TRUE;
-                                $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " content invalid data at row no -" . $errorRowNo;
-                            }
-                        } else {
-                            $data['transport_id'] = 0;
-                        }
-
                         //echo '$i++ : '.$i.' ==== $fielsdArr[$i]++ :'.$fielsdArr[$i].' ==== $r[$i]++ : '.$r[$i].'<br>';
                         //if($fielsdArr[$i]=='roll' && trim($r[$i])!="")
                         $data[$fielsdArr[$i]] = trim($r[$i]);
                     }
                 }
-                
+                //pre($errorMsgArr);die;
                 if (count($blankErrorMsgArr) > 0) {
                     $error = TRUE;
                     if (count($blankErrorMsgArr) < 20) {
@@ -293,34 +231,30 @@ class Bulk_upload_controller extends MY_Controller {
                         }
                     }
                 }
-                //pre($errorMsgArr);
-                //pre('$error');
+               
+                //pre('$error'); 
                 if ($error === FALSE) {
-                    //pre('comming to add data');
-                    //pre($data);
-                    //$data['date_time']=strtotime(date("Y-m-d H:i:s"));
-                    if (!array_key_exists('roll', $data)) {
-                        $data['roll'] = "";
-                    }
-                    $dataStudent['roll'] = $data['roll'];
-
-                    unset($data['roll']);
-                    unset($data['class_id']);
-                    unset($data['section_id']);
-
+                    $userData=array('fName'=>$data['fName'],'lName'=>$data['lName'],'phoneNumber'=>$data['phoneNumber'],'userName'=>$data['userName']);
+    
+                    $userDataArr = array();
+                    $userDataArr = bulk_upload_generate_user_table_data_arr($userData, array('typeText' => 'teacher'));
+                    //pre($userDataArr);pre($data);die;
+                    $userId = $this->Sc_user_model->add($userDataArr);
+    
+                    unset($data['fName']);
+                    unset($data['lName']);
+                    unset($data['phoneNumber']);
+                    unset($data['userName']);
+    
+                    $data['userId'] = $userId;
+    
                     //$dataStudent['date_added'] = strtotime(date("Y-m-d H:i:s"));
-                    $dataStudent['enroll_code'] = substr(md5(rand(0, 1000000)), 0, 7);
-                    $dataStudent['year'] = $this->Setting_model->get_setting_record(array('type' => 'running_year'), 'description');
-                    $data = array_filter($data, create_function('$a', 'return $a!=="";'));
+                    
                     //pre('final student data');
                     //pre($data); die;
                     //pre($dataStudent);die;
-                    $student_id = $this->Student_model->save_student($data);
-                    $dataStudent['student_id'] = $student_id;
-
-                    $dataStudent['roll'] = generate_roll_no($dataStudent['class_id'], $dataStudent['section_id']);
-                    generate_log(serialize($dataStudent));
-                    $enroll_id = $this->Student_model->enroll_student($dataStudent);
+                    $this->load->model("Sc_teacher_model");
+                    $student_id = $this->Sc_teacher_model->add($data);
                 } else {
                     $errorExcelArr[] = $r;
                     $someRowError = TRUE;
@@ -338,8 +272,11 @@ class Bulk_upload_controller extends MY_Controller {
                 create_excel_file($file_name_with_path, $errorExcelArr);
                 echo json_encode(array('result'=>'need_good','msg'=>'some data are not uploaded,plz check with error details.','url'=>BASE_URL.$this->erpUserTypeArr[$this->userType].'/principal/teacher_bulk_upload_error'));die;
             }
-            echo json_encode(array('result'=>'good','message'=>$this->upload->data()));die;
         }
+    }
+
+    function upload_process_test(){
+        
     }
 
     function student_upload_process() {
@@ -693,5 +630,48 @@ class Bulk_upload_controller extends MY_Controller {
             redirect(base_url() . 'index.php?school_admin/bulk_upload', 'refresh');
         }
     }
+
+    function checkValidPhoneEmail($data, $type) {
+        if ($type == 'email') {
+            if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
+                return 'ok';
+            } else {
+                return ' an email address like name@doamin.tld. ';
+            }
+        } else if ($type == 'phone') {
+            if (!ctype_digit($data)) {
+                return ' a phone number only content 0 to 9 digit';
+            } else {
+                if (strlen($data) < 11 && strlen($data) > 6) {
+                    return 'ok';
+                } else {
+                    return ' a phone number only content 7 to 10 chaacters';
+                }
+            }
+        }
+    }
+
+    function get_mysql_date_formate_from_raw($data) {
+		$dateDataArr = explode('.', $data);
+		//echo count($dateDataArr);
+		if (count($dateDataArr) != 3) {
+			return '';
+		} elseif (strlen($dateDataArr[2]) != 4) {
+			return '';
+		} elseif (strlen($dateDataArr[1]) != 2) {
+			return '';
+		} elseif (strlen($dateDataArr[0]) != 2) {
+			return '';
+		} elseif ($dateDataArr[0] < 0 || $dateDataArr[0] > 31) {
+			return '';
+		} elseif ($dateDataArr[1] < 0 || $dateDataArr[1] > 12) {
+			return '';
+			//} elseif ($dateDataArr[2] > (date('Y') - 1)) { echo $dateDataArr[2].'<br>'; echo date('Y') - 1;echo '<br>';die('G');
+			// return '';
+		} else {
+			return $dateDataArr[2] . '-' . $dateDataArr[1] . '-' . $dateDataArr[0];
+		}
+	}
+
 
 }
