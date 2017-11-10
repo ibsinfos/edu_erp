@@ -22,7 +22,7 @@
                 <div class="panel panel-bordered">
                     <div class="panel-header">
                         <div class="col s12 m6 l6">
-                            <button type="button" class="waves-effect waves-purple btn z-depth-3 pull-left">Download Excelfile for Re-Upload</button>
+                            <button type="button" class="waves-effect waves-purple btn z-depth-3 pull-left" onclick="location.href='<?php echo BASE_URL.$this->erpUserTypeArr[$this->userType].'/bulk_upload_controller/download_bulk_upload_error/teacher';?>'">Download Excelfile for Re-Upload</button>
                         </div>
                         <div class="col s12 m6 l6">
                             <button type="button" class="waves-effect waves-purple btn z-depth-3 pull-right" onclick="location.href='<?php echo BASE_URL.$this->erpUserTypeArr[$this->userType].'/principal/bulk_upload';?>';">Go for Bulk Upload</button>

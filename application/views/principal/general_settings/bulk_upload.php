@@ -32,13 +32,13 @@
                                 <div class="panel-body">
                                     
                                     <div class="row">
-                                        <?php echo form_open_multipart('principal/bulk_upload_controller/',array('class' => 'validate bluk_upload_form'))?>
+                                        <?php echo form_open_multipart('principal/bulk_upload_controller/',array('class' => 'validate bluk_upload_form','id' => 'form-upload-teacher'))?>
                                         <div class="col m6 s12 l4 text-center">
                                             <input type="file" name="userFile">
                                         </div>
                                         <div class="col m6 s12 l4 text-center">
                                             <!--<i class="mdi mdi-download"></i>-->
-                                            <button type="button" class="btn btn-default">
+                                            <button type="button" class="btn btn-default bulk-upload-template-dowload" data-usertype="teacher">
                                                 <i class="mdi mdi-download"></i>
                                             </button>
                                         </div>
@@ -77,7 +77,7 @@
                                         </div>
                                         <div class="col m6 s12 l4 text-center">
                                             <!--<i class="mdi mdi-download"></i>-->
-                                            <button type="button" class="btn btn-default">
+                                            <button type="button" class="btn btn-default bulk-upload-template-dowload" data-usertype="class">
                                                 <i class="mdi mdi-download"></i>
                                             </button>
                                         </div>
@@ -121,7 +121,7 @@
                                             </button>
                                         </div>
                                         <div class="col m6 s12 l4 text-center">
-                                            <button type="button" class="btn btn-default">
+                                            <button type="button" class="btn btn-default bulk-upload-template-dowload" data-usertype="student">
                                                 <i class="mdi mdi-upload"></i>
                                                 Submit
                                             </button>
@@ -155,7 +155,7 @@
                                         </div>
                                         <div class="col m6 s12 l4 text-center">
                                             <!--<i class="mdi mdi-download"></i>-->
-                                            <button type="button" class="btn btn-default">
+                                            <button type="button" class="btn btn-default bulk-upload-template-dowload" data-usertype="parent">
                                                 <i class="mdi mdi-download"></i>
                                             </button>
                                         </div>
@@ -194,7 +194,7 @@
                                         </div>
                                         <div class="col m6 s12 l4 text-center">
                                             <!--<i class="mdi mdi-download"></i>-->
-                                            <button type="button" class="btn btn-default">
+                                            <button type="button" class="btn btn-default bulk-upload-template-dowload" data-usertype="subject">
                                                 <i class="mdi mdi-download"></i>
                                             </button>
                                         </div>
@@ -212,6 +212,11 @@
                     </div>
                 </li>
             </ul>
+            <div class="progress">
+                <div id="progress-bar" class="progress-bar progress-bar-success progress-bar-striped " role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
+                    20%
+                </div>
+            </div>
         </div>
         
     </div>

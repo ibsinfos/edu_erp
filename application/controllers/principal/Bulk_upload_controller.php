@@ -17,7 +17,22 @@ class Bulk_upload_controller extends MY_Controller {
         $generalDataArr['ogImage'] = '';
         $this->_SEODataArr = $generalDataArr;
     }
-
+    
+    function download_bulk_upload_template($userType){
+        $this->load->helper('download');
+        $data = file_get_contents(SchoolResourcesPath.'all_templates/'.$userType.'_upload_template.xlsx');
+        //$name = 'parent_bulk_upload_error_details_for_excel_file.xlsx';
+        $name = $userType.'_upload_template.xlsx';
+        force_download($name, $data);
+    }
+    
+    function download_bulk_upload_error($userType){
+        $this->load->helper('download');
+        $data = file_get_contents(SchoolResourcesPath.'bulk_upload_error/'.$userType.'_bulk_upload_error_details_for_excel_file.xlsx');
+        $name = $userType.'_bulk_upload_with_error_data.xlsx';
+        force_download($name, $data);
+    }
+    
     function teacher_upload_process() {
         $config['upload_path'] = SchoolResourcesPath . 'uploads/';
         $config['allowed_types'] = 'xls|xlsx';

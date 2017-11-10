@@ -4,7 +4,8 @@ jQuery(function () {
         var uploadURI=myJsMain.baseURL+'bulk_upload_controller/'+jQuery(this).data('formactionid')+'/';
         
         var inputFile = jQuery(this).parent().prev().prev().children();
-        //alert(inputFile.attr("name"));
+        var formEle=jQuery(this).parent().parent();
+        formId=formEle.attr("id");
         //var uploadforId = $('.bluk_upload_form').attr('id');
         //var 
         //alert(uploadforId);
@@ -32,7 +33,7 @@ jQuery(function () {
                         success: function (data) {
                             //listFilesOnServer();
                             $("body").Unlock();
-                            showUploadedFileStatus(data);
+                            showUploadedFileStatus(data,formId);
                         },
                         /*xhr: function() {
                          var xhr = new XMLHttpRequest();
@@ -51,17 +52,22 @@ jQuery(function () {
                          }*/
                     });
                 }else{
+                    $("body").Unlock();
                     //process erro for to upload excel file onlye
                     myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',"Please select only excel file for bulk upload.");
+                    jQuery('#'+formId)[0].reset();
                 }
             }
         }else{
+            $("body").Unlock();
             /// empty file error process
             myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',"Please select the excel file for bulk upload.");
+            jQuery('#'+formId)[0].reset();
         }
     });
     
-    function showUploadedFileStatus(data){
+    function showUploadedFileStatus(data,formId){
+        jQuery('#'+formId)[0].reset();
         resultData=JSON.parse(data);
         if(resultData.result=='bad'){
             myJsMain.commonFunction.erpAlert(myJsMain.messageBoxTitle+' System Message',resultData.msg);
@@ -74,4 +80,7 @@ jQuery(function () {
               }, 3500);
         }
     }
+    jQuery('.bulk-upload-template-dowload').on('click',function(){
+        window.location.href=myJsMain.baseURL+'bulk_upload_controller/download_bulk_upload_template/'+jQuery(this).data("usertype");
+    });
 });
