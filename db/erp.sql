@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2017 at 05:50 PM
+-- Generation Time: Nov 13, 2017 at 04:37 PM
 -- Server version: 10.1.16-MariaDB
--- PHP Version: 5.6.24
+-- PHP Version: 7.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `erp`
 --
+CREATE DATABASE IF NOT EXISTS `erp` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `erp`;
 
 -- --------------------------------------------------------
 
@@ -84,6 +86,29 @@ INSERT INTO `sc_blood_group` (`bloodGroupId`, `title`) VALUES
 (6, 'AB-'),
 (7, 'O+'),
 (8, 'O-');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sc_caste`
+--
+
+DROP TABLE IF EXISTS `sc_caste`;
+CREATE TABLE IF NOT EXISTS `sc_caste` (
+  `casteId` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(10) NOT NULL,
+  PRIMARY KEY (`casteId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sc_caste`
+--
+
+INSERT INTO `sc_caste` (`casteId`, `title`) VALUES
+(1, 'General'),
+(2, 'OBC'),
+(3, 'SC'),
+(4, 'ST');
 
 -- --------------------------------------------------------
 
@@ -1909,7 +1934,14 @@ CREATE TABLE IF NOT EXISTS `sc_parent` (
   `deviceToken` varchar(500) DEFAULT NULL,
   `addDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`parentId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sc_parent`
+--
+
+INSERT INTO `sc_parent` (`parentId`, `userId`, `motherFName`, `motherMName`, `motherLName`, `address`, `fatherProfession`, `fatherQualification`, `motherProfession`, `motherQualification`, `religion`, `caste`, `homePhone`, `city`, `state`, `country`, `zip`, `image`, `deviceToken`, `addDate`) VALUES
+(1, 3, 'mfname', 'mmname', 'mlname', 'dummmy address', 'fprofession', 'fqualification', 'mprofession', 'mqualification', 'religion', 'caste', '8484565', 0, 0, 0, NULL, NULL, NULL, '2017-11-12 06:16:17');
 
 -- --------------------------------------------------------
 
@@ -2037,7 +2069,7 @@ CREATE TABLE IF NOT EXISTS `sc_user` (
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0=>deactive,1=>active,2=>delete',
   `schoolId` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sc_user`
@@ -2045,7 +2077,8 @@ CREATE TABLE IF NOT EXISTS `sc_user` (
 
 INSERT INTO `sc_user` (`userId`, `userName`, `communicationEmail`, `password`, `passcode`, `fName`, `mName`, `lName`, `phoneNumber`, `userType`, `status`, `schoolId`) VALUES
 (1, 'info@school-erp.com', 'info@school-erp.com', 'UFJJLTEyMzQ1~91b2a91f2d3e7b55941c57710757b395', 'SAD-12345', 'School', '', 'Admin', 88888888, 'PRI', 1, 1),
-(2, 'demoteacher@school-erp.com', 'demoteacher@school-erp.com', 'VEVBblo2ZkgwMTg2~91b2a91f2d3e7b55941c57710757b395', 'TEAnZ6fH0186', 'fname', 'mname', 'lname', 2147483647, 'TEA', 1, 1);
+(2, 'demoteacher@school-erp.com', 'demoteacher@school-erp.com', 'VEVBblo2ZkgwMTg2~91b2a91f2d3e7b55941c57710757b395', 'TEAnZ6fH0186', 'fname', 'mname', 'lname', 2147483647, 'TEA', 1, 1),
+(3, 'demoparent@school-erp.com', 'demoparent@school-erp.com', '', '', 'pfname', 'pmname', 'plname', 541254, 'PAR', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2057,6 +2090,8 @@ DROP TABLE IF EXISTS `sc_year`;
 CREATE TABLE IF NOT EXISTS `sc_year` (
   `sessionId` int(11) NOT NULL AUTO_INCREMENT,
   `session` varchar(25) NOT NULL,
+  `startingMonth` int(11) DEFAULT NULL,
+  `endingMonth` int(11) DEFAULT NULL,
   PRIMARY KEY (`sessionId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
@@ -2064,12 +2099,12 @@ CREATE TABLE IF NOT EXISTS `sc_year` (
 -- Dumping data for table `sc_year`
 --
 
-INSERT INTO `sc_year` (`sessionId`, `session`) VALUES
-(1, '2016-2017'),
-(2, '2017-2018'),
-(3, '2018-2019'),
-(4, '2019-2020'),
-(5, '2020-2021');
+INSERT INTO `sc_year` (`sessionId`, `session`, `startingMonth`, `endingMonth`) VALUES
+(1, '2016-2017', NULL, NULL),
+(2, '2017-2018', NULL, NULL),
+(3, '2018-2019', NULL, NULL),
+(4, '2019-2020', NULL, NULL),
+(5, '2020-2021', NULL, NULL);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
