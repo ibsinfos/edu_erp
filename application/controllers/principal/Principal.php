@@ -167,4 +167,18 @@ class Principal extends MY_Controller {
         $data['errors'] = $this->load->view($this->erpUserTypeArr[$this->userType].'/general_settings/bulk_upload_errors',$data,TRUE);
         $this->load->view($this->erpUserTypeArr[$this->userType].'/general_settings/teacher_bulk_upload_error',$data);
     }
+    
+    function class_bulk_upload_error(){
+        $data=$this->_get_logedin_template($this->_SEODataArr);
+        $breadcrumb=array();
+        $breadcrumbItemArr=array('breadcrumbLink'=>'#','tooltip'=>'All Teacher List','breadcrumbIcon'=>'fa-user','breadcrumbText'=>'Teacher List');
+        $breadcrumb[]=$breadcrumbItemArr;
+        $data['breadcrumb']=  generate_breadcrumb($breadcrumb);
+        $file_name = SchoolResourcesPath.'msc_logs/class_bulk_upload_error_details.log';
+        $error_messages = file_get_contents($file_name);
+        $messages = json_decode($error_messages);
+        $data['messages']=$messages;
+        $data['errors'] = $this->load->view($this->erpUserTypeArr[$this->userType].'/general_settings/bulk_upload_errors',$data,TRUE);
+        $this->load->view($this->erpUserTypeArr[$this->userType].'/general_settings/class_bulk_upload_error',$data);
+    }
 }

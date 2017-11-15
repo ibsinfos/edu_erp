@@ -94,7 +94,7 @@ class Bulk_upload_controller extends MY_Controller {
                         if (trim($r[$i]) == "") {
                             $error = TRUE;
                             $blankErrorMsgArr[] = $fielsdStringForAdminArr[$i] . " should not be blank at row no " . $errorRowNo;
-                            pre($blankErrorMsgArr);die;
+                            //pre($blankErrorMsgArr);die;
                         } else {
                             $validPhoneEmailCheck = "ok";
                             $rsEmailPhoneUnique = array();
@@ -286,6 +286,170 @@ class Bulk_upload_controller extends MY_Controller {
                 @unlink($file_name_with_path);
                 create_excel_file($file_name_with_path, $errorExcelArr);
                 echo json_encode(array('result'=>'need_good','msg'=>'some data are not uploaded,plz check with error details.','url'=>BASE_URL.$this->erpUserTypeArr[$this->userType].'/principal/teacher_bulk_upload_error'));die;
+            }
+        }
+    }
+    
+    function class_upload_process() {
+        $config['upload_path'] = SchoolResourcesPath . 'uploads/';
+        $config['allowed_types'] = 'xls|xlsx';
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('userFile')) {
+            //$error = array('error' => );
+            echo json_encode(array('result'=>'bad','msg'=>$this->upload->display_errors()));die;
+        } else {
+            $data = $this->upload->data();
+            $excelFilePath=$data['full_path'];
+            //$excelFilePath=SchoolResourcesPath."uploads/teacher_upload_template.xlsx";
+            $this->load->library('Excel_lib',array('excelFilePath'=>$excelFilePath));
+            //die("kkk");
+            @ini_set('memory_limit', '-1');
+            @set_time_limit(0);
+            $num_cols= $this->excel_lib->get_num_cols();
+            $f = 0;
+            $fielsdStringForAdmin="Class Name,Class numeric name,Section name,Section nick name,Teacher email,Room number,Max capacity"; /// lable in excel file
+            $fielsdString="name,numericName,nameSection,nickName,email,roomNo,maxCapacity"; // real db fields
+            $fielsdStringMandotary ="name,numericName,nameSection,nickName,email"; // real db fields ;// real db fields which are mandetory;
+            $fielsdArr = explode(',', $fielsdString);
+            $fielsdStringForAdminArr = explode(',', $fielsdStringForAdmin);
+            $fielsdStringMandotaryArr = explode(',', $fielsdStringMandotary);
+            
+            $someRowError = FALSE;
+            $errorMsgArr = array();
+            $errorExcelArr = array();
+            $errorExcelArr[] = $fielsdStringForAdminArr;
+            $errorRowNo = 2;
+            $allDataRows=$this->excel_lib->get_all_rows();
+            $NotAutoAddCollArr=array();
+            //pre($allDataRows);die;
+            $this->load->model('Sc_class_model');
+            $this->load->model('Sc_section_model');
+            $this->load->model('Sc_user_model');
+            
+            foreach ($allDataRows as $r) {
+                $data = array();
+                $dataStudent = array();
+                $error = FALSE;
+                // Ignore the inital name row of excel file
+                if ($f == 0) {
+                    $f++;
+                    continue;
+                } $f++;
+                
+                //pre($r); die('here');
+                //pre($r);pre('above are $r data');
+                if ($num_cols > count($fielsdArr)) {
+                    $num_cols = count($fielsdArr);
+                }
+                $blankErrorMsgArr = array();
+                $errorRowIncrease = FALSE;
+                
+                for ($i = 0; $i < $num_cols; $i++) {    // checking is filds is mandetory or not
+                    //pre($fielsdArr); echo $i;
+                    if (in_array($fielsdArr[$i], $fielsdStringMandotaryArr)) {
+                        //pre($fielsdArr[$i]);die;
+                        //now validating mandetory fiels
+                        //generate_log("Field ".$fielsdArr[$i]." value ".$r[$i]."\n",'student_bulk_upload_'.date('d-m-Y-H').'.log');
+    
+                        if (trim($r[$i]) == "") {
+                            $error = TRUE;
+                            $blankErrorMsgArr[] = $fielsdStringForAdminArr[$i] . " should not be blank at row no " . $errorRowNo;
+                            //pre($blankErrorMsgArr);die;
+                        } else {
+                            $validPhoneEmailCheck = "ok";
+                            $rsEmailPhoneUnique = array();
+                            
+                            if ($fielsdArr[$i] == 'name') {
+                                $classData['name']=trim($r[$i]);
+                            }
+                            
+                            if ($fielsdArr[$i] == 'numericName') {
+                                $classData['numericName']=trim($r[$i]);
+                            }
+                            
+                            if ($fielsdArr[$i] == 'email') {
+                                $rsEmailPhoneUnique = $this->Sc_user_model->get_data_by_cols('userId', array('userName' => trim($r[$i])));
+                                $validPhoneEmailCheck = $this->checkValidPhoneEmail(trim($r[$i]), 'email');
+                                
+                                if ($validPhoneEmailCheck != 'ok') {
+                                    $error = TRUE;
+                                    $errorMsgArr[] = $fielsdStringForAdminArr[$i] . " Should be " . $validPhoneEmailCheck . " at row no -" . $errorRowNo;
+                                }else{
+                                    $sectionDataArr['teacherId']=$rsEmailPhoneUnique[0]->userId;
+                                }
+                            }
+                            
+                            if ($fielsdArr[$i] == 'nameSection') {
+                                $sectionDataArr['name']=trim($r[$i]);
+                            }
+                            
+                            if ($fielsdArr[$i] == 'nickName') {
+                                $sectionDataArr['nickName']=trim($r[$i]);
+                            }
+                            
+                        }
+                        
+                    } else {
+                        //echo '$i++ : '.$i.' ==== $fielsdArr[$i]++ :'.$fielsdArr[$i].' ==== $r[$i]++ : '.$r[$i].'<br>';
+                        //if($fielsdArr[$i]=='roll' && trim($r[$i])!="")
+                        $sectionDataArr[$fielsdArr[$i]] = trim($r[$i]);
+                    }
+                }
+                
+                //pre($errorMsgArr);die;
+                if (count($blankErrorMsgArr) > 0) {
+                    $error = TRUE;
+                    if (count($blankErrorMsgArr) < 20) {
+                        foreach ($blankErrorMsgArr AS $errorKey => $errorVal) {
+                            $errorMsgArr[] = $errorVal;
+                        }
+                    }
+                }
+                //pre('$error'); 
+                if ($error === FALSE) {
+                    $classId="";
+                    $classDataArr= get_data_generic_fun('sc_class','classId',array('name'=>$classData['name']));
+                    if(empty($classDataArr)){
+                        $classData['schoolId']= $this->session->userdata('USER_SCHOOL_ID');
+                        //create a class here
+                        $classId=$this->Sc_class->add($classData);
+                    }else{
+                        $classId=$classDataArr[0]->classId;
+                    }
+                    
+                    if($classId==""){
+                        $errorMsgArr[]="Unknown error arrises to add data for row no -" . $errorRowNo;
+                        $errorExcelArr[] = $r;
+                        $someRowError = TRUE;
+                    }else{
+                        $sectionDataArr['classId']=$classId;
+                        $sectionDataArr['schoolId']=$this->session->userdata('USER_SCHOOL_ID');
+                        $sectionOldDataArr= get_data_generic_fun('sc_section','sectionId',array('name'=>$sectionDataArr['name'],'classId'=>$sectionDataArr['classId']));
+                        if(!empty($sectionDataArr)){
+                            $errorMsgArr[]="Section already created  for row no -" . $errorRowNo;
+                            $errorExcelArr[] = $r;
+                            $someRowError = TRUE;
+                        }else{
+                            $this->load->model("Sc_section_model");
+                            $this->Sc_section_model->add($sectionOldDataArr);
+                        }
+                    }
+                } else {
+                    $errorExcelArr[] = $r;
+                    $someRowError = TRUE;
+                }
+                $errorRowNo++;
+            }
+            
+            if ($someRowError == FALSE) {
+                echo json_encode(array('result'=>'good','msg'=>'Class bulk upload completed successfully.'));die;
+            } else {
+                //pre($errorMsgArr);die;
+                generate_log(json_encode($errorMsgArr), 'clsss_bulk_upload_error_details.log', TRUE);
+                $file_name_with_path = SchoolResourcesPath.'bulk_upload_error/class_bulk_upload_error_details_for_excel_file.xlsx';
+                @unlink($file_name_with_path);
+                create_excel_file($file_name_with_path, $errorExcelArr);
+                echo json_encode(array('result'=>'need_good','msg'=>'some data are not uploaded,plz check with error details.','url'=>BASE_URL.$this->erpUserTypeArr[$this->userType].'/principal/class_bulk_upload_error'));die;
             }
         }
     }
